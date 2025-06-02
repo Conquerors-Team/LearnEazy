@@ -2,23 +2,37 @@
 
 namespace Laravel\Cashier;
 
-use Exception;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
+use NumberFormatter;
+use Stripe\BaseStripeClient;
+use Stripe\Customer as StripeCustomer;
+use Stripe\StripeClient;
 
 class Cashier
 {
     /**
-     * The current currency.
+     * The Cashier library version.
      *
      * @var string
      */
-    protected static $currency = 'usd';
+    const VERSION = '13.17.0';
 
     /**
-     * The current currency symbol.
+     * The Stripe API version.
      *
      * @var string
      */
-    protected static $currencySymbol = '$';
+    const STRIPE_VERSION = '2020-08-27';
+
+    /**
+     * The base URL for the Stripe API.
+     *
+     * @var string
+     */
+    public static $apiBaseUrl = BaseStripeClient::DEFAULT_API_BASE;
 
     /**
      * The custom currency formatter.
@@ -28,70 +42,80 @@ class Cashier
     protected static $formatCurrencyUsing;
 
     /**
-     * Set the currency to be used when billing users.
+     * Indicates if Cashier migrations will be run.
      *
-     * @param  string  $currency
-     * @param  string|null  $symbol
-     * @return void
+     * @var bool
      */
-    public static function useCurrency($currency, $symbol = null)
-    {
-        static::$currency = $currency;
+    public static $runsMigrations = true;
 
-        static::useCurrencySymbol($symbol ?: static::guessCurrencySymbol($currency));
+    /**
+     * Indicates if Cashier routes will be registered.
+     *
+     * @var bool
+     */
+    public static $registersRoutes = true;
+
+    /**
+     * Indicates if Cashier will mark past due subscriptions as inactive.
+     *
+     * @var bool
+     */
+    public static $deactivatePastDue = true;
+
+    /**
+     * Indicates if Cashier will automatically calculate taxes using Stripe Tax.
+     *
+     * @var bool
+     */
+    public static $calculatesTaxes = false;
+
+    /**
+     * The default customer model class name.
+     *
+     * @var string
+     */
+    public static $customerModel = 'App\\Models\\User';
+
+    /**
+     * The subscription model class name.
+     *
+     * @var string
+     */
+    public static $subscriptionModel = Subscription::class;
+
+    /**
+     * The subscription item model class name.
+     *
+     * @var string
+     */
+    public static $subscriptionItemModel = SubscriptionItem::class;
+
+    /**
+     * Get the customer instance by its Stripe ID.
+     *
+     * @param  \Stripe\Customer|string|null  $stripeId
+     * @return \Laravel\Cashier\Billable|null
+     */
+    public static function findBillable($stripeId)
+    {
+        $stripeId = $stripeId instanceof StripeCustomer ? $stripeId->id : $stripeId;
+
+        return $stripeId ? (new static::$customerModel)->where('stripe_id', $stripeId)->first() : null;
     }
 
     /**
-     * Guess the currency symbol for the given currency.
+     * Get the Stripe SDK client.
      *
-     * @param  string  $currency
-     * @return string
+     * @param  array  $options
+     * @return \Stripe\StripeClient
      */
-    protected static function guessCurrencySymbol($currency)
+    public static function stripe(array $options = [])
     {
-        switch (strtolower($currency)) {
-            case 'usd':
-            case 'aud':
-            case 'cad':
-                return '$';
-            case 'eur':
-                return '€';
-            case 'gbp':
-                return '£';
-            default:
-                throw new Exception('Unable to guess symbol for currency. Please explicitly specify it.');
-        }
-    }
-
-    /**
-     * Get the currency currently in use.
-     *
-     * @return string
-     */
-    public static function usesCurrency()
-    {
-        return static::$currency;
-    }
-
-    /**
-     * Set the currency symbol to be used when formatting currency.
-     *
-     * @param  string  $symbol
-     * @return void
-     */
-    public static function useCurrencySymbol($symbol)
-    {
-        static::$currencySymbol = $symbol;
-    }
-
-    /**
-     * Get the currency symbol currently in use.
-     *
-     * @return string
-     */
-    public static function usesCurrencySymbol()
-    {
-        return static::$currencySymbol;
+        return new StripeClient(array_merge([
+            'api_key' => $options['api_key'] ?? config('cashier.secret'),
+            'stripe_version' => static::STRIPE_VERSION,
+            'api_base' => static::$apiBaseUrl,
+        ], $options));
     }
 
     /**
@@ -109,20 +133,110 @@ class Cashier
      * Format the given amount into a displayable currency.
      *
      * @param  int  $amount
+     * @param  string|null  $currency
+     * @param  string|null  $locale
+     * @param  array  $options
      * @return string
      */
-    public static function formatAmount($amount)
+    public static function formatAmount($amount, $currency = null, $locale = null, array $options = [])
     {
         if (static::$formatCurrencyUsing) {
-            return call_user_func(static::$formatCurrencyUsing, $amount);
+            return call_user_func(static::$formatCurrencyUsing, $amount, $currency, $locale, $options);
         }
 
-        $amount = number_format($amount / 100, 2);
+        $money = new Money($amount, new Currency(strtoupper($currency ?? config('cashier.currency'))));
 
-        if (starts_with($amount, '-')) {
-            return '-'.static::usesCurrencySymbol().ltrim($amount, '-');
+        $locale = $locale ?? config('cashier.currency_locale');
+
+        $numberFormatter = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+
+        if (isset($options['min_fraction_digits'])) {
+            $numberFormatter->setAttribute(NumberFormatter::MIN_FRACTION_DIGITS, $options['min_fraction_digits']);
         }
 
-        return static::usesCurrencySymbol().$amount;
+        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, new ISOCurrencies());
+
+        return $moneyFormatter->format($money);
+    }
+
+    /**
+     * Configure Cashier to not register its migrations.
+     *
+     * @return static
+     */
+    public static function ignoreMigrations()
+    {
+        static::$runsMigrations = false;
+
+        return new static;
+    }
+
+    /**
+     * Configure Cashier to not register its routes.
+     *
+     * @return static
+     */
+    public static function ignoreRoutes()
+    {
+        static::$registersRoutes = false;
+
+        return new static;
+    }
+
+    /**
+     * Configure Cashier to maintain past due subscriptions as active.
+     *
+     * @return static
+     */
+    public static function keepPastDueSubscriptionsActive()
+    {
+        static::$deactivatePastDue = false;
+
+        return new static;
+    }
+
+    /**
+     * Configure Cashier to automatically calculate taxes using Stripe Tax.
+     *
+     * @return static
+     */
+    public static function calculateTaxes()
+    {
+        static::$calculatesTaxes = true;
+
+        return new static;
+    }
+
+    /**
+     * Set the customer model class name.
+     *
+     * @param  string  $customerModel
+     * @return void
+     */
+    public static function useCustomerModel($customerModel)
+    {
+        static::$customerModel = $customerModel;
+    }
+
+    /**
+     * Set the subscription model class name.
+     *
+     * @param  string  $subscriptionModel
+     * @return void
+     */
+    public static function useSubscriptionModel($subscriptionModel)
+    {
+        static::$subscriptionModel = $subscriptionModel;
+    }
+
+    /**
+     * Set the subscription item model class name.
+     *
+     * @param  string  $subscriptionItemModel
+     * @return void
+     */
+    public static function useSubscriptionItemModel($subscriptionItemModel)
+    {
+        static::$subscriptionItemModel = $subscriptionItemModel;
     }
 }

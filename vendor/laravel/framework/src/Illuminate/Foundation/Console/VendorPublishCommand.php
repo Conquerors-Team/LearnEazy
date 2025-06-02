@@ -2,13 +2,14 @@
 
 namespace Illuminate\Foundation\Console;
 
-use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
-use League\Flysystem\MountManager;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Events\VendorTagPublished;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use League\Flysystem\Filesystem as Flysystem;
 use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Filesystem as Flysystem;
+use League\Flysystem\MountManager;
 
 class VendorPublishCommand extends Command
 {
@@ -38,10 +39,10 @@ class VendorPublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'vendor:publish {--force : Overwrite any existing files.}
-                    {--all : Publish assets for all service providers without prompt.}
-                    {--provider= : The service provider that has assets you want to publish.}
-                    {--tag=* : One or many tags that have assets you want to publish.}';
+    protected $signature = 'vendor:publish {--force : Overwrite any existing files}
+                    {--all : Publish assets for all service providers without prompt}
+                    {--provider= : The service provider that has assets you want to publish}
+                    {--tag=* : One or many tags that have assets you want to publish}';
 
     /**
      * The console command description.
@@ -90,7 +91,7 @@ class VendorPublishCommand extends Command
             return;
         }
 
-        list($this->provider, $this->tags) = [
+        [$this->provider, $this->tags] = [
             $this->option('provider'), (array) $this->option('tag'),
         ];
 
@@ -135,16 +136,16 @@ class VendorPublishCommand extends Command
     /**
      * Parse the answer that was given via the prompt.
      *
-     * @param string $choice
+     * @param  string  $choice
      * @return void
      */
     protected function parseChoice($choice)
     {
-        list($type, $value) = explode(': ', strip_tags($choice));
+        [$type, $value] = explode(': ', strip_tags($choice));
 
-        if ($type == 'Provider') {
+        if ($type === 'Provider') {
             $this->provider = $value;
-        } elseif ($type == 'Tag') {
+        } elseif ($type === 'Tag') {
             $this->tags = [$value];
         }
     }
@@ -157,8 +158,20 @@ class VendorPublishCommand extends Command
      */
     protected function publishTag($tag)
     {
-        foreach ($this->pathsToPublish($tag) as $from => $to) {
+        $published = false;
+
+        $pathsToPublish = $this->pathsToPublish($tag);
+
+        foreach ($pathsToPublish as $from => $to) {
             $this->publishItem($from, $to);
+
+            $published = true;
+        }
+
+        if ($published === false) {
+            $this->comment('No publishable resources for tag ['.$tag.'].');
+        } else {
+            $this->laravel['events']->dispatch(new VendorTagPublished($tag, $pathsToPublish));
         }
     }
 

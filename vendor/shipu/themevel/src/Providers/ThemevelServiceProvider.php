@@ -18,8 +18,9 @@ class ThemevelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!File::exists(public_path('Themes')) && config('theme.symlink') && File::exists(config('theme.theme_path'))) {
-            App::make('files')->link(config('theme.theme_path'), public_path('Themes'));
+        $symlink = config('theme.symlink_path', public_path('Themes'));
+        if (config('theme.symlink') && File::exists(config('theme.theme_path')) && !is_link($symlink)) {
+            App::make('files')->link(config('theme.theme_path'), $symlink);
         }
     }
 
@@ -92,7 +93,7 @@ class ThemevelServiceProvider extends ServiceProvider
             $configPath => config_path('theme.php'),
         ]);
 
-        $this->mergeConfigFrom($configPath, 'themevel');
+        $this->mergeConfigFrom($configPath, 'theme');
     }
 
     /**

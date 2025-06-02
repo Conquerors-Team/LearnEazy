@@ -6,11 +6,10 @@ return [
     |--------------------------------------------------------------------------
     | Indipay Service Config
     |--------------------------------------------------------------------------
-    |   gateway = CCAvenue / PayUMoney / EBS / Citrus / InstaMojo
-    |   view    = File
+    |   gateway = CCAvenue / PayUMoney / EBS / Citrus / InstaMojo / ZapakPay / Paytm / Mocker
     */
 
-    'gateway' => 'InstaMojo',                // Replace with the name of default gateway you want to use
+    'gateway' => 'Mocker',                // Replace with the name of default gateway you want to use
 
     'testMode'  => true,                   // True for Testing the Gateway [For production false]
 
@@ -60,7 +59,27 @@ return [
         'redirectUrl' => env('INDIPAY_REDIRECT_URL', 'indipay/response'),
     ],
 
-    // Add your response link here. In Laravel 5.2 you may use the api middleware instead of this.
+    'mocker' =>  [
+        'service' => env('MOCKER_SERVICE','default'),
+        'redirect_url' => env('MOCKER_REDIRECT_URL', 'indipay/response'),
+    ],
+
+    'zapakpay' =>  [
+        'merchantIdentifier' => env('ZAPAKPAY_MERCHANT_ID',''),
+        'secret' => env('ZAPAKPAY_SECRET', ''),
+        'returnUrl' => env('ZAPAKPAY_RETURN_URL', 'indipay/response'),
+    ],
+
+    'paytm' =>  [
+        'MERCHANT_KEY' => env('PAYTM_MERCHANT_KEY',''),
+        'MID' => env('PAYTM_MID', ''),
+        'CHANNEL_ID' => env('PAYTM_CHANNEL_ID', 'WEB'),
+        'WEBSITE' => env('PAYTM_WEBSITE', 'WEBSTAGING'),
+        'INDUSTRY_TYPE_ID' => env('PAYTM_INDUSTRY_TYPE_ID', 'Retail'),
+        'REDIRECT_URL' => env('PAYTM_REDIRECT_URL', 'indipay/response'),
+    ],
+
+    // Add your response link here. In Laravel 5.2+ you may use the VerifyCsrf Middleware.
     'remove_csrf_check' => [
         'indipay/response'
     ],

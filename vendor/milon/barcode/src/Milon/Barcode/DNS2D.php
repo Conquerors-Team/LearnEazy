@@ -92,7 +92,7 @@ class DNS2D {
      * @return string SVG code.
      * @protected
      */
-    protected function getBarcodeSVG($code, $type, $w = 3, $h = 3, $color = 'black') {
+    public function getBarcodeSVG($code, $type, $w = 3, $h = 3, $color = 'black') {
         if (!$this->store_path) {
             $this->setStorPath(app('config')->get("barcode.store_path"));
         }
@@ -103,7 +103,6 @@ class DNS2D {
         $svg = '<' . '?' . 'xml version="1.0" standalone="no"' . '?' . '>' . "\n";
         $svg .= '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' . "\n";
         $svg .= '<svg width="' . round(($this->barcode_array['num_cols'] * $w), 3) . '" height="' . round(($this->barcode_array['num_rows'] * $h), 3) . '" version="1.1" xmlns="http://www.w3.org/2000/svg">' . "\n";
-        $svg .= "\t" . '<desc>' . strtr($this->barcode_array['code'], $repstr) . '</desc>' . "\n";
         $svg .= "\t" . '<g id="elements" fill="' . $color . '" stroke="none">' . "\n";
         // print barcode elements
         $y = 0;
@@ -139,7 +138,7 @@ class DNS2D {
      * @return string HTML code.
      * @protected
      */
-    protected function getBarcodeHTML($code, $type, $w = 10, $h = 10, $color = 'black') {
+    public function getBarcodeHTML($code, $type, $w = 10, $h = 10, $color = 'black') {
         if (!$this->store_path) {
             $this->setStorPath(app('config')->get("barcode.store_path"));
         }
@@ -176,10 +175,10 @@ class DNS2D {
      * @param $w (int) Width of a single rectangle element in pixels.
      * @param $h (int) Height of a single rectangle element in pixels.
      * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
-     * @return path or false in case of error.
+     * @return string|false path or false in case of error.
      * @protected
      */
-    protected function getBarcodePNG($code, $type, $w = 3, $h = 3, $color = array(0, 0, 0)) {
+    public function getBarcodePNG($code, $type, $w = 3, $h = 3, $color = array(0, 0, 0)) {
         if (!$this->store_path) {
             $this->setStorPath(app('config')->get("barcode.store_path"));
         }
@@ -216,9 +215,9 @@ class DNS2D {
                 if ($this->barcode_array['bcode'][$r][$c] == 1) {
                     // draw a single barcode cell
                     if ($imagick) {
-                        $bar->rectangle($x, $y, ($x + $w), ($y + $h));
+                        $bar->rectangle($x, $y, ($x + ($w-1)), ($y + ($h-1)));
                     } else {
-                        imagefilledrectangle($png, $x, $y, ($x + $w), ($y + $h), $fgcol);
+                        imagefilledrectangle($png, $x, $y, ($x + ($w-1)), ($y + ($h-1)), $fgcol);
                     }
                 }
                 $x += $w;
@@ -248,11 +247,13 @@ class DNS2D {
      * @param $w (int) Width of a single bar element in pixels.
      * @param $h (int) Height of a single bar element in pixels.
      * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
-     * @return url or false in case of error.
+     * @return string|false url or false in case of error.
      * @protected
      */
     protected function getBarcodePNGUri($code, $type, $w = 3, $h = 3, $color = array(0, 0, 0)) {
-        return url($this->getBarcodePNGPath($code, $type, $w, $h, $color));
+        $path = $this->getBarcodePNGPath($code, $type, $w, $h, $color);
+        // Replace backslash (Windows) with forward slashes, to make it compatible with url().
+        return url(str_replace('\\', '/', $path));
     }
 
     /**
@@ -266,7 +267,7 @@ class DNS2D {
      * @param $w (int) Width of a single rectangle element in pixels.
      * @param $h (int) Height of a single rectangle element in pixels.
      * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
-     * @return path of image whice created
+     * @return string|false path of image which was created or false in case of error
      * @protected
      */
     protected function getBarcodePNGPath($code, $type, $w = 3, $h = 3, $color = array(0, 0, 0)) {
@@ -315,7 +316,7 @@ class DNS2D {
             }
             $y += $h;
         }
-        $file_name= Str::slug($code);
+        $file_name= Str::slug($code.$type);
         $save_file = $this->checkfile($this->store_path . $file_name . ".png");
 
         if ($imagick) {
@@ -404,8 +405,8 @@ class DNS2D {
         return $path;
     }
 
-    protected function setStorPath($path) {
-        $this->store_path = $path;
+    public function setStorPath($path) {
+        $this->store_path = rtrim((string) $path, '/' . DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         return $this;
     }
 

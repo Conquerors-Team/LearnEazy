@@ -6,6 +6,8 @@ use Softon\Indipay\Gateways\EBSGateway;
 use Softon\Indipay\Gateways\InstaMojoGateway;
 use Softon\Indipay\Gateways\PaymentGatewayInterface;
 use Softon\Indipay\Gateways\PayUMoneyGateway;
+use Softon\Indipay\Gateways\MockerGateway;
+use Softon\Indipay\Gateways\ZapakPayGateway;
 
 class Indipay {
 
@@ -36,6 +38,11 @@ class Indipay {
         return $this->gateway->request($parameters);
     }
 
+    public function verify($parameters = array())
+    {
+        return $this->gateway->verify($parameters);
+    }
+
     public function process($order)
     {
         return $order->send();
@@ -43,26 +50,35 @@ class Indipay {
 
     public function gateway($name)
     {
+        $name = strtolower($name);
         switch($name)
         {
-            case 'CCAvenue':
+            case 'ccavenue':
                 $this->gateway = new CCAvenueGateway();
                 break;
 
-            case 'PayUMoney':
+            case 'payumoney':
                 $this->gateway = new PayUMoneyGateway();
                 break;
 
-            case 'EBS':
+            case 'ebs':
                 $this->gateway = new EBSGateway();
                 break;
 
-            case 'Citrus':
+            case 'citrus':
                 $this->gateway = new CitrusGateway();
                 break;
 
-            case 'InstaMojo':
+            case 'instamojo':
                 $this->gateway = new InstaMojoGateway();
+                break;
+
+            case 'mocker':
+                $this->gateway = new MockerGateway();
+                break;
+
+            case 'zapakpay':
+                $this->gateway = new ZapakPayGateway();
                 break;
 
         }

@@ -25,42 +25,39 @@ class FileFormField extends FormField
      *
      * @throws \InvalidArgumentException When error code doesn't exist
      */
-    public function setErrorCode($error)
+    public function setErrorCode(int $error): void
     {
-        $codes = array(UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE, UPLOAD_ERR_PARTIAL, UPLOAD_ERR_NO_FILE, UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE, UPLOAD_ERR_EXTENSION);
-        if (!in_array($error, $codes)) {
-            throw new \InvalidArgumentException(sprintf('The error code %s is not valid.', $error));
+        $codes = [\UPLOAD_ERR_INI_SIZE, \UPLOAD_ERR_FORM_SIZE, \UPLOAD_ERR_PARTIAL, \UPLOAD_ERR_NO_FILE, \UPLOAD_ERR_NO_TMP_DIR, \UPLOAD_ERR_CANT_WRITE, \UPLOAD_ERR_EXTENSION];
+        if (!\in_array($error, $codes)) {
+            throw new \InvalidArgumentException(\sprintf('The error code "%s" is not valid.', $error));
         }
 
-        $this->value = array('name' => '', 'type' => '', 'tmp_name' => '', 'error' => $error, 'size' => 0);
+        $this->value = ['name' => '', 'type' => '', 'tmp_name' => '', 'error' => $error, 'size' => 0];
     }
 
     /**
      * Sets the value of the field.
-     *
-     * @param string $value The value of the field
      */
-    public function upload($value)
+    public function upload(?string $value): void
     {
         $this->setValue($value);
     }
 
     /**
      * Sets the value of the field.
-     *
-     * @param string $value The value of the field
      */
-    public function setValue($value)
+    public function setValue(?string $value): void
     {
         if (null !== $value && is_readable($value)) {
-            $error = UPLOAD_ERR_OK;
+            $error = \UPLOAD_ERR_OK;
             $size = filesize($value);
             $info = pathinfo($value);
             $name = $info['basename'];
 
             // copy to a tmp location
-            $tmp = sys_get_temp_dir().'/'.sha1(uniqid(mt_rand(), true));
-            if (array_key_exists('extension', $info)) {
+            $tmp = tempnam(sys_get_temp_dir(), $name);
+            if (\array_key_exists('extension', $info)) {
+                unlink($tmp);
                 $tmp .= '.'.$info['extension'];
             }
             if (is_file($tmp)) {
@@ -69,21 +66,19 @@ class FileFormField extends FormField
             copy($value, $tmp);
             $value = $tmp;
         } else {
-            $error = UPLOAD_ERR_NO_FILE;
+            $error = \UPLOAD_ERR_NO_FILE;
             $size = 0;
             $name = '';
             $value = '';
         }
 
-        $this->value = array('name' => $name, 'type' => '', 'tmp_name' => $value, 'error' => $error, 'size' => $size);
+        $this->value = ['name' => $name, 'type' => '', 'tmp_name' => $value, 'error' => $error, 'size' => $size];
     }
 
     /**
      * Sets path to the file as string for simulating HTTP request.
-     *
-     * @param string $path The path to the file
      */
-    public function setFilePath($path)
+    public function setFilePath(string $path): void
     {
         parent::setValue($path);
     }
@@ -93,14 +88,14 @@ class FileFormField extends FormField
      *
      * @throws \LogicException When node type is incorrect
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         if ('input' !== $this->node->nodeName) {
-            throw new \LogicException(sprintf('A FileFormField can only be created from an input tag (%s given).', $this->node->nodeName));
+            throw new \LogicException(\sprintf('A FileFormField can only be created from an input tag (%s given).', $this->node->nodeName));
         }
 
         if ('file' !== strtolower($this->node->getAttribute('type'))) {
-            throw new \LogicException(sprintf('A FileFormField can only be created from an input tag with a type of file (given type is %s).', $this->node->getAttribute('type')));
+            throw new \LogicException(\sprintf('A FileFormField can only be created from an input tag with a type of file (given type is "%s").', $this->node->getAttribute('type')));
         }
 
         $this->setValue(null);

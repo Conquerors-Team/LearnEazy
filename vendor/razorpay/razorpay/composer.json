@@ -1,12 +1,7 @@
 {
     "name": "razorpay/razorpay",
     "description": "Razorpay PHP Client Library",
-    "keywords": [
-        "razorpay",
-        "api",
-        "php",
-        "client"
-    ],
+    "keywords": ["razorpay", "api", "php", "client"],
     "authors": [
         {
             "name": "Abhay Rana",
@@ -28,18 +23,19 @@
     "homepage": "https://docs.razorpay.com",
     "license": "MIT",
     "require": {
-        "php": ">=5.4.0",
-        "rmccue/requests": "v1.6.1",
+        "php": ">=7.3",
+        "rmccue/requests": "^2.0",
         "ext-json": "*"
     },
     "require-dev": {
         "raveren/kint": "1.*",
-        "phpunit/phpunit": "^4.8.0"
+        "phpunit/phpunit": "^9"
     },
     "autoload": {
         "psr-4": {
             "Razorpay\\Api\\": "src/",
             "Razorpay\\Tests\\": "tests/"
-        }
+        },
+        "files" : ["Deprecated.php"]
     }
 }

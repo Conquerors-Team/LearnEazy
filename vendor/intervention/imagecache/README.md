@@ -23,19 +23,18 @@ The Image Cache class supports Laravel integration. Best practice to use the lib
 Open your Laravel config file `config/app.php` and add the following lines.
 
 In the `$providers` array add the service providers for this package.
-    
+
     'providers' => array(
-        
+
         [...]
 
         'Intervention\Image\ImageServiceProvider'
     ),
-    
 
 Add the facade of this package to the `$aliases` array.
 
     'aliases' => array(
-        
+
         [...]
 
         'Image' => 'Intervention\Image\Facades\Image'
@@ -62,6 +61,19 @@ Determine a lifetime in minutes for the cache file as an optional second paramet
 $img = Image::cache(function($image) {
    return $image->make('public/foo.jpg')->resize(300, 200)->greyscale();
 }, 10, true);
+```
+
+## Server configuration
+
+If you have Static Resources caching enabled on Nginx please add your cache directory ({route} in config) to static resources handler exclusion:
+
+```
+# where "cache" is {route}
+location ~* ^\/(?!cache).*\.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc|webp|woff|woff2)$ {
+  expires max;
+  access_log off;
+  add_header Cache-Control "public";
+}
 ```
 
 ## License

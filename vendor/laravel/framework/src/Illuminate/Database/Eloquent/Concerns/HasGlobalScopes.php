@@ -3,9 +3,9 @@
 namespace Illuminate\Database\Eloquent\Concerns;
 
 use Closure;
+use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use Illuminate\Database\Eloquent\Scope;
 
 trait HasGlobalScopes
 {
@@ -18,7 +18,7 @@ trait HasGlobalScopes
      *
      * @throws \InvalidArgumentException
      */
-    public static function addGlobalScope($scope, Closure $implementation = null)
+    public static function addGlobalScope($scope, ?Closure $implementation = null)
     {
         if (is_string($scope) && ! is_null($implementation)) {
             return static::$globalScopes[static::class][$scope] = $implementation;

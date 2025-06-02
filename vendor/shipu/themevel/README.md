@@ -1,13 +1,15 @@
 # Laravel-Themevel
+[![Latest Stable Version](https://api.travis-ci.org/shipu/themevel.svg?branch=master)](https://travis-ci.org/shipu/themevel)
 [![Latest Stable Version](https://poser.pugx.org/shipu/themevel/v/stable)](https://packagist.org/packages/shipu/themevel)
 [![Latest Unstable Version](https://poser.pugx.org/shipu/themevel/v/unstable)](https://packagist.org/packages/shipu/themevel)
 [![License](https://poser.pugx.org/shipu/themevel/license)](https://packagist.org/packages/shipu/themevel)
 
-Themevel is a Laravel 5 theme and asset management package. You can easily integrate this package with any Laravel based project.
+Themevel is a Laravel theme and asset management package. You can easily integrate this package with any Laravel based project.
 
 ### Features
 
-* Custom theme location
+* Custom theme path
+* Override theme
 * Parent theme support
 * Unlimited Parent view finding
 * Asset Finding
@@ -15,6 +17,9 @@ Themevel is a Laravel 5 theme and asset management package. You can easily integ
 * Multiple theme config extension
 * Multiple theme changelog extension
 * Artisan console commands
+* Theme enable only Specific route via middleware
+* Almost everything customizable 
+* Also Laravel 5.5 to Laravel 10 Supported
 
 ## Installation
 
@@ -106,6 +111,7 @@ php artisan theme:list
             - welcome.blade.php
         - changelog.yml        
         - theme.json
+     - themetwo/   
 ```
 You can change `theme.json` and `changelog.yml` name from `config/theme.php`
 
@@ -132,6 +138,15 @@ For example:
 Then run `theme:create` command which describe above.
 
 Now Please see the API List Doc.
+
+## View Finding Flow:
+
+Suppose you want find `welcome.blade.php` 
+```
+ - At first check your active theme 
+ - If `welcome.blade.php not found in active theme then search parent recursively
+ - If `welcome.blade.php not found in parents theme then search laravel default view folder resources/views
+ ```
 
 ## API List
 - [set](https://github.com/shipu/themevel#set)
@@ -246,12 +261,19 @@ Specific theme assets:
 ```
 ### lang
 
-The `lang` method translates the given language line using your current **theme** [localization files](https://laravel.com/docs/5.4/localization):
+The `lang` method translates the given language line using your current **theme** [localization files](https://laravel.com/docs/master/localization):
 ```php
 echo Theme::lang('content.title'); // return string
 // or
 echo lang('content.title'); // return string
 ```
+also support
+```php
+echo Theme::lang('content.title', [your replace array], 'your desire locale'); // return string
+// or
+echo lang('content.title', [your replace array], 'your desire locale'); // return string
+```
+
 If you want to bind specific theme assets:
 ```php
 echo Theme::lang('your_theme_name::your_asset_path'); // return string
@@ -311,6 +333,17 @@ protected $middlewareGroups = [
 ```
 Theme set from `config/theme.php` .
 
+Then in your controller you can call your view as you would normally do:
+
+```php
+
+return view('home');  // This will load the home.blade.php from the the folder you set in your `config/theme.php`
+
+```
+
+
+
+
 ### Dependency Injection
 You can also inject theme instance using ThemeContract, eg:
 
@@ -324,6 +357,14 @@ public function __construct(ThemeContract $theme)
     $this->theme = $theme
 }
 ```
+## Troubleshooting
+
+Clear config after runing `vendor publish` (see [Config section](#configuration)) to save issues related to config caching by running:
+
+`php artisan config:cache`
+
+`php artisan config:clear`
+
 
 ## Credits
 

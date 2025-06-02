@@ -2,12 +2,15 @@
 
 namespace Illuminate\Foundation\Console;
 
-use Illuminate\Support\Str;
+use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 class ListenerMakeCommand extends GeneratorCommand
 {
+    use CreatesMatchingTest;
+
     /**
      * The console command name.
      *
@@ -44,15 +47,15 @@ class ListenerMakeCommand extends GeneratorCommand
             'Illuminate',
             '\\',
         ])) {
-            $event = $this->laravel->getNamespace().'Events\\'.$event;
+            $event = $this->laravel->getNamespace().'Events\\'.str_replace('/', '\\', $event);
         }
 
         $stub = str_replace(
-            'DummyEvent', class_basename($event), parent::buildClass($name)
+            ['DummyEvent', '{{ event }}'], class_basename($event), parent::buildClass($name)
         );
 
         return str_replace(
-            'DummyFullEvent', $event, $stub
+            ['DummyFullEvent', '{{ eventNamespace }}'], trim($event, '\\'), $stub
         );
     }
 
@@ -67,11 +70,11 @@ class ListenerMakeCommand extends GeneratorCommand
             return $this->option('event')
                         ? __DIR__.'/stubs/listener-queued.stub'
                         : __DIR__.'/stubs/listener-queued-duck.stub';
-        } else {
-            return $this->option('event')
-                        ? __DIR__.'/stubs/listener.stub'
-                        : __DIR__.'/stubs/listener-duck.stub';
         }
+
+        return $this->option('event')
+                    ? __DIR__.'/stubs/listener.stub'
+                    : __DIR__.'/stubs/listener-duck.stub';
     }
 
     /**
@@ -104,9 +107,9 @@ class ListenerMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['event', 'e', InputOption::VALUE_OPTIONAL, 'The event class being listened for.'],
+            ['event', 'e', InputOption::VALUE_OPTIONAL, 'The event class being listened for'],
 
-            ['queued', null, InputOption::VALUE_NONE, 'Indicates the event listener should be queued.'],
+            ['queued', null, InputOption::VALUE_NONE, 'Indicates the event listener should be queued'],
         ];
     }
 }

@@ -3,11 +3,11 @@
 namespace Laravel\Socialite\Two;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use GuzzleHttp\ClientInterface;
-use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Contracts\Provider as ProviderContract;
 
 abstract class AbstractProvider implements ProviderContract
@@ -83,11 +83,25 @@ abstract class AbstractProvider implements ProviderContract
     protected $stateless = false;
 
     /**
+     * Indicates if PKCE should be used.
+     *
+     * @var bool
+     */
+    protected $usesPKCE = false;
+
+    /**
      * The custom Guzzle configuration options.
      *
      * @var array
      */
     protected $guzzle = [];
+
+    /**
+     * The cached user instance.
+     *
+     * @var \Laravel\Socialite\Two\User|null
+     */
+    protected $user;
 
     /**
      * Create a new provider instance.
@@ -142,7 +156,7 @@ abstract class AbstractProvider implements ProviderContract
     /**
      * Redirect the user of the application to the provider's authentication screen.
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function redirect()
     {
@@ -152,11 +166,15 @@ abstract class AbstractProvider implements ProviderContract
             $this->request->session()->put('state', $state = $this->getState());
         }
 
+        if ($this->usesPKCE()) {
+            $this->request->session()->put('code_verifier', $this->getCodeVerifier());
+        }
+
         return new RedirectResponse($this->getAuthUrl($state));
     }
 
     /**
-     * Get the authentication URL for the provider.
+     * Build the authentication URL for the provider from the given base URL.
      *
      * @param  string  $url
      * @param  string  $state
@@ -176,13 +194,19 @@ abstract class AbstractProvider implements ProviderContract
     protected function getCodeFields($state = null)
     {
         $fields = [
-            'client_id' => $this->clientId, 'redirect_uri' => $this->redirectUrl,
+            'client_id' => $this->clientId,
+            'redirect_uri' => $this->redirectUrl,
             'scope' => $this->formatScopes($this->getScopes(), $this->scopeSeparator),
             'response_type' => 'code',
         ];
 
         if ($this->usesState()) {
             $fields['state'] = $state;
+        }
+
+        if ($this->usesPKCE()) {
+            $fields['code_challenge'] = $this->getCodeChallenge();
+            $fields['code_challenge_method'] = $this->getCodeChallengeMethod();
         }
 
         return array_merge($fields, $this->parameters);
@@ -205,19 +229,36 @@ abstract class AbstractProvider implements ProviderContract
      */
     public function user()
     {
+        if ($this->user) {
+            return $this->user;
+        }
+
         if ($this->hasInvalidState()) {
             throw new InvalidStateException;
         }
 
         $response = $this->getAccessTokenResponse($this->getCode());
 
-        $user = $this->mapUserToObject($this->getUserByToken(
-            $token = Arr::get($response, 'access_token')
-        ));
+        $user = $this->getUserByToken(Arr::get($response, 'access_token'));
 
-        return $user->setToken($token)
-                    ->setRefreshToken(Arr::get($response, 'refresh_token'))
-                    ->setExpiresIn(Arr::get($response, 'expires_in'));
+        return $this->userInstance($response, $user);
+    }
+
+    /**
+     * Create a user instance from the given data.
+     *
+     * @param  array  $response
+     * @param  array  $user
+     * @return \Laravel\Socialite\Two\User
+     */
+    protected function userInstance(array $response, array $user)
+    {
+        $this->user = $this->mapUserToObject($user);
+
+        return $this->user->setToken(Arr::get($response, 'access_token'))
+            ->setRefreshToken(Arr::get($response, 'refresh_token'))
+            ->setExpiresIn(Arr::get($response, 'expires_in'))
+            ->setApprovedScopes(explode($this->scopeSeparator, Arr::get($response, 'scope', '')));
     }
 
     /**
@@ -246,7 +287,7 @@ abstract class AbstractProvider implements ProviderContract
 
         $state = $this->request->session()->pull('state');
 
-        return ! (strlen($state) > 0 && $this->request->input('state') === $state);
+        return empty($state) || $this->request->input('state') !== $state;
     }
 
     /**
@@ -257,14 +298,23 @@ abstract class AbstractProvider implements ProviderContract
      */
     public function getAccessTokenResponse($code)
     {
-        $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'form_params' : 'body';
-
         $response = $this->getHttpClient()->post($this->getTokenUrl(), [
-            'headers' => ['Accept' => 'application/json'],
-            $postKey => $this->getTokenFields($code),
+            RequestOptions::HEADERS => $this->getTokenHeaders($code),
+            RequestOptions::FORM_PARAMS => $this->getTokenFields($code),
         ]);
 
         return json_decode($response->getBody(), true);
+    }
+
+    /**
+     * Get the headers for the access token request.
+     *
+     * @param  string  $code
+     * @return array
+     */
+    protected function getTokenHeaders($code)
+    {
+        return ['Accept' => 'application/json'];
     }
 
     /**
@@ -275,10 +325,56 @@ abstract class AbstractProvider implements ProviderContract
      */
     protected function getTokenFields($code)
     {
-        return [
-            'client_id' => $this->clientId, 'client_secret' => $this->clientSecret,
-            'code' => $code, 'redirect_uri' => $this->redirectUrl,
+        $fields = [
+            'grant_type' => 'authorization_code',
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'code' => $code,
+            'redirect_uri' => $this->redirectUrl,
         ];
+
+        if ($this->usesPKCE()) {
+            $fields['code_verifier'] = $this->request->session()->pull('code_verifier');
+        }
+
+        return array_merge($fields, $this->parameters);
+    }
+
+    /**
+     * Refresh a user's access token with a refresh token.
+     *
+     * @param  string  $refreshToken
+     * @return \Laravel\Socialite\Two\Token
+     */
+    public function refreshToken($refreshToken)
+    {
+        $response = $this->getRefreshTokenResponse($refreshToken);
+
+        return new Token(
+            Arr::get($response, 'access_token'),
+            Arr::get($response, 'refresh_token'),
+            Arr::get($response, 'expires_in'),
+            explode($this->scopeSeparator, Arr::get($response, 'scope', ''))
+        );
+    }
+
+    /**
+     * Get the refresh token response for the given refresh token.
+     *
+     * @param  string  $refreshToken
+     * @return array
+     */
+    protected function getRefreshTokenResponse($refreshToken)
+    {
+        return json_decode($this->getHttpClient()->post($this->getTokenUrl(), [
+            RequestOptions::HEADERS => ['Accept' => 'application/json'],
+            RequestOptions::FORM_PARAMS => [
+                'grant_type' => 'refresh_token',
+                'refresh_token' => $refreshToken,
+                'client_id' => $this->clientId,
+                'client_secret' => $this->clientSecret,
+            ],
+        ])->getBody(), true);
     }
 
     /**
@@ -299,7 +395,7 @@ abstract class AbstractProvider implements ProviderContract
      */
     public function scopes($scopes)
     {
-        $this->scopes = array_unique(array_merge($this->scopes, (array) $scopes));
+        $this->scopes = array_values(array_unique(array_merge($this->scopes, (array) $scopes)));
 
         return $this;
     }
@@ -312,7 +408,7 @@ abstract class AbstractProvider implements ProviderContract
      */
     public function setScopes($scopes)
     {
-        $this->scopes = array_unique((array) $scopes);
+        $this->scopes = array_values(array_unique((array) $scopes));
 
         return $this;
     }
@@ -420,6 +516,60 @@ abstract class AbstractProvider implements ProviderContract
     protected function getState()
     {
         return Str::random(40);
+    }
+
+    /**
+     * Determine if the provider uses PKCE.
+     *
+     * @return bool
+     */
+    protected function usesPKCE()
+    {
+        return $this->usesPKCE;
+    }
+
+    /**
+     * Enables PKCE for the provider.
+     *
+     * @return $this
+     */
+    public function enablePKCE()
+    {
+        $this->usesPKCE = true;
+
+        return $this;
+    }
+
+    /**
+     * Generates a random string of the right length for the PKCE code verifier.
+     *
+     * @return string
+     */
+    protected function getCodeVerifier()
+    {
+        return Str::random(96);
+    }
+
+    /**
+     * Generates the PKCE code challenge based on the PKCE code verifier in the session.
+     *
+     * @return string
+     */
+    protected function getCodeChallenge()
+    {
+        $hashed = hash('sha256', $this->request->session()->get('code_verifier'), true);
+
+        return rtrim(strtr(base64_encode($hashed), '+/', '-_'), '=');
+    }
+
+    /**
+     * Returns the hash method used to calculate the PKCE code challenge.
+     *
+     * @return string
+     */
+    protected function getCodeChallengeMethod()
+    {
+        return 'S256';
     }
 
     /**
