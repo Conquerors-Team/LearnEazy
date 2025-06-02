@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Http\Controllers\Traits\HasSlug;
 
 class StudentPaidContent extends Model
 {
+
+    use HasSlug;
     protected $table = 'student_paid_contents';
 
     protected  $examSettings;

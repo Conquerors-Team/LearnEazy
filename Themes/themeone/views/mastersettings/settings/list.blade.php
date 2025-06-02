@@ -49,7 +49,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>'mastersettings.dataTable'))
+ @include('common.datatables', array('route'=>'mastersettings.dataTable','table_columns' => ['title','key','description','action']))
  {{-- @include('common.deletescript', array('route'=>'/mastersettings/topics/delete/')) --}}
 
 @stop
