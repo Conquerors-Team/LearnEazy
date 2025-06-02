@@ -1,0 +1,6 @@
+ID,"First Name","Last Name",Email,"Profile Image",Type,"Creation Time",Birthdate,City,Company,Country,Facebook,Language,LinkedIn,Phone,Twitter,Website
+1,Admin,A,adiyya@conquerorstech.net,http://phpstack-418717-1345355.cloudwaysapps.com/media/user.svg,admin,"2020-06-19 03:57:19",,,,,,,,,,
+5,dept1user1,test,deptuser1@gmail.com,http://phpstack-418717-1345355.cloudwaysapps.com/media/user.svg,agent,"2020-06-20 09:19:10",,,,,,,,,,
+6,dept1user2,test,dept1user2@gmail.com,http://phpstack-418717-1345355.cloudwaysapps.com/media/user.svg,agent,"2020-06-20 09:20:14",,,,,,,,,,
+3,user1,test,user1@gmail.com,http://phpstack-418717-1345355.cloudwaysapps.com/media/user.svg,admin,"2020-06-19 08:55:01",,,,,,,,,,
+4,user2,test2,user2@gmail.com,http://phpstack-418717-1345355.cloudwaysapps.com/media/user.svg,user,"2020-06-19 08:55:49",,,,,,,,,,
