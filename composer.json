@@ -18,6 +18,7 @@
         "jenssegers/agent": "^2.6",
         "laravel/cashier": "^13.17",
         "laravel/framework": "^8.85.0",
+        "laravel/helpers": "^1.7",
         "laravel/nexmo-notification-channel": "*",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.21",
