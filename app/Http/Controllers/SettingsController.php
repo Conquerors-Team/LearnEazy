@@ -85,6 +85,7 @@ class SettingsController extends Controller
         ->removeColumn('id')
         ->removeColumn('slug')
         ->removeColumn('updated_at')
+        ->rawColumns(['title','action'])
         ->make();
     }
 

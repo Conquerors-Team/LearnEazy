@@ -64,7 +64,7 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=>URL_PAID_CONTENT_AJAXLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_PAID_CONTENT_AJAXLIST, 'route_as_url' => TRUE,'table_columns' => ['title','cost','duration','duration_type','action']))
  @include('common.deletescript', array('route'=>URL_EXAM_SERIES_DELETE))
 
 @stop

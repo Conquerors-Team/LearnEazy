@@ -45,5 +45,5 @@
 @endsection
 
 @section('footer_scripts')
- @include('common.datatables', array('route' =>'user_actions.dataTable'))
+ @include('common.datatables', array('route' =>'user_actions.dataTable','table_columns' => ['action','action_model','action_id','created_at','user_id']))
 @stop
