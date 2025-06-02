@@ -56,7 +56,7 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=>'boards_chapters.dataTable'))
+ @include('common.datatables', array('route'=>'boards_chapters.dataTable','table_columns' => ['title','subject_id','status','action']))
  @include('common.deletescript', array('route'=>URL_BOARD_CHAPTERS_DELETE))
 
 @stop

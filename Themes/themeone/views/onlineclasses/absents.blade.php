@@ -57,6 +57,6 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=> route('class.absent.list', ['slug' => $onlinecalss->slug]), 'route_as_url' => 'TRUE'))
+ @include('common.datatables', array('route'=> route('class.absent.list', ['slug' => $onlinecalss->slug]), 'route_as_url' => 'TRUE','table_columns' => ['name','student_class_id','course_id']))
 
 @stop

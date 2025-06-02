@@ -261,6 +261,7 @@ class OnlineclassesController extends Controller
         ->removeColumn('student_class_id')
         ->removeColumn('live_quiz_id')
         ->removeColumn('class_duration')
+        ->rawColumns(['class_time','url','action'])
         ->make();
     }
 

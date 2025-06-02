@@ -69,7 +69,8 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=>URL_ADMIN_ONLINECLASSES_GETLIST, 'route_as_url' => TRUE, 'search_columns' => ['class_title' => request('class_title'), 'batch_id' => request('batch_id'), 'from_date' => request('from_date'), 'to_date' => request('to_date'), 'faculty_id' => request('faculty_id'), 'subject_id' => request('subject_id')]))
+ @include('common.datatables', array('route'=>URL_ADMIN_ONLINECLASSES_GETLIST, 'route_as_url' => TRUE, 'search_columns' => ['class_title' => request('class_title'), 'batch_id' => request('batch_id'), 'from_date' => request('from_date'), 'to_date' => request('to_date'), 'faculty_id' => request('faculty_id'), 'subject_id' => request('subject_id')],
+ 'table_columns' => ['valid_from', 'class_time', 'title', 'batch_id', 'subject_id', 'topic','url','action']))
  @include('common.deletescript', array('route'=>URL_ADMIN_ONLINECLASSES_DELETE))
 
 <script src="{{JS}}datepicker.min.js"></script>

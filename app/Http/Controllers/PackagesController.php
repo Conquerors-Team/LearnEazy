@@ -201,6 +201,7 @@ class PackagesController extends Controller
 
         ->removeColumn('id')
         ->removeColumn('institute_id')
+        ->rawColumns(['image','action'])
 
         ->make();
     }

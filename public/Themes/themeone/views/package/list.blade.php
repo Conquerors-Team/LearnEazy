@@ -61,7 +61,21 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=>URL_PACKAGES_GETDATA, 'route_as_url' => TRUE))
- @include('common.deletescript', array('route'=>URL_PACKAGES_DELETE))
+@include('common.datatables', array('route'=>URL_PACKAGES_GETDATA, 'route_as_url' => TRUE,
+'table_columns' => [
+    'title',
+    'cost',
+    'number_of_logins',
+    'package_for',
+    'trail_available',
+    'trail_period_days',
+    'is_default',
+    'duration_type',
+    'duration',
+    'image',
+    'action'
+]))
+
+@include('common.deletescript', array('route'=>URL_PACKAGES_DELETE))
 
 @stop

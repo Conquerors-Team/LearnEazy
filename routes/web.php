@@ -297,14 +297,15 @@ Route::prefix('questionbank/categories')->group(function() {
 // ==================
 // Boards Routes
 // ==================
-Route::prefix('exams/boards')->group(function() {
-    Route::get('/', [BoardsController::class, 'index']);
-    Route::get('add', [BoardsController::class, 'create']);
-    Route::post('add', [BoardsController::class, 'store']);
-    Route::get('edit/{slug}', [BoardsController::class, 'edit']);
-    Route::patch('edit/{slug}', [BoardsController::class, 'update']);
-    Route::delete('delete/{slug}', [BoardsController::class, 'delete']);
-    Route::get('getList', [BoardsController::class, 'getDatatable'])->name('boards.dataTable');
+Route::prefix('exams')->group(function () {
+    Route::get('boards', [BoardsController::class, 'index']);
+    Route::get('board/add', [BoardsController::class, 'create']);
+    Route::post('board/add', [BoardsController::class, 'store']);
+    Route::get('board/edit/{slug}', [BoardsController::class, 'edit']);
+    Route::patch('board/edit/{slug}', [BoardsController::class, 'update']);
+    Route::delete('board/delete/{slug}', [BoardsController::class, 'delete']);
+
+    Route::get('board/getList', [BoardsController::class, 'getDatatable'])->name('boards.dataTable');
 });
 
 // ==================

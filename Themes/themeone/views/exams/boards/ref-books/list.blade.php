@@ -55,7 +55,7 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=>'ref_books.dataTable'))
+ @include('common.datatables', array('route'=>'ref_books.dataTable','table_columns' => ['title','author_name','action']))
  @include('common.deletescript', array('route'=>URL_REF_BOOKS_DELETE))
 
 @stop
