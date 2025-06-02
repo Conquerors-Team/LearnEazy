@@ -1,0 +1,9 @@
+ /* Blue - Navbar */
+.navbar-custom{ 
+	/*background: #03a9f3;*/
+	background: #3b507b;
+}
+.top-nav>li>a{color: #fff}
+.top-profile-menu h2{color: #fff}
+.top-profile-menu .mdi{color: #f0f0f0}
+/* Blue - Navbar ends */
