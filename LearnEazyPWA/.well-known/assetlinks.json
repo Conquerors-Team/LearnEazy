@@ -1,1 +1,0 @@
-[ { "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "android_app", "package_name": "info.learneazy.org", "sha256_cert_fingerprints": ["79:60:75:AE:86:13:1E:54:31:47:65:B2:8E:87:FC:0D:28:38:8D:73:23:D0:2E:F2:D3:55:B3:02:D3:56:DB:59"] } } ]
