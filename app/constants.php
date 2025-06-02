@@ -8,8 +8,8 @@ $base .= '://'.$_SERVER['HTTP_HOST'] . str_replace(basename($_SERVER['SCRIPT_NAM
 
 //  $base1 = 'https://learnizz.com/';
 //  $base = 'https://learnizz.com/';
-$base1 = 'http://localhost/learnEazyNew/';
- $base = 'http://localhost/learnEazyNew/';
+$base1 = 'http://localhost/learneazy/';
+ $base = 'http://localhost/learneazy/';
 
 define('PREFIX1', $base1.'public/');
 define('BASE_PATH', $base.'/');
