@@ -180,9 +180,9 @@ class BatchesController extends Controller
         ->removeColumn('student_class_id')
         ->removeColumn('course_id')
 
-        ->removeColumn('total_seats')
-        ->removeColumn('booked_seats')
-        ->removeColumn('available_seats')
+        // ->removeColumn('total_seats')
+        // ->removeColumn('booked_seats')
+        // ->removeColumn('available_seats')
         // ->removeColumn('capacity')
         ->removeColumn('enable_sms_alerts')
         ->rawColumns([ 'name','action','start_date','capacity','end_date'])

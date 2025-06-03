@@ -56,6 +56,6 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>URL_THEMES_GET_DATA, 'route_as_url'=>TRUE))
+ @include('common.datatables', array('route'=>URL_THEMES_GET_DATA, 'route_as_url'=>TRUE,'table_columns' => ['title','description','is_active','action']))
 
 @stop

@@ -83,6 +83,7 @@ class SiteThemesController extends Controller
         })
         ->removeColumn('slug')
         ->removeColumn('id')
+        ->rawColumns(['title','is_active','action'])
         ->make();
     }  
 
@@ -161,6 +162,8 @@ class SiteThemesController extends Controller
 	        return redirect($isValid);
 
 	    $input_data = Input::all();
+      // $input_data = $request->all();
+
 
       if($request->has('theme_color') && $slug == 'theme_one'){
 

@@ -264,6 +264,8 @@ return [
 		'ImageSettings' => App\ImageSettings::class,
          'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
          'Theme' => Shipu\Themevel\Facades\Theme::class,
+         'Input' => Illuminate\Support\Facades\Request::class,
+
     ],
 
 ];

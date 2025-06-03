@@ -762,7 +762,7 @@ class LmsSeriesController extends Controller
 
     	$data['title']              = getPhrase('update_series_for').' '.$record->title;
       $data['layout']   =  getLayout();
-
+$data['categories'] = $data['subjects'];
 
          $view_name = getTheme().'::lms.lmsseries.update-list';
         return view($view_name, $data);

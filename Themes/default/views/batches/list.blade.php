@@ -112,7 +112,7 @@
 
   
 
- @include('common.datatables', array('route'=>URL_BATCHS_GETLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_BATCHS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','name','start_date','end_date','capacity','booked_seats','available_seats','action']))
 
  @include('common.deletescript', array('route'=>URL_BATCHS_DELETE))
 
