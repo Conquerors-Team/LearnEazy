@@ -379,7 +379,7 @@
 							</div>
 							<a href="javascript:void(0);" class="text-orange" onclick="openModal('loginModal')">Have Account?</a>
 							<!-- <a class="text-orange" href="#">Have Account?</a> -->
-							<button type="submit" class="btn btn-le-dark float-right">Submit777</button>
+							<button type="submit" class="btn btn-le-dark float-right">Submit</button>
 							<div id="loading"></div>
 						</form>
 					</div>
