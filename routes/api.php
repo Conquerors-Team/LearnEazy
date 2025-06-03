@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PWA\LoginController;
+
+Route::post('/login', [LoginController::class, 'postLogin']);
+Route::post('/dashboardDetails', [LoginController::class, 'dashboardDetails']);
+Route::post('/subjectDetails', [LoginController::class, 'subjectDetails']);
+Route::post('/topicDetails', [LoginController::class, 'topicDetails']);
+Route::post('/notestopicDetails', [LoginController::class, 'notestopicDetails']);
+Route::post('/upcomingaNDcompleted', [LoginController::class, 'upcomingaNDcompleted']);
+Route::post('/quizInstructions', [LoginController::class, 'quizInstructions']);
+Route::post('/quizQuestions', [LoginController::class, 'quizQuestions']);
+Route::post('/finishQuiz', [LoginController::class, 'finishQuiz']);
+Route::post('/quizAnswers', [LoginController::class, 'quizAnswers']);
+Route::post('/quizDetailedReport', [LoginController::class, 'quizDetailedReports']);
+Route::post('/quizReport', [LoginController::class, 'QuizReport']);
+Route::post('/allquizzes', [LoginController::class, 'allQuizzes']);
+Route::post('/getAnalysis', [LoginController::class, 'getAnalysis']);
+Route::post('/update-user-info', [LoginController::class, 'updateUserInfo']);
+Route::post('/subscriptionDetails', [LoginController::class, 'subscriptionDetails']);
+Route::post('/subjectTests', [LoginController::class, 'subjectTests']);
+Route::post('/grandTests', [LoginController::class, 'grandTests']);
+Route::post('/packageDetails', [LoginController::class, 'packageDetails']);
+Route::post('/previousYearsTests', [LoginController::class, 'previousYearsTests']);
+Route::post('/razorPaySuccess', [LoginController::class, 'razorpaySuccess']);
+Route::post('/notificationData', [LoginController::class, 'notification']);
+Route::post('/noteDest', [LoginController::class, 'noteDest']);
+Route::post('/examList', [LoginController::class, 'examList']);
+Route::get('/userNumber', [LoginController::class, 'userNumber']);
+Route::get('/getBoards', [LoginController::class, 'boards']);
+Route::post('/class_courses', [LoginController::class, 'getClassCourses']);
+Route::post('/registration', [LoginController::class, 'registration']);
+Route::post('/otpVerify', [LoginController::class, 'otpVerify']);
+Route::post('/enrollPhone', [LoginController::class, 'enrollPhone']);
+Route::post('/getuserPhone', [LoginController::class, 'getuserPhone']);
+Route::post('/classAttendence', [LoginController::class, 'classAttendence']);
+Route::post('/freeEnrollPack', [LoginController::class, 'freeEnroll']);
+Route::post('/useractiveStatus', [LoginController::class, 'useractiveStatus']);
+Route::post('/packageStatus', [LoginController::class, 'packageStatus']);
