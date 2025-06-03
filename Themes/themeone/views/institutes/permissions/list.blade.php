@@ -56,6 +56,6 @@
 
 
 @section('footer_scripts')
-  @include('common.datatables', array('route'=>URL_PERMISSIONS_GETDATA,'route_as_url'=>TRUE ))
+  @include('common.datatables', array('route'=>URL_PERMISSIONS_GETDATA,'route_as_url'=>TRUE,'table_columns' => ['title','module','status','action']))
  @include('common.deletescript', array('route'=>URL_PERMISSIONS_DELETE ))
 @stop

@@ -423,12 +423,12 @@ Route::prefix('permissions')->group(function() {
     Route::get('edit/{slug}', [PermissionsController::class, 'edit']);
     Route::patch('edit/{slug}', [PermissionsController::class, 'update']);
     Route::delete('delete/{slug}', [PermissionsController::class, 'delete']);
-    Route::get('getList', [PermissionsController::class, 'getDatatable'])->name('permissions.dataTable');
+    Route::get('/getlist', [PermissionsController::class, 'getDatatable'])->name('permissions.dataTable');
 });
 
 // ==================
 // Competitive Exam Types Routes
-// ==================
+// ==================S
 Route::prefix('competitive_exam_types')->group(function() {
     Route::get('/', [CompetitiveExamTypesController::class, 'index']);
     Route::get('add', [CompetitiveExamTypesController::class, 'create']);

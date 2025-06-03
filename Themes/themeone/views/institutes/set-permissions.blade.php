@@ -36,7 +36,7 @@
 					<!-- @else
 						{!! Form::open(array('url' => URL_ADD_INSTITUTE_REGISTER, 'method' => 'POST', 'name'=>'formLanguage ', 'novalidate'=>'',  'name'=>"registrationForm")) !!} -->
 					@endif
-                 <!--    @dd(record); -->
+             
 
  					 <fieldset class="form-group">
 
