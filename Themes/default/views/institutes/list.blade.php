@@ -96,8 +96,8 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>URL_INSTITUTES_GETDATATABLE ,'route_as_url'=>TRUE ))
-
+ @include('common.datatables', array('route'=>URL_INSTITUTES_GETDATATABLE ,'route_as_url'=>TRUE,'table_columns' => ['user_id','institute_name','institute_address', 'status','action']))
+ @include('common.deletescript', array('route'=>URL_LANGUAGES_DELETE))
  <script>
 
  		function approveInstitute(institute_id){

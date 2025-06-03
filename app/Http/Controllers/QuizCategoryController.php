@@ -165,6 +165,7 @@ class QuizCategoryController extends Controller
                 $image = $path.$records->image;
             return '<img src="'.PREFIX.$image.'" height="50" width="50" />';
         })
+        ->rawColumns(['image','action'])
         ->make();
     }
 

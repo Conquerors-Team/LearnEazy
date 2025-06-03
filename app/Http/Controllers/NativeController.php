@@ -101,6 +101,7 @@ class NativeController extends Controller
         })
         ->removeColumn('id')
         ->removeColumn('slug')
+        ->rawColumns(['language','is_rtl','is_default','action'])
         ->make();
     }
     /**

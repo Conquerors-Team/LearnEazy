@@ -55,6 +55,7 @@ use App\Http\Controllers\SMSAgentController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\FrontendExamsController;
 
+
 use App\Http\Controllers\SiteThemesController;
 use App\Http\Controllers\InstituteController;
 use App\Http\Controllers\InstituteAssosiatesController;
@@ -1095,3 +1096,14 @@ Route::patch('lms/series/edit/{slug}', [LmsSeriesController::class, 'update']);
 Route::delete('lms/series/delete/{slug}', [LmsSeriesController::class, 'delete']);
 Route::get('lms/series/getList', [LmsSeriesController::class, 'getDatatable'])->name('lmsseries.dataTable');
 Route::match(['get', 'post'], 'lms/change-content-order/{slug}', [LmsSeriesController::class, 'changeContentOrder'])->name('lmsseries.chang_content_order');
+
+
+// Quiz Categories
+Route::get('exams/categories', [QuizCategoryController::class, 'index']);
+Route::get('exams/categories/add', [QuizCategoryController::class, 'create']);
+Route::post('exams/categories/add', [QuizCategoryController::class, 'store']);
+Route::get('exams/categories/edit/{slug}', [QuizCategoryController::class, 'edit']);
+Route::patch('exams/categories/edit/{slug}', [QuizCategoryController::class, 'update']);
+Route::delete('exams/categories/delete/{slug}', [QuizCategoryController::class, 'delete']);
+
+Route::get('exams/categories/getList', [QuizCategoryController::class, 'getDatatable'])->name('quizcategories.dataTable');

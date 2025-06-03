@@ -104,7 +104,7 @@
 
   
 
- @include('common.datatables', array('route'=>URL_INSTRUCTIONS_GETLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_INSTRUCTIONS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','content','action']))
 
  @include('common.deletescript', array('route'=>URL_INSTRUCTIONS_DELETE))
 

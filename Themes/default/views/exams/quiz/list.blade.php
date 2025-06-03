@@ -122,7 +122,7 @@
 
   
 
- @include('common.datatables', array('route'=>URL_QUIZ_GETLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_QUIZ_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','dueration','category_id', 'is_paid','total_marks','exam_type','action']))
 
  @include('common.deletescript', array('route'=>URL_QUIZ_DELETE))
 

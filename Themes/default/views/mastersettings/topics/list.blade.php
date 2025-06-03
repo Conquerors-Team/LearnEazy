@@ -60,7 +60,11 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>'topics.dataTable'))
+@include('common.datatables', array(
+    'route' => 'topics.dataTable',
+    'table_columns' => ['topics.institute_id', 'subject_title', 'parent_id', 'topic_name', 'action']
+))
+
  @include('common.deletescript', array('route'=>URL_TOPICS_DELETE))
 
 @stop

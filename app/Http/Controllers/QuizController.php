@@ -304,7 +304,7 @@ class QuizController extends Controller
         ->removeColumn('id')
         ->removeColumn('slug')
         ->removeColumn('tags')
-        ->removeColumn('category_id')
+        // ->removeColumn('category_id')
         ->removeColumn('display_type')
         ->rawColumns(['title','action'])
         ->make();

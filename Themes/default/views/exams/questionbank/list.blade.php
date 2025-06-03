@@ -59,7 +59,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=> URL_QUESTIONBANK_GETLIST, 'route_as_url' => 'TRUE'))
+ @include('common.datatables', array('route'=> URL_QUESTIONBANK_GETLIST, 'route_as_url' => 'TRUE','table_columns' => ['institute_id','subject_title','subject_code','action']))
  @include('common.deletescript', array('route'=> URL_QUESTIONBANK_DELETE))
 
 @stop

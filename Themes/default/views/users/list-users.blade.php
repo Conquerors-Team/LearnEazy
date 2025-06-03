@@ -55,6 +55,6 @@
 @endsection
  
 @section('footer_scripts')
- @include('common.datatables', array('route'=>'users.dataTable'))
+ @include('common.datatables', array('route'=>'users.dataTable','table_columns' => ['image','name','institute_id', 'email', 'display_name', 'action']))
  @include('common.deletescript', array('route'=>URL_USERS_DELETE))
 @stop

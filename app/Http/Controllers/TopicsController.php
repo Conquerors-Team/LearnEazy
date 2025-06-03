@@ -64,7 +64,7 @@ class TopicsController extends Controller
 
       if(shareData('share_topics')){
                $records = Topic::join('subjects', 'topics.subject_id', '=' ,'subjects.id')
-         ->select(['topics.institute_id','subject_title','parent_id', 'topic_name','topics.slug', 'topics.id', 'topics.updated_at', 'chapter_id', 'subject_id']);
+         ->select(['topics.institute_id as institute_id','subject_title','parent_id', 'topic_name','topics.slug', 'topics.id', 'topics.updated_at', 'chapter_id', 'subject_id']);
          if ( ! empty( request('institute') ) ) {
             $records->where('topics.institute_id', request('institute'));
           } else {

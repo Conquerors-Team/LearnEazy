@@ -57,7 +57,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>'quizcategories.dataTable'))
+ @include('common.datatables', array('route'=>'quizcategories.dataTable','table_columns' => ['institute_id','category','image', 'description','action']))
  @include('common.deletescript', array('route'=>URL_QUIZ_CATEGORY_DELETE))
 
 @stop

@@ -56,7 +56,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>'languages.dataTable'))
+ @include('common.datatables', array('route'=>'languages.dataTable','table_columns' => ['language','code','is_rtl', 'is_default','action']))
  @include('common.deletescript', array('route'=>URL_LANGUAGES_DELETE))
 
 @stop

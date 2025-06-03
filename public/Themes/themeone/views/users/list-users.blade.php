@@ -11,7 +11,7 @@
 					<div class="col-lg-12">
 						<ol class="breadcrumb">
 							<li><a href="{{PREFIX}}"><i class="mdi mdi-home"></i></a> </li>
-							<li>{{ $title }}</li>
+							<li>{{ $title }}teirgtjegi</li>
 						</ol>
 					</div>
 				</div>
