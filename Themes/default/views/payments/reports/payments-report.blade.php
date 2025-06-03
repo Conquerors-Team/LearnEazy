@@ -115,8 +115,8 @@
 
 @section('footer_scripts')
  
- @include('common.chart', array('chart_data'=>$payments_chart_data,'ids' =>array('payments_chart'), 'scale'=>TRUE))
- @include('common.chart', array('chart_data'=>$payments_monthly_data,'ids' =>array('payments_monthly_chart'), 'scale'=>true))
+ @include('common.chart', array('chart_data'=>$payments_chart_data,'ids' =>array('payments_chart'), 'scale'=>TRUE,'table_columns' => ['institute_id','image','name','item_name','plan_type','start_date','end_date','payment_gateway','updated_at','payment_status']))
+ @include('common.chart', array('chart_data'=>$payments_monthly_data,'ids' =>array('payments_monthly_chart'), 'scale'=>true,'table_columns' => ['institute_id','image','name','item_name','plan_type','start_date','end_date','payment_gateway','updated_at','payment_status']))
  
  
 

@@ -55,7 +55,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>URL_FEEDBACKS_GETLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_FEEDBACKS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','image','name','subject','description','updated_at','action']))
  @include('common.deletescript', array('route'=>URL_FEEDBACK_DELETE))
 
 @stop

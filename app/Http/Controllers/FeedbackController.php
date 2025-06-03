@@ -118,6 +118,7 @@ class FeedbackController extends Controller
 
         ->removeColumn('id')
         ->removeColumn('slug')
+        ->rawColumns(['institute_id','title','image','action'])
         ->make();
     }
 
