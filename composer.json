@@ -5,44 +5,42 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "8.2.*",
-        "alexusmai/laravel-file-manager": "*",
+        "php": "^8.1",
+        "alexusmai/laravel-file-manager": "^3.3",
         "anhskohbo/no-captcha": "^3.7",
         "cmgmyr/messenger": "^2.31",
         "consoletvs/charts": "^6.8",
         "craftsys/msg91-laravel": "^0.15.1",
-        "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "intervention/image": "2.7",
+        "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^3.11",
         "jenssegers/agent": "^2.6",
-        "laravel/cashier": "^13.17",
-        "laravel/framework": "^8.85.0",
+        "laravel/cashier": "^15.6",
+        "laravel/framework": "^10.0",
         "laravel/helpers": "^1.7",
-        "laravel/nexmo-notification-channel": "*",
-        "laravel/sanctum": "^2.11",
+        "laravel/nexmo-notification-channel": "^3.3",
+        "laravel/sanctum": "^3.2",
         "laravel/socialite": "^5.21",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.4",
+        "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.6",
         "laravelcollective/html": "^6.4",
-        "maatwebsite/excel": "*",
+        "maatwebsite/excel": "^3.1",
         "milon/barcode": "^12.0",
         "phpoffice/phpexcel": "^1.8",
         "razorpay/razorpay": "^2.9",
-        "shipu/themevel": "^3.0",
-        "softon/indipay": "*",
-        "spatie/laravel-permission": "^6.18",
-        "yajra/laravel-datatables-oracle": "^9.21"
+        "shipu/themevel": "^1.5",
+        "spatie/laravel-permission": "^6.19",
+        "yajra/laravel-datatables-oracle": "^10.11"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10",
-        "symfony/css-selector": "^7.2",
-        "symfony/dom-crawler": "^7.2"
+        "nunomaduro/collision": "^7.0",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0",
+        "symfony/css-selector": "^7.3",
+        "symfony/dom-crawler": "^7.3"
     },
     "autoload": {
         "psr-4": {
@@ -55,8 +53,8 @@
            "app/helpers.php",
            "app/language_helper.php"
         ]
-    },
 
+    },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
@@ -78,6 +76,9 @@
         ]
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "10.x-dev"
+        },
         "laravel": {
             "dont-discover": []
         }
@@ -85,8 +86,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
