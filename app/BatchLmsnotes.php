@@ -1,0 +1,24 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+// class BatchStudent extends Model
+class BatchLmsnotes  extends Model
+{
+    protected $table="batch_lmsnotes";
+
+    public static function boot()
+    {
+        parent::boot();
+        BatchStudent::observe(new \App\Observers\UserActionsObserver);
+    }
+
+    public function batch() {
+    	return $this->belongsTo(Batch::class, 'batch_id')->withDefault();
+    }
+    public function user() {
+    	return $this->belongsTo(User::class, 'user_id')->withDefault();
+    }
+}
