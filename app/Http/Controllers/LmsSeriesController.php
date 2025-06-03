@@ -40,7 +40,7 @@ class LmsSeriesController extends Controller
         $data['layout']   =  getLayout();
 
     	// return view('lms.lmsseries.list', $data);
-
+// dd($data);
         $view_name = getTheme().'::lms.lmsseries.list';
         return view($view_name, $data);
     }
@@ -256,17 +256,19 @@ class LmsSeriesController extends Controller
         ->removeColumn('slug')
         ->removeColumn('updated_at')
 
-        ->removeColumn('is_paid')
-        ->removeColumn('cost')
-        ->removeColumn('validity')
+        // ->removeColumn('is_paid')
+        // ->removeColumn('cost')
+        // ->removeColumn('validity')
         ->removeColumn('subject_id')
 
         ->removeColumn('chapter_id')
         ->removeColumn('topic_id')
         ->removeColumn('sub_topic_id')
-        ->rawColumns(['institute_id','title','image','action'])
+        ->rawColumns(['institute_id','title','image','is_paid','action','show_in_front'])
 
         ->make();
+
+        // dd($records->all());
 
         return $final_table;
     }
