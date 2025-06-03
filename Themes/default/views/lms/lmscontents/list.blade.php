@@ -56,7 +56,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>'lmscontent.dataTable'))
+ @include('common.datatables', array('route'=>'lmscontent.dataTable','table_columns' => ['institute_id','title','image','content_type','subject_title','action']))
  @include('common.deletescript', array('route'=>URL_LMS_CONTENT_DELETE))
 
 @stop

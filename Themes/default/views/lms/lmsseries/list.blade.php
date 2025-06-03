@@ -59,7 +59,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>URL_LMS_SERIES_AJAXLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_LMS_SERIES_AJAXLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','image','is_paid','cost','validity','total_items','show_in_front','action']))
  @include('common.deletescript', array('route'=>URL_LMS_SERIES_DELETE))
 
 @stop

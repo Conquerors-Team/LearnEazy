@@ -61,7 +61,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>URL_COUPONS_GETLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_COUPONS_GETLIST, 'route_as_url' => TRUE, 'table_columns' => ['institute_id','title','coupon_code','discount_type','discount_value','minimum_bill','discount_maximum_amount','usage_limit','status','action']))
  @include('common.deletescript', array('route'=>URL_COUPONS_DELETE))
 
 @stop

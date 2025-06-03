@@ -56,7 +56,7 @@
 
 @section('footer_scripts')
   
- @include('common.datatables', array('route'=>URL_ADMIN_NOTIFICATIONS_GETLIST, 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>URL_ADMIN_NOTIFICATIONS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','valid_from','valid_to','url','action']))
  @include('common.deletescript', array('route'=>URL_ADMIN_NOTIFICATIONS_DELETE))
 
 @stop
