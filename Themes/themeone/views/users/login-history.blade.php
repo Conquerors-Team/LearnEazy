@@ -47,5 +47,5 @@
 @endsection
 
 @section('footer_scripts')
- @include('common.datatables', array('route' =>'login_history.dataTable','table_columns' => ['username','ipaddress','device_name','platform','created_at','login_status']))
+ @include('common.datatables', array('route' =>'login_history.dataTable','table_columns' => ['username','ipaddress','device_name','platform','browser','created_at','login_status']))
 @stop
