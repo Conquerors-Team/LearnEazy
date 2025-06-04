@@ -266,6 +266,7 @@ return [
         'Theme' => Shipu\Themevel\Facades\Theme::class,
         // 'Input' => Illuminate\Support\Facades\Request::class,
         'Request' => Illuminate\Support\Facades\Request::class,
+         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

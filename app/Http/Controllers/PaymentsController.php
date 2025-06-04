@@ -21,10 +21,11 @@ use App\Paypal;
 use App\Payment;
 use Input;
 use Softon\Indipay\Facades\Indipay;
-use Excel;
+// use Excel;
 use Carbon;
 use Exception;
-
+use App\Exports\PaymentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 class PaymentsController extends Controller
 {
   public $payment_records = [];
@@ -1718,7 +1719,8 @@ class PaymentsController extends Controller
         $records = $query->get();
         $this->payment_records = $records;
 
-     $this->downloadExcel();
+    //  $this->downloadExcel();
+     return Excel::download(new PaymentsExport($records), 'payments_report.xlsx');
 
     }
 
