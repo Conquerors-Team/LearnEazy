@@ -904,8 +904,8 @@ class UsersController extends Controller
    */
   public function updatePassword(Request $request)
   {
-
-
+// dd('sasasas');
+// dd($request->all());
     $this->validate($request, [
       'old_password' => 'required',
       'password'     => 'required|confirmed',

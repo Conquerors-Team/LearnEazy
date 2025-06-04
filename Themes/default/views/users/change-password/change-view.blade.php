@@ -33,7 +33,7 @@
 					@if ($record)
 					 <?php $button_name = getPhrase('update'); ?>
 						{{ Form::model($record, 
-						array('url' => ['users/change-password', $record->slug], 
+						array('url' => ['users-change-password', $record->slug], 
 						'method'=>'patch', 'novalidate'=>'', 'name'=>"changePassword")) }}
 					@endif
 

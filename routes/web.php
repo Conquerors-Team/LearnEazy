@@ -185,6 +185,8 @@ Route::patch('users/settings/{slug}', [UsersController::class, 'updateSettings']
 
 Route::get('users-change-password/{slug}', [UsersController::class, 'changePassword']);
 Route::patch('users-change-password/{slug}', [UsersController::class, 'updatePassword']);
+// Route::get('users-change-password/{slug}', [UsersController::class, 'changePassword']);
+// Route::patch('users-change-password/{slug}', [UsersController::class, 'updatePassword']);
 
 Route::get('import-users/import', [UsersController::class, 'importUsers']);
 Route::post('import-users/import', [UsersController::class, 'readExcel']);
