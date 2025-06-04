@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Controllers\Traits\HasSlug;
 class Couponcode extends Model
 {
+
+
+     use HasSlug;
     protected $table= "couponcodes";
 
     public static function boot()

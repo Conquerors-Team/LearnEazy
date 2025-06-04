@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Zizaco\Entrust\EntrustPermission;
-use Spatie\Permission\Models\Role as SpatieRole;
+// use Spatie\Permission\Models\Role as SpatieRole;
 use App\Http\Controllers\Traits\HasSlug;
-class Permission extends SpatieRole
+use Illuminate\Database\Eloquent\Model;
+
+class Permission extends Model
 {
 
       use HasSlug;
