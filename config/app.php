@@ -162,12 +162,12 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-         Milon\Barcode\BarcodeServiceProvider::class,
+        Milon\Barcode\BarcodeServiceProvider::class,
         //  SimpleSoftwareIO\SMS\SMSServiceProvider::class,
 
-         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
-         Shipu\Themevel\Providers\ThemevelServiceProvider::class,
-    //    Fideloper\Proxy\TrustedProxyServiceProvider::class,
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        Shipu\Themevel\Providers\ThemevelServiceProvider::class,
+        //    Fideloper\Proxy\TrustedProxyServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
 
 
@@ -175,12 +175,12 @@ return [
         /*
          * Package Service Providers...
          */
-         Laravel\Cashier\CashierServiceProvider::class,
-          Cmgmyr\Messenger\MessengerServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
 
         // Zizaco\Entrust\EntrustServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
-         Collective\Html\HtmlServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
         //  Intervention\Image\ImageServiceProvider::class,
 
         ConsoleTVs\Charts\ChartsServiceProvider::class,
@@ -195,8 +195,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 
-		Maatwebsite\Excel\ExcelServiceProvider::class,
-		// Softon\Indipay\IndipayServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        // Softon\Indipay\IndipayServiceProvider::class,
 
 
 
@@ -253,19 +253,19 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
-		// 'Input' => Illuminate\Support\Facades\Input::class,
+        // 'Input' => Illuminate\Support\Facades\Input::class,
         'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class,
 
-		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-		'Zipper' => 'Chumper\Zipper\Zipper',
-		 'Indipay' => Softon\Indipay\Facades\Indipay::class,
-		'Share' => 'Chencha\Share\ShareFacade',
-		'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
-		'ImageSettings' => App\ImageSettings::class,
-         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
-         'Theme' => Shipu\Themevel\Facades\Theme::class,
-        'Input' => Illuminate\Support\Facades\Request::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Zipper' => 'Chumper\Zipper\Zipper',
+        'Indipay' => Softon\Indipay\Facades\Indipay::class,
+        'Share' => 'Chencha\Share\ShareFacade',
+        'Newsletter' => Spatie\Newsletter\NewsletterFacade::class,
+        'ImageSettings' => App\ImageSettings::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'Theme' => Shipu\Themevel\Facades\Theme::class,
+        // 'Input' => Illuminate\Support\Facades\Request::class,
+        'Request' => Illuminate\Support\Facades\Request::class,
 
     ],
 

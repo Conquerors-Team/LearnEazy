@@ -12,9 +12,12 @@ use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
+// use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+// use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Request;
+// use Illuminate\Http\Input;
+
 
 class MessagesController extends Controller
 {
@@ -201,8 +204,8 @@ class MessagesController extends Controller
             return back();
         }
 
-        $input = Input::all();
-        if (Input::has('recipients')) {
+         $input = Request::all(); 
+        if (Request::has('recipients')) {
 
             $selectors = 'hai';
         }
@@ -233,7 +236,7 @@ class MessagesController extends Controller
             ]
         );
         // Recipients
-        if (Input::has('recipients')) {
+        if (Request::has('recipients')) {
             $thread->addParticipant($input['recipients']);
         }
         return redirect(URL_MESSAGES);
@@ -265,7 +268,7 @@ class MessagesController extends Controller
             [
                 'thread_id' => $thread->id,
                 'user_id'   => Auth::id(),
-                'body'      => Input::get('message'),
+                'body'      => Request::get('message'),
             ]
         );
         // Add replier as a participant
@@ -278,8 +281,8 @@ class MessagesController extends Controller
         $participant->last_read = new Carbon;
         $participant->save();
         // Recipients
-        if (Input::has('recipients')) {
-            $thread->addParticipants(Input::get('recipients'));
+        if (Request::has('recipients')) {
+            $thread->addParticipants(Request::get('recipients'));
         }
 
         if ( ! empty( $request_id ) ) {
