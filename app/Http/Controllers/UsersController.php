@@ -972,8 +972,8 @@ class UsersController extends Controller
     $failed_list = [];
 
     try {
-      if (Input::hasFile('excel')) {
-        $path = Input::file('excel')->getRealPath();
+      if (request()->hasFile('excel')) {
+        $path = request()->file('excel')->getRealPath();
         $data = Excel::load($path, function ($reader) {})->get();
 
         $user_record = array();
