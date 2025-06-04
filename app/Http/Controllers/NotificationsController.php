@@ -208,7 +208,7 @@ class NotificationsController extends Controller
 
          'valid_from'      	=> 'bail|required',
          'valid_to'      	=> 'bail|required',
-         'notification_for'       => 'bail|required',
+        //  'notification_for'       => 'bail|required',
             ];
 
          if ( $request->notification_for == 'batch' ) {
