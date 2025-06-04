@@ -221,11 +221,11 @@ class FeedbackController extends Controller
 
     public function delete($slug)
     {
-    //  if(!can('feedback_delete'))
-      // {
-      //   prepareBlockUserMessage();
-      //   return back();
-      // }
+     if(!canDo('feedback_delete'))
+      {
+        prepareBlockUserMessage();
+        return back();
+      }
      $record = Feedback::where('slug', $slug)->first();
 
     if(!env('DEMO_MODE')) {
