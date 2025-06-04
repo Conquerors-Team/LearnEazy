@@ -5,11 +5,12 @@ use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Exception;
+use App\Http\Controllers\Traits\HasSlug;
 class Language extends Model
 {
 
    
-    
+      use HasSlug;
     /**
      * This method is used to add new phrases to the system
      * @param [type]  $phrase           [phrase key]

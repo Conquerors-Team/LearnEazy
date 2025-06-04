@@ -7,9 +7,10 @@ use Image;
 use ImageSettings;
 use File;
 use Input;
-
+use App\Http\Controllers\Traits\HasSlug;
 class Package extends Model
 {
+      use HasSlug;
     protected $table= "packages";
 
     public static function boot()

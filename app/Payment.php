@@ -5,9 +5,10 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
 use \App;
-
+use App\Http\Controllers\Traits\HasSlug;
 class Payment extends Model
 {
+      use HasSlug;
 	protected $table = 'payments';
 
     public static function boot()

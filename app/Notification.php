@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Controllers\Traits\HasSlug;
 class Notification extends Model
 {
+      use HasSlug;
      protected $table= "notifications";
 
     public static function boot()

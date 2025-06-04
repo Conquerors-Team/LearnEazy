@@ -9,9 +9,10 @@ use Auth;
 Use App\Subject;
 use App\Topic;
 use Illuminate\Database\Eloquent\Builder;
-
+use App\Http\Controllers\Traits\HasSlug;
 class QuestionBank extends Model
 {
+      use HasSlug;
     protected $table = 'questionbank';
     public $success_list   = [];
     public $failed_list    = [];

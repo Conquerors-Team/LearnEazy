@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Controllers\Traits\HasSlug;
 class QuestionbankCategory extends Model
 {
+      use HasSlug;
     protected $table = 'questionbank_categories';
 
     public static function boot()

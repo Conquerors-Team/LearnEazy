@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Spatie\Activitylog\LogsActivityInterface;
 use Spatie\Activitylog\Traits\LogsActivity;
-
+use App\Http\Controllers\Traits\HasSlug;
 class Plan extends Model
 {
-
+  use HasSlug;
 	  use LogsActivity;
     protected $table = 'plans';
     protected static $logAttributes = ['title', 'name', 'slug', 'amount', 'type'];

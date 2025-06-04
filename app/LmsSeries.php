@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Http\Controllers\Traits\HasSlug;
 class LmsSeries extends Model
 {
+    use HasSlug;
    protected $table = 'lmsseries';
 
 

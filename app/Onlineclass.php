@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Http\Controllers\Traits\HasSlug;
 class Onlineclass extends Model
 {
+      use HasSlug;
     protected $table= "onlineclasses";
 
     protected $fillable = ['lmsseries_id', 'lmsnotes_id', 'live_quiz_id'];

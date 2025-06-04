@@ -5,9 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
-
+use App\Http\Controllers\Traits\HasSlug;
 class QuizCategory extends Model
 {
+      use HasSlug;
     protected $table = "quizcategories";
 
     public static function boot()

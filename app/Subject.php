@@ -4,9 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Topic;
+use App\Http\Controllers\Traits\HasSlug;
 class Subject extends Model
 {
-
+  use HasSlug;
     public static function boot()
     {
         parent::boot();

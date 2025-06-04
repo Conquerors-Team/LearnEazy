@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Traits\HasSlug;
 
 class Topic extends Model
 {
+    use HasSlug;
     public static function boot()
     {
         parent::boot();
@@ -14,7 +16,7 @@ class Topic extends Model
 
     public function subject()
     {
-    	return $this->belongsTo('App\Subject');
+        return $this->belongsTo('App\Subject');
     }
 
 
@@ -27,9 +29,9 @@ class Topic extends Model
      */
     public static function getTopics($subject_id, $parent_id = 0)
     {
-    	return Topic::where('parent_id', '=', $parent_id)
-    			->where('subject_id', '=', $subject_id)
-    			->get();
+        return Topic::where('parent_id', '=', $parent_id)
+            ->where('subject_id', '=', $subject_id)
+            ->get();
     }
 
     /**
