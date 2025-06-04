@@ -74,7 +74,7 @@ class TopicsController extends Controller
         else{
 
               $records = Topic::join('subjects', 'topics.subject_id', '=' ,'subjects.id')
-         ->select(['subject_title','parent_id', 'topic_name','topics.slug', 'topics.id', 'topics.updated_at', 'chapter_id', 'subject_id'])
+         ->select(['topics.institute_id as institute_id','subject_title','parent_id', 'topic_name','topics.slug', 'topics.id', 'topics.updated_at', 'chapter_id', 'subject_id'])
          ->where('topics.institute_id',$institute_id);
 
          }
@@ -156,7 +156,7 @@ class TopicsController extends Controller
         $temp .='</ul></div>';
 
         $link_data = $link_data.$temp;
-
+// dd($records);
 
 
         return $link_data;
@@ -198,6 +198,7 @@ class TopicsController extends Controller
           }
         })
         ->removeColumn('chapter_id')
+        ->rawColumns(['institute_id', 'action'])
         ->make();
     }
 

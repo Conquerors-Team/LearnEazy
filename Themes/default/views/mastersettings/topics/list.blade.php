@@ -62,7 +62,7 @@
   
 @include('common.datatables', array(
     'route' => 'topics.dataTable',
-    'table_columns' => ['topics.institute_id', 'subject_title', 'parent_id', 'topic_name', 'action']
+    'table_columns' => ['institute_id', 'subject_title', 'parent_id', 'topic_name', 'action']
 ))
 
  @include('common.deletescript', array('route'=>URL_TOPICS_DELETE))
