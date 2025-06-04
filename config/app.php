@@ -253,7 +253,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
-		'Input' => Illuminate\Support\Facades\Input::class,
+		// 'Input' => Illuminate\Support\Facades\Input::class,
         'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class,
 
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
@@ -264,7 +264,8 @@ return [
 		'ImageSettings' => App\ImageSettings::class,
          'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
          'Theme' => Shipu\Themevel\Facades\Theme::class,
-         'Input' => Illuminate\Support\Facades\Request::class,
+        'Input' => Illuminate\Support\Facades\Request::class,
+
 
     ],
 

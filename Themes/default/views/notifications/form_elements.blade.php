@@ -1,18 +1,14 @@
- 					
+ 					<div class="row">
 
- 				
+ 						<fieldset class="form-group col-md-6">
 
-					<div class="row">
 
- 					 <fieldset class="form-group col-md-6">
 
-						
+ 							{{ Form::label('title', getphrase('title')) }}
 
-						{{ Form::label('title', getphrase('title')) }}
+ 							<span class="text-red">*</span>
 
-						<span class="text-red">*</span>
-
-						{{ Form::text('title', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => getPhrase('title'),
+ 							{{ Form::text('title', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => getPhrase('title'),
 
 							'ng-model'=>'title', 
 
@@ -28,191 +24,195 @@
 
 							)) }}
 
-						<div class="validation-error" ng-messages="formNotifications.title.$error" >
+ 							<div class="validation-error" ng-messages="formNotifications.title.$error">
 
-	    					{!! getValidationMessage()!!}
+ 								{!! getValidationMessage()!!}
 
-	    					{!! getValidationMessage('pattern')!!}
+ 								{!! getValidationMessage('pattern')!!}
 
-	    					{!! getValidationMessage('minlength')!!}
+ 								{!! getValidationMessage('minlength')!!}
 
-	    					{!! getValidationMessage('maxlength')!!}
+ 								{!! getValidationMessage('maxlength')!!}
 
-						</div>
+ 							</div>
 
-					</fieldset>
+ 						</fieldset>
 
-					
 
-					<fieldset class="form-group col-md-6">
 
-						
+ 						<fieldset class="form-group col-md-6">
 
-						{{ Form::label('url', getphrase('url')) }}
 
-						 
 
-						{{ Form::text('url', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'www.sitename.com',
+ 							{{ Form::label('url', getphrase('url')) }}
+
+
+
+ 							{{ Form::text('url', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'www.sitename.com',
 
 							)) }}
- 
 
-					</fieldset>
 
-				 </div>
+ 						</fieldset>
 
-				 
+ 					</div>
 
-					 
 
- 			
 
- 			 <div class="row input-daterange" id="dp">
 
 
 
-		 	<?php 
 
+ 					<div class="row input-daterange" id="dp">
 
 
-		 	$date_from = date('Y/m/d');
 
+ 						<?php
 
 
-		 	$date_to = date('Y/m/d');
 
+							$date_from = date('Y/m/d');
 
 
-		 	if($record)
 
+							$date_to = date('Y/m/d');
 
 
-		 	{
 
+							if ($record) {
 
 
-		 		$date_from = $record->valid_from;
 
+								$date_from = $record->valid_from;
 
 
-		 		$date_to = $record->valid_to;
 
+								$date_to = $record->valid_to;
+							}
 
 
-		 	}
 
+							?>
 
 
-		 	 ?>
 
+ 						<fieldset class="form-group col-md-6">
 
 
-  				 <fieldset class="form-group col-md-6">
 
 
 
-                                     
 
 
+ 							{{ Form::label('valid_from', getphrase('valid_from')) }}
 
-                        {{ Form::label('valid_from', getphrase('valid_from')) }}
 
 
 
-                     
 
 
 
-                        {{ Form::text('valid_from', $value = $date_from , $attributes = array('class'=>'input-sm form-control', 'placeholder' => '2015/7/17')) }}
+ 							{{ Form::text('valid_from', $value = $date_from , $attributes = array('class'=>'input-sm form-control', 'placeholder' => '2015/7/17')) }}
 
 
 
-                            
 
-                       
 
 
 
-                        </fieldset>
 
 
+ 						</fieldset>
 
 
 
 
 
-  				 <fieldset class="form-group col-md-6">
 
 
+ 						<fieldset class="form-group col-md-6">
 
-                                     
 
 
 
-                        {{ Form::label('valid_to', getphrase('valid_to')) }}
 
 
 
-                       
+ 							{{ Form::label('valid_to', getphrase('valid_to')) }}
 
 
 
-                        {{ Form::text('valid_to', $value = $date_to , $attributes = array('class'=>'input-sm form-control', 'placeholder' => '2015/7/17')) }}
 
- 
 
-                     
 
 
+ 							{{ Form::text('valid_to', $value = $date_to , $attributes = array('class'=>'input-sm form-control', 'placeholder' => '2015/7/17')) }}
 
-                        </fieldset>
 
 
 
-				</div>
 
- 		
 
-  				  	<div class="row">
 
-					<fieldset class="form-group  col-md-6">
+ 						</fieldset>
 
-						
 
-						{{ Form::label('short_description', getphrase('short_description')) }}
 
-						
+ 					</div>
 
-						{{ Form::textarea('short_description', $value = null , $attributes = array('class'=>'form-control', 'rows'=>'5', 'placeholder' => getPhrase('short_description'))) }}
 
-					</fieldset>
 
-					<fieldset class="form-group  col-md-6">
+ 					<div class="row">
 
-						
+ 						<fieldset class="form-group  col-md-6">
 
-						{{ Form::label('description', getphrase('description')) }}
 
-						
 
-						{{ Form::textarea('description', $value = null , $attributes = array('class'=>'form-control ckeditor', 'rows'=>'5', 'placeholder' => getPhrase('description'))) }}
+ 							{{ Form::label('short_description', getphrase('short_description')) }}
 
-					</fieldset>
 
 
+ 							{{ Form::textarea('short_description', $value = null , $attributes = array('class'=>'form-control', 'rows'=>'5', 'placeholder' => getPhrase('short_description'))) }}
 
-					</div>
+ 						</fieldset>
 
+ 						<fieldset class="form-group  col-md-6">
 
 
 
+ 							{{ Form::label('description', getphrase('description')) }}
 
-						<div class="buttons text-center">
 
-							<button class="btn btn-lg btn-success button"
 
-							ng-disabled='!formNotifications.$valid'>{{ $button_name }}</button>
+ 							{{ Form::textarea('description', $value = null , $attributes = array('class'=>'form-control ckeditor', 'rows'=>'5', 'placeholder' => getPhrase('description'))) }}
 
-						</div>
+ 						</fieldset>
 
-		 
+
+
+ 					</div>
+
+
+
+
+
+ 					<div class="buttons text-center">
+
+ 						<button class="btn btn-lg btn-success button"
+
+ 							ng-disabled='!formNotifications.$valid'>{{ $button_name }}</button>
+
+ 					</div>
+
+ 					@section('footer_scripts')
+ 					<script src="https://cdn.ckeditor.com/4.25.1/standard/ckeditor.js"></script>
+
+
+ 					<script>
+ 						document.addEventListener("DOMContentLoaded", function() {
+ 							document.querySelectorAll('.ckeditor').forEach((el) => {
+ 								CKEDITOR.replace(el);
+ 							});
+ 						});
+ 					</script>
+ 					@stop
