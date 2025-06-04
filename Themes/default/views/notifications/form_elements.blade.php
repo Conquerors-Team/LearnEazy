@@ -204,15 +204,4 @@
 
  					</div>
 
- 					@section('footer_scripts')
- 					<script src="https://cdn.ckeditor.com/4.25.1/standard/ckeditor.js"></script>
-
-
- 					<script>
- 						document.addEventListener("DOMContentLoaded", function() {
- 							document.querySelectorAll('.ckeditor').forEach((el) => {
- 								CKEDITOR.replace(el);
- 							});
- 						});
- 					</script>
- 					@stop
+ 				
