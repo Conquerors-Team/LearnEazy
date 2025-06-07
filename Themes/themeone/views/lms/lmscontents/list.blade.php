@@ -60,9 +60,39 @@
 @section('footer_scripts')
 
  @include('common.filter-scripts')
- @include('common.datatables', array('route'=>'lmscontent.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['institute_id','title','image', 'content_type',
-    'subject_title',
-    'action']))
+
+@if(checkRole(getUserGrade(3)) || shareData('share_lms_contents'))
+    @include('common.datatables', [
+        'route' => 'lmscontent.dataTable',
+        'search_columns' => [
+            'subject' => request('subject_id'),
+            'chapter' => request('chapter_id'),
+            'topic' => request('topic_id'),
+            'sub_topic' => request('sub_topic_id'),
+            'content_type' => request('content_type'),
+            'institute' => request('institute_id')
+        ],
+        'table_columns' => [
+            'institute_id', 'title', 'image', 'content_type', 'subject_title', 'action'
+        ]
+    ])
+@else
+    @include('common.datatables', [
+        'route' => 'lmscontent.dataTable',
+        'search_columns' => [
+            'subject' => request('subject_id'),
+            'chapter' => request('chapter_id'),
+            'topic' => request('topic_id'),
+            'sub_topic' => request('sub_topic_id'),
+            'content_type' => request('content_type'),
+            'institute' => request('institute_id')
+        ],
+        'table_columns' => [
+            'title', 'image', 'content_type', 'subject_title', 'action'
+        ]
+    ])
+@endif
+
  @include('common.deletescript', array('route'=>URL_LMS_CONTENT_DELETE))
 
 @stop
