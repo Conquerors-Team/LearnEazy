@@ -1,11 +1,12 @@
 <?php
 
 namespace App;
-
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Chapter extends Model
 {
+    use HasSlug;
     public static function boot()
     {
         parent::boot();

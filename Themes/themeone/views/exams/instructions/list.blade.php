@@ -103,9 +103,12 @@
 @section('footer_scripts')
 
 
-
+@if(checkRole(getUserGrade(3)) || shareData())
  @include('common.datatables', array('route'=>URL_INSTRUCTIONS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','content','action']))
-
+@else
+ @include('common.datatables', array('route'=>URL_INSTRUCTIONS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['title','content','action']))
+ @endif
+ 
  @include('common.deletescript', array('route'=>URL_INSTRUCTIONS_DELETE))
 
 

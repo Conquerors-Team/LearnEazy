@@ -179,6 +179,9 @@ class UsersController extends Controller
       ->removeColumn('quiz_count_week')
       ->rawColumns(['image', 'name', 'action', 'institute_id'])
       // ->addAction('action',['printable' => false])
+      ->filterColumn('display_name', function($query, $keyword) {
+        $query->where('roles.display_name', 'like', "%{$keyword}%");
+      })
 
       ->make();
   }

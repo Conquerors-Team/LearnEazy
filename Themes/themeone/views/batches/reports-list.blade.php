@@ -42,9 +42,9 @@
 								<tr>
 									<th>Date</th>
 					 				<th>Batch name</th>
-					 				@if( ! isFaculty() )
+					 				<!-- @if( ! isFaculty() )
 					 				<th>Faculty</th>
-					 				@endif
+					 				@endif -->
 					 				<th>Exam</th>
 					 				<th>Reports</th>
 								</tr>
@@ -65,6 +65,6 @@
 
 
 @section('footer_scripts')
- @include('common.datatables', array('route'=>route('batch.get_reports'), 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>route('batch.get_reports'), 'route_as_url' => TRUE,'table_columns'=>['created_at','name','user_id','action']))
 @stop
 

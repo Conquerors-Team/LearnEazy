@@ -1589,6 +1589,7 @@ class StudentQuizController extends Controller
         ->removeColumn('grade_points')
         ->removeColumn('quizzes.total_marks')
         ->removeColumn('is_paid')
+        ->rawColumns(['title','exam_status','action'])
 
         ->make();
     }
@@ -1701,6 +1702,7 @@ class StudentQuizController extends Controller
         ->removeColumn('quizzes.total_marks')
          ->removeColumn('slug')
          ->removeColumn('user_id')
+         ->rawColumns(['title','is_paid'])
         ->make();
     }
 

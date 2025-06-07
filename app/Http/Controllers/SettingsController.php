@@ -466,7 +466,7 @@ class SettingsController extends Controller
      */
     public function prepareEnvData(Request $request)
     {
-        $request_data = Input::all();
+        $request_data = request()->all();
         $data = array();
 
         foreach ($request_data as $key => $value) {
@@ -505,7 +505,7 @@ class SettingsController extends Controller
       if($isValid = $this->isValidRecord($record))
         return redirect($isValid);
 
-    $input_data = Input::all();
+    $input_data = request()->all();
 
     
  

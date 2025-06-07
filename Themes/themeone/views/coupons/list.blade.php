@@ -63,7 +63,11 @@
 
 @section('footer_scripts')
 
+@if(checkRole(getUserGrade(3)) || shareData())
  @include('common.datatables', array('route'=>URL_COUPONS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','coupon_code','discount_type','discount_value','minimum_bill','discount_maximum_amount','usage_limit','status','action']))
- @include('common.deletescript', array('route'=>URL_COUPONS_DELETE))
+@else
+@include('common.datatables', array('route'=>URL_COUPONS_GETLIST, 'route_as_url' => TRUE,'table_columns' => ['title','coupon_code','discount_type','discount_value','minimum_bill','discount_maximum_amount','usage_limit','status','action']))
+@endif 
+@include('common.deletescript', array('route'=>URL_COUPONS_DELETE))
 
 @stop

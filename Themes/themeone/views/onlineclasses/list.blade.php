@@ -46,9 +46,9 @@
 									<th>{{ getPhrase('subject')}}</th>
 
 									<th>{{ getPhrase('topic')}}</th>
-									@if(isInstitute() || isStudent() )
+									<!-- @if(isInstitute() || isStudent() )
 									<th>{{ getPhrase('faculty')}}</th>
-									@endif
+									@endif -->
 									<th>{{ getPhrase('url')}}</th>
 									@if(checkRole(getUserGrade(2)))
 									<th>{{ getPhrase('action')}}</th>
@@ -69,8 +69,16 @@
 
 @section('footer_scripts')
 
+@if(isInstitute() || isStudent())
  @include('common.datatables', array('route'=>URL_ADMIN_ONLINECLASSES_GETLIST, 'route_as_url' => TRUE, 'search_columns' => ['class_title' => request('class_title'), 'batch_id' => request('batch_id'), 'from_date' => request('from_date'), 'to_date' => request('to_date'), 'faculty_id' => request('faculty_id'), 'subject_id' => request('subject_id')],
  'table_columns' => ['valid_from', 'class_time', 'title', 'batch_id', 'subject_id', 'topic','url','action']))
+@elseif(checkRole(getUserGrade(2)))
+ @include('common.datatables', array('route'=>URL_ADMIN_ONLINECLASSES_GETLIST, 'route_as_url' => TRUE, 'search_columns' => ['class_title' => request('class_title'), 'batch_id' => request('batch_id'), 'from_date' => request('from_date'), 'to_date' => request('to_date'), 'faculty_id' => request('faculty_id'), 'subject_id' => request('subject_id')],
+ 'table_columns' => ['valid_from', 'class_time', 'title', 'batch_id', 'subject_id', 'topic','url','action']))
+@else
+@include('common.datatables', array('route'=>URL_ADMIN_ONLINECLASSES_GETLIST, 'route_as_url' => TRUE, 'search_columns' => ['class_title' => request('class_title'), 'batch_id' => request('batch_id'), 'from_date' => request('from_date'), 'to_date' => request('to_date'), 'faculty_id' => request('faculty_id'), 'subject_id' => request('subject_id')],
+ 'table_columns' => ['valid_from', 'class_time', 'title', 'batch_id', 'subject_id', 'topic','url']))
+@endif
  @include('common.deletescript', array('route'=>URL_ADMIN_ONLINECLASSES_DELETE))
 
 <script src="{{JS}}datepicker.min.js"></script>

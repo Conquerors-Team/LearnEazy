@@ -113,6 +113,6 @@
 @section('footer_scripts')
    @include('common.filter-scripts')
 
-   @include('common.datatables', array('route'=>'lmsseries.dataTable', 'search_columns' => ['callfrom' => 'batch', 'batch_id' => $record->id, 'subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'),'content_type' => request('content_type'), 'institute' => request('institute_id')]))
+   @include('common.datatables', array('route'=>'lmsseries.dataTable', 'search_columns' => ['callfrom' => 'batch', 'batch_id' => $record->id, 'subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'),'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['title','image','total_items','show_in_front','action']))
 @stop
 

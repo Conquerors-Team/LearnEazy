@@ -1102,6 +1102,7 @@ class BatchesController extends Controller
         })
         ->removeColumn('id')
         ->removeColumn('slug')
+        ->rawColumns(['name','action'])
 
         ->make();
     }

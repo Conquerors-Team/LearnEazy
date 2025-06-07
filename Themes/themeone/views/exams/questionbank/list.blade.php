@@ -63,8 +63,13 @@
 @section('footer_scripts')
 	
  @include('common.filter-scripts')	
-
+@if(checkRole(getUserGrade(3)) || shareData('share_subjects'))
  @include('common.datatables', array('route'=> 'exams.questionbank.getList', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'institute' => request('institute_id')], 'table_columns' => ['institute_id','subject_title','subject_code','action']))
+
+ @else
+  @include('common.datatables', array('route'=> 'exams.questionbank.getList', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'institute' => request('institute_id')], 'table_columns' => ['subject_title','subject_code','action']))
+@endif
+ 
  @include('common.deletescript', array('route'=> URL_QUESTIONBANK_DELETE))
 
 @stop

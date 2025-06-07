@@ -199,6 +199,10 @@ class TopicsController extends Controller
         })
         ->removeColumn('chapter_id')
         ->rawColumns(['institute_id', 'action'])
+        ->filterColumn('subject_title', function($query, $keyword) {
+          $query->where('subjects.subject_title', 'like', "%{$keyword}%");
+        })
+
         ->make();
     }
 

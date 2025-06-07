@@ -64,8 +64,13 @@
 
 @section('footer_scripts')
 @include('common.filter-scripts')
-
+@if(checkRole(getUserGrade(3)) || shareData('share_lms_series'))
  @include('common.datatables', array('route'=>'lmsseries.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'),'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['institute_id','title','image','total_items','show_in_front','action']))
+
+ @else
+ @include('common.datatables', array('route'=>'lmsseries.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'),'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['title','image','total_items','show_in_front','action']))
+@endif
+
  @include('common.deletescript', array('route'=>URL_LMS_SERIES_DELETE))
 
 @stop

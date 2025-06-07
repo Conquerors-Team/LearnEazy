@@ -105,6 +105,19 @@
 
 
 @section('footer_scripts')
-   @include('common.datatables', array('route'=>'lmsnotes.dataTable', 'search_columns' => ['callfrom' => 'batch', 'batch_id' => $record->id],'table_columns' => ['institute_id','title','content_type','action']))
+@if(checkRole(getUserGrade(3)) || shareData('share_lms_notes'))
+    @include('common.datatables', [
+        'route' => 'lmsnotes.dataTable',
+        'search_columns' => ['callfrom' => 'batch', 'batch_id' => $record->id],
+        'table_columns' => ['institute_id', 'title', 'content_type', 'action']
+    ])
+@else
+    @include('common.datatables', [
+        'route' => 'lmsnotes.dataTable',
+        'search_columns' => ['callfrom' => 'batch', 'batch_id' => $record->id],
+        'table_columns' => ['title', 'content_type', 'action']
+    ])
+@endif
+
 @stop
 

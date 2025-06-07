@@ -120,7 +120,7 @@
 
   
 
- @include('common.datatables', array('route'=>URL_STUDENT_EXAM_ANALYSIS_BYEXAM.$user->slug, 'route_as_url' => 'TRUE'))
+ @include('common.datatables', array('route'=>URL_STUDENT_EXAM_ANALYSIS_BYEXAM.$user->slug, 'route_as_url' => 'TRUE','table_columns'=>['title','is_paid','dueration','total_marks','attempts']))
 
  
 

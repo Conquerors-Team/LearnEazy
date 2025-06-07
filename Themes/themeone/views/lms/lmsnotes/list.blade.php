@@ -57,8 +57,13 @@
 
 
 @section('footer_scripts')
-
+@if(checkRole(getUserGrade(3)) || shareData('share_lms_notes'))
  @include('common.datatables', array('route'=>'lmsnotes.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'),'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['institute_id','title','content_type','action']))
+@else
+ @include('common.datatables', array('route'=>'lmsnotes.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'),'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['title','content_type','action']))
+@endif
+ 
  @include('common.deletescript', array('route'=>URL_LMS_NOTES_DELETE))
+
 
 @stop

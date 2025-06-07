@@ -62,7 +62,11 @@
 
 @section('footer_scripts')
  @include('common.filter-scripts')
-
+ 
+@if(shareData('share_topics'))
  @include('common.datatables', array('route'=>'topics.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'institute' => request('institute_id')],'table_columns' => ['subject_title','topic_name','parent_id','action']))
+@else
+ @include('common.datatables', array('route'=>'topics.dataTable', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'institute' => request('institute_id')],'table_columns' => ['subject_title','topic_name','parent_id','action']))
+@endif
  @include('common.deletescript', array('route'=>URL_TOPICS_DELETE))
 @stop

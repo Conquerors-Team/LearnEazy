@@ -105,8 +105,11 @@
  
 
 @section('footer_scripts')
-  
+@if(checkRole(getUserGrade(3)))
  @include('common.datatables', array('route'=>$ajax_url, 'route_as_url' => TRUE,'table_columns' => ['institute_id','image','name','item_name','plan_type','start_date','end_date','payment_gateway','updated_at','payment_status']))
+@else
+ @include('common.datatables', array('route'=>$ajax_url, 'route_as_url' => TRUE,'table_columns' => ['image','name','item_name','plan_type','start_date','end_date','payment_gateway','updated_at','payment_status']))
+@endif
  @include('payments.scripts.js-scripts');
  {{-- @include('common.deletescript', array('route'=>URL_QUIZ_DELETE)) --}}
 <script>

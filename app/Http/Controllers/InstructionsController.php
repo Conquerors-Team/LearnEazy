@@ -105,7 +105,8 @@ class InstructionsController extends Controller
         ->removeColumn('id')
         ->removeColumn('slug')
         ->removeColumn('updated_at')
-        ->rawColumns(['institue_id','action'])
+  
+        ->rawColumns(['institute_id','content','action'])
 
         ->make();
     }
