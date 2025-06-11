@@ -1,12 +1,14 @@
 <?php
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Permission\Models\Role as SpatieRole;
 use App\Models\User;
 
 class Role extends SpatieRole
 {
+    use HasSlug;
     protected $fillable = ['name', 'display_name', 'description'];
 
     public static function getRoles()

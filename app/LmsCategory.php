@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class LmsCategory extends Model
 {
+    use HasSlug;
     protected $table = 'lmscategories';
 
  	public static function boot()

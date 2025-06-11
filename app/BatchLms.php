@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class BatchLms extends Model
 {
+    use HasSlug;
     protected $table="batch_lmsseries";
 
     public $timestamps = false;

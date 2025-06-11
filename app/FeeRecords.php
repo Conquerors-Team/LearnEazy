@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class FeeRecords extends Model
 {
+	use HasSlug;
     protected $table="fee_payment_records";
 
     public function getTotalPaid($user_id, $batch_id, $fee_id)

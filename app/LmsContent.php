@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class LmsContent extends Model
 {
+  use HasSlug;
     protected $table = 'lmscontents';
 
     public static function boot()

@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use App\QuizResult;
 use App\Quiz;
 use DB;
 class ExamTopper extends Model
 {
+    use HasSlug;
     protected $table = 'examtoppers';
 
   

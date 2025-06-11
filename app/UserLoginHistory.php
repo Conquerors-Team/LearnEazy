@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class UserLoginHistory extends Model
 {
+    use HasSlug;
     protected $table='users_login_history';
 
     protected $fillable = ['username', 'password', 'ipaddress', 'platform', 'platform_version', 'browser', 'browser_version', 'device_name', 'device_type', 'user_id', 'login_status',

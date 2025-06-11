@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class FeePayment extends Model
 {
+	use HasSlug;
     protected $table="fee_payments";
 
     public static function addFeeRecord($bacth_student, $fee_amount)

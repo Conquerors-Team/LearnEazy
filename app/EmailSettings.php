@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -8,6 +10,7 @@ use App\Http\Requests;
 use Mail;
 class EmailSettings extends Model
 {
+    use HasSlug;
     protected $settings = array(
     								'provider'     => 'mailtrap',
     								'type' 		   => 'mailtrap',

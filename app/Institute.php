@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use Carbon\Carbon;
 
 class Institute extends Model
 {
+    use HasSlug;
     protected $table="institutes";
 
     protected $dates = ['valid_until'];

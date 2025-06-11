@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 class GeneralSettings extends Model
 {
+    use HasSlug;
     protected $pageLength 		= 10;
 
     protected $staffIDPrefix    = 'ACA';

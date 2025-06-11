@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class QuizQuestions extends Model
 {
+    use HasSlug;
 
     protected $table = 'quiz_questions';
 

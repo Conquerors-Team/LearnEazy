@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class BoardSubject extends Model
 {
+    use HasSlug;
     // protected $appends = ['name_institute'];
     protected $table = 'board_subjects';
 

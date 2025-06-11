@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class AlertEnabled extends Model
 {
+    use HasSlug;
     protected $table="alerts_enabled";
 
     public static function boot()

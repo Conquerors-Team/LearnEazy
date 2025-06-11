@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 // class BatchStudent extends Model
 class BatchLmsnotes  extends Model
 {
+    use HasSlug;
     protected $table="batch_lmsnotes";
 
     public static function boot()

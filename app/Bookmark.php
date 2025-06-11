@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Bookmark extends Model
 {
+    use HasSlug;
     protected $table = 'bookmarks';
 
     public static function boot()

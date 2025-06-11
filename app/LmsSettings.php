@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class LmsSettings extends Model
 {
+    use HasSlug;
      protected  $settings = array(
      'categoryImagepath'        => "public/uploads/lms/categories/",
      'contentImagepath'     	=> "public/uploads/lms/content/",

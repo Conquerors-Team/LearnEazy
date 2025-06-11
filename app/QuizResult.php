@@ -2,12 +2,14 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
 
 class QuizResult extends Model
 {
+  use HasSlug;
     protected $table = 'quizresults';
 
     public static function boot()

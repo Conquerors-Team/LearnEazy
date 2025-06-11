@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class LmsSeriesData extends Model
 {
+    use HasSlug;
     protected $table = 'lmsseries_data';
 
     public static function boot()

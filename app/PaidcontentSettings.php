@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class PaidcontentSettings extends Model
 {
+    use HasSlug;
      protected  $settings = array(
      'categoryImagepath'        => "public/uploads/paidcontents/categories/",
      'contentImagepath'     	=> "public/uploads/paidcontents/content/",

@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class QuestionBankTypes extends Model
 {
+    use HasSlug;
     protected $table = "question_bank_types";
 
     public static function boot()

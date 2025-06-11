@@ -8,8 +8,8 @@ use \App;
 use App\Http\Requests;
 use App\User;
 use App\GeneralSettings as Settings;
-use Intervention\Image\Laravel\Facades\Image;
 // use Image;
+use Intervention\Image\Laravel\Facades\Image;
 use ImageSettings;
 use Yajra\Datatables\Datatables;
 use DB;
@@ -180,7 +180,7 @@ class UsersController extends Controller
       ->removeColumn('quiz_count_week')
       ->rawColumns(['image', 'name', 'action', 'institute_id'])
       // ->addAction('action',['printable' => false])
-      ->filterColumn('display_name', function ($query, $keyword) {
+      ->filterColumn('display_name', function($query, $keyword) {
         $query->where('roles.display_name', 'like', "%{$keyword}%");
       })
 
@@ -196,7 +196,7 @@ class UsersController extends Controller
    */
   public function create()
   {
-
+    
     if (checkRole(getUserGrade(11), 'user_create')) {
       prepareBlockUserMessage();
       return back();
@@ -467,15 +467,20 @@ class UsersController extends Controller
       $request->file('image')->move($destinationPath, $fileName);
       $user->image = $fileName;
 
-
       // Image::make($destinationPath . $fileName)->fit($imageObject->getProfilePicSize())->save($destinationPath . $fileName);
       Image::read($destinationPath . $fileName)
-        ->cover($examSettings->imageSize, $examSettings->imageSize)
+        ->cover(
+          $imageObject->getProfilePicSize(),
+          $imageObject->getProfilePicSize()
+        )
         ->save($destinationPath . $fileName);
 
-      Image::make($destinationPath . $fileName)
-        ->fit($imageObject->getThumbnailSize())
-        ->save($destinationPathThumb . $fileName);
+        Image::read($destinationPath . $fileName)
+          ->cover(
+            $imageObject->getThumbnailSize(),
+            $imageObject->getThumbnailSize()
+          )
+          ->save($destinationPathThumb . $fileName);
 
       // Image::make($destinationPath . $fileName)->fit($imageObject->getThumbnailSize())->save($destinationPathThumb . $fileName);
       $user->save();
@@ -917,8 +922,8 @@ class UsersController extends Controller
    */
   public function updatePassword(Request $request)
   {
-    // dd('sasasas');
-    // dd($request->all());
+// dd('sasasas');
+// dd($request->all());
     $this->validate($request, [
       'old_password' => 'required',
       'password'     => 'required|confirmed',

@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class EmailTemplate extends Model
 {
+	use HasSlug;
     protected $table = 'emailtemplates';
 
 

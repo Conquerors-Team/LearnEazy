@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
 class ExamSeries extends Model
 {
+    use HasSlug;
     protected $table = 'examseries';
 
     public static function boot()

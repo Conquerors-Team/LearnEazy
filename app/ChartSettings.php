@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class ChartSettings extends Model
 {
+    use HasSlug;
      protected  $settings = array(
      'categoryImagepath'     	=> "uploads/exams/categories/",
      'imageSize'                => 300,

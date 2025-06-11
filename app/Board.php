@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
 {
+    use HasSlug;
     protected $table="boards";
 
     public static function boot()
