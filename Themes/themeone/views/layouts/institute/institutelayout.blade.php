@@ -179,11 +179,11 @@
 
 					<li {{ isActive($active_class, 'users') }}> <a href="{{URL_USERS}}"><i class="fa fa-fw fa-user-circle"></i> {{ getPhrase('users') }} </a> </li>
 
-					@if(checkRole(getUserGrade(2), 'classes_access'))
+					@if(!checkRole(getUserGrade(12), 'classes_access'))
 					<li {{ isActive($active_class, 'classes') }}> <a href="{{URL_INSTITUTE_CLASSES}}"><i class="fa fa-meetup"></i> {{ getPhrase('classes') }} </a> </li>
 					@endif
 
-					@if(checkRole(getUserGrade(2), 'course_access'))
+					@if(!checkRole(getUserGrade(12), 'course_access'))
 					<li {{ isActive($active_class, 'courses') }}> <a href="{{URL_INSTITUTE_COURSE}}"><i class="fa fa-university"></i> {{ getPhrase('courses') }} </a> </li>
 					@endif
 

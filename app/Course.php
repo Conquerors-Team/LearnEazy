@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    use HasSlug;
     public static function boot()
     {
         parent::boot();

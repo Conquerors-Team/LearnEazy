@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use \App;
 use Illuminate\Http\Request;
-
+use Intervention\Image\Laravel\Facades\Image;
 use App\Http\Requests;
 use App\Subject;
 use App\QuizResult;
@@ -13,7 +13,7 @@ use Input;
 use Excel;
 use Exception;
 use Illuminate\Support\Facades\Storage;
-use Image;
+// use Image;
 class SubjectsController extends Controller
 {
     public $excel_data = array();
@@ -168,7 +168,7 @@ class SubjectsController extends Controller
      */
     public function create()
     {
-      if(!checkRole(getUserGrade(2), 'subject_create'))
+      if(checkRole(getUserGrade(12), 'subject_create'))
       {
         prepareBlockUserMessage();
         return back();
@@ -380,8 +380,13 @@ class SubjectsController extends Controller
             $destinationPath      = $examSettings->subjectsImagepath;
             \File::copy($path, $destinationPath . $fileName);
 
-            Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+            // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+            
+               Image::read($destinationPath.$fileName)   // v3 uses read(), not make()
+    ->cover($examSettings->imageSize, $examSettings->imageSize)
 
+
+     ->save($destinationPath.$fileName);
             $record->image      = $fileName;
             $record->save();
           }
