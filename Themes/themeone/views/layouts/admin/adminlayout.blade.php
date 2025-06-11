@@ -154,7 +154,7 @@
 					<li {{ isActive($active_class, 'users') }}> <a href="{{URL_USERS}}"><i class="fa fa-fw fa-user-circle"></i> {{ getPhrase('users') }} </a> </li>
 
 					<li {{ isActive($active_class, 'classes') }}> <a href="{{URL_INSTITUTE_CLASSES}}"><i class="fa fa-meetup"></i> {{ getPhrase('classes') }} </a> </li>
-					<li {{ isActive($active_class, 'chapters') }}> <a  href="{{route('mastersettings.chapters_index')}}"><i class="fa fa-meetup"></i> {{ getPhrase('chapters') }} </a> </li>
+					<!-- <li {{ isActive($active_class, 'chapters') }}> <a  href="{{route('mastersettings.chapters_index')}}"><i class="fa fa-meetup"></i> {{ getPhrase('chapters') }} </a> </li> -->
 
 					<li {{ isActive($active_class, 'courses') }}>
 						<a href="{{URL_INSTITUTE_COURSE}}"><i class="fa fa-graduation-cap"></i> {{ getPhrase('courses') }} </a>

@@ -182,7 +182,7 @@
 					@if(!checkRole(getUserGrade(12), 'classes_access'))
 					<li {{ isActive($active_class, 'classes') }}> <a href="{{URL_INSTITUTE_CLASSES}}"><i class="fa fa-meetup"></i> {{ getPhrase('classes') }} </a> </li>
 					@endif
-					<li {{ isActive($active_class, 'chapters') }}> <a  href="{{route('mastersettings.chapters_index')}}"><i class="fa fa-meetup"></i> {{ getPhrase('chapters') }} </a> </li>
+					<!-- <li {{ isActive($active_class, 'chapters') }}> <a  href="{{route('mastersettings.chapters_index')}}"><i class="fa fa-meetup"></i> {{ getPhrase('chapters') }} </a> </li> -->
 					<!-- <li {{ isActive($active_class, 'topics') }}> <a  href="{{route('mastersettings.topics')}}"><i class="fa fa-meetup"></i> {{ getPhrase('topics') }} </a> </li> -->
 
 					@if(!checkRole(getUserGrade(12), 'course_access'))
