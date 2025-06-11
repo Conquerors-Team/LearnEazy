@@ -313,7 +313,8 @@
 					<a data-toggle="collapse" data-target="#reports"><i class="fa fa-fw fa-bell" ></i>{{ getPhrase('packages') }} </a>
 					<ul id="reports" class="collapse sidemenu-dropdown">
 					  	<li><a href="{{route('packages.list')}}"> <i class="fa fa-fw fa-bell"></i>{{ getPhrase('list') }}</a></li>
-						<li><a href="{{route('packages.get_renewal_requests')}}"> <i class="fa fa-fw fa-chain-broken"></i>{{ getPhrase('renewal_requests') }}</a></li>
+						<!-- <li><a href="{{route('packages.get_renewal_requests')}}"> <i class="fa fa-fw fa-chain-broken"></i>{{ getPhrase('renewal_requests') }}</a></li> -->
+						<li><a href="{{route('packages.renewal_requests')}}"> <i class="fa fa-fw fa-chain-broken"></i>{{ getPhrase('renewal_requests') }}</a></li>
 					</ul>
 					</li>
 

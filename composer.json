@@ -13,6 +13,7 @@
         "craftsys/msg91-laravel": "^0.15.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^3.11",
+        "intervention/image-laravel": "^1.5",
         "jenssegers/agent": "^2.6",
         "laravel/cashier": "^15.6",
         "laravel/framework": "^10.0",

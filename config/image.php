@@ -14,7 +14,7 @@ return array(
     | Supported: "gd", "imagick"
     |
     */
-
-    'driver' => 'gd'
+ 'driver' => \Intervention\Image\Drivers\Gd\Driver::class,
+    // 'driver' => 'gd'
 
 );

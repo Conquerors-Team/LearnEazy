@@ -985,6 +985,7 @@ Route::get('renewal-requests', [PackagesController::class, 'renewRequests'])->na
 // Route::get('online-classes/getList', [OnlineclassesController::class, 'getDatatable'])->name('online_classes.getList');
 
 Route::get('get-renewal-requests', [PackagesController::class, 'getRenewalRequests'])->name('packages.get_renewal_requests');
+Route::get('renewal-requests', [PackagesController::class, 'renewalRequests'])->name('packages.renewal_requests');
 
 // Route::post('file-manager-custom/upload', [\Alexusmai\LaravelFileManager\Controllers\FileManagerController::class, 'upload']);
 

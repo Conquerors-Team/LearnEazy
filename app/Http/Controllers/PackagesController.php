@@ -9,11 +9,11 @@ use App\Package;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
-use Image;
+// use Image;
 use ImageSettings;
 use File;
 use Input;
-
+use Intervention\Image\Laravel\Facades\Image;
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
@@ -322,6 +322,15 @@ class PackagesController extends Controller
      * @param  Request $request [Request Object]
      * @return void
      */
+    protected function deleteFile($filename, $path)
+{
+    $fullPath = public_path($path . '/' . $filename);
+
+    if ($filename && file_exists($fullPath)) {
+        @unlink($fullPath);
+    }
+}
+
     public function store(Request $request)
     {
       if(!canDo('package_create'))
@@ -381,6 +390,7 @@ class PackagesController extends Controller
         flash('success','record_added_successfully', 'success');
       return redirect(URL_PACKAGES);
     }
+    
 
       /**
      * This method process the image is being refferred
@@ -406,7 +416,12 @@ class PackagesController extends Controller
           $request->file($file_name)->move($destinationPath, $fileName);
 
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          Image::read($destinationPath.$fileName)   // v3 uses read(), not make()
+    ->cover($examSettings->imageSize, $examSettings->imageSize)
+
+
+     ->save($destinationPath.$fileName);
          return $fileName;
         }
      }
@@ -536,6 +551,7 @@ class PackagesController extends Controller
     }
 
     public function renewalRequests() {
+      
       $data['active_class']       = 'packages';
       $data['title']              = getPhrase('renewal_requests');
       $data['layout']   =  getLayout();
@@ -576,8 +592,9 @@ class PackagesController extends Controller
             return '<a href="'.url('messages/' . $records->message_id . '/' . $records->id).'">Details</a>';
         })
         ->removeColumn('id')
-        ->removeColumn('institute_id')
+        // ->removeColumn('institute_id')
         ->removeColumn('updated_at')
+        ->rawColumns(['message_id','replied'])
         ->make();
     }
 

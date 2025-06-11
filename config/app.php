@@ -140,6 +140,8 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+      Intervention\Image\Laravel\ServiceProvider::class,
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -255,7 +257,7 @@ return [
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         // 'Input' => Illuminate\Support\Facades\Input::class,
         'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class,
-
+'Image' => Intervention\Image\Laravel\Facades\Image::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Zipper' => 'Chumper\Zipper\Zipper',
         'Indipay' => Softon\Indipay\Facades\Indipay::class,
@@ -268,6 +270,7 @@ return [
         'Request' => Illuminate\Support\Facades\Request::class,
          'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
+         
     ],
 
 ];

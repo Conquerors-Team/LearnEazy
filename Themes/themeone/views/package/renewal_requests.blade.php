@@ -46,5 +46,5 @@
 @endsection
 
 @section('footer_scripts')
- @include('common.datatables', array('route'=>route('packages.get_renewal_requests'), 'route_as_url' => TRUE))
+ @include('common.datatables', array('route'=>route('packages.get_renewal_requests'), 'route_as_url' => TRUE,'table_columns' => ['institute_id', 'message','created_at','replied','message_id']))
 @stop

@@ -27,11 +27,11 @@
 						<table class="table table-striped table-bordered datatable" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>{{ getPhrase('institute')}}</th>
+									<!-- <th>{{ getPhrase('institute')}}</th>
 									<th>{{ getPhrase('message')}}</th>
 									<th>{{ getPhrase('created')}}</th>
 									<th>{{ getPhrase('reply_status')}}</th>
-									<th>{{ getPhrase('message_thread')}}</th>
+									<th>{{ getPhrase('message_thread')}}</th> -->
 								</tr>
 							</thead>
 
