@@ -56,6 +56,8 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\FrontendExamsController;
 
 
+
+
 use App\Http\Controllers\SiteThemesController;
 use App\Http\Controllers\InstituteController;
 use App\Http\Controllers\InstituteAssosiatesController;
@@ -1110,3 +1112,51 @@ Route::patch('exams/categories/edit/{slug}', [QuizCategoryController::class, 'up
 Route::delete('exams/categories/delete/{slug}', [QuizCategoryController::class, 'delete']);
 
 Route::get('exams/categories/getList', [QuizCategoryController::class, 'getDatatable'])->name('quizcategories.dataTable');
+
+
+Route::get('mastersettings/subjects', [SubjectsController::class, 'index'])->name('mastersettings.subjects');
+Route::get('mastersettings/subjects/add', [SubjectsController::class, 'create']);
+Route::post('mastersettings/subjects/add', [SubjectsController::class, 'store']);
+Route::get('mastersettings/subjects/edit/{slug}', [SubjectsController::class, 'edit']);
+Route::patch('mastersettings/subjects/edit/{slug}', [SubjectsController::class, 'update']);
+Route::delete('mastersettings/subjects/delete/{id}', [SubjectsController::class, 'delete']);
+Route::get('mastersettings/subjects/getList', [SubjectsController::class, 'getDatatable'])->name('subjects.dataTable');
+Route::get('mastersettings/subjects/import', [SubjectsController::class, 'import']);
+Route::post('mastersettings/subjects/import', [SubjectsController::class, 'readExcel']);
+
+Route::get('mastersettings/chapters', [ChaptersController::class, 'index'])->name('mastersettings.chapters_index');
+Route::get('mastersettings/chapters/add', [ChaptersController::class, 'create'])->name('mastersettings.chapters_create');
+Route::post('mastersettings/chapters/add', [ChaptersController::class, 'store'])->name('mastersettings.chapters_store');
+Route::get('mastersettings/chapters/edit/{slug}', [ChaptersController::class, 'edit'])->name('mastersettings.chapters_edit');
+Route::patch('mastersettings/chapters/edit/{slug}', [ChaptersController::class, 'update'])->name('mastersettings.chapters_update');
+Route::delete('mastersettings/chapters/delete/{id}', [ChaptersController::class, 'delete'])->name('mastersettings.chapters_delete');
+Route::get('mastersettings/chapters/getList', [ChaptersController::class, 'getDatatable'])->name('chapters.dataTable');
+Route::get('mastersettings/chapters/import', [ChaptersController::class, 'import'])->name('mastersettings.chapters_import');
+Route::post('mastersettings/chapters/import', [ChaptersController::class, 'readExcel'])->name('mastersettings.chapters_import_read');
+
+Route::get('mastersettings/topics', [TopicsController::class, 'index'])->name('mastersettings.topics');
+Route::get('mastersettings/topics/add', [TopicsController::class, 'create']);
+Route::post('mastersettings/topics/add', [TopicsController::class, 'store']);
+Route::get('mastersettings/topics/edit/{slug}', [TopicsController::class, 'edit']);
+Route::patch('mastersettings/topics/edit/{slug}', [TopicsController::class, 'update']);
+Route::delete('mastersettings/topics/delete/{id}', [TopicsController::class, 'delete']);
+Route::get('mastersettings/topics/getList', [TopicsController::class, 'getDatatable'])->name('topics.dataTable');
+
+Route::get('mastersettings/topics/get-parents-topics/{subject_id}/{chapter_id}', [TopicsController::class, 'getChapterTopics']);
+Route::get('mastersettings/topics/get-parents-topics-exam/{subject_id}/{chapter_id}', [TopicsController::class, 'getChapterTopicsExam']);
+Route::get('mastersettings/chapters/get-parents-chapters/{subject_id}', [TopicsController::class, 'getSubjectChapters'])->name('mastersettings.chapters_parent_chapters');
+
+Route::get('mastersettings/subjects/get-institute-subjects/{institute_id}', [TopicsController::class, 'getInstituteSubjects'])->name('mastersettings.institute_subjects');
+
+Route::get('student/lms/get-parents-topics/{subject_id}/{chapter_id}', [TopicsController::class, 'getChapterParentTopics']);
+Route::get('student/lms/get-sub-topics/{subject_id}/{chapter_id}/{topic_id}', [TopicsController::class, 'getChapterSubTopics']);
+
+Route::get('mastersettings/topics/import', [TopicsController::class, 'import']);
+Route::post('mastersettings/topics/import', [TopicsController::class, 'readExcel']);
+
+
+Route::get('mastersettings/class/get-batch/{class_id}', [OnlineclassesController::class, 'getBatches']);
+Route::get('mastersettings/class/get-user/{user_id}', [OnlineclassesController::class, 'getUser']);
+Route::get('mastersettings/class/get-faculty/{batch_id}', [OnlineclassesController::class, 'getFacultyBatches']);
+Route::get('mastersettings/class/get-faculty-subjects/{faculty_id}', [OnlineclassesController::class, 'getFacultySubjects']);
+Route::get('onlineclasses/classend/alerts', [OnlineclassesController::class, 'classEndAlerts'])->name('onlineclasses.classend_alerts');

@@ -248,9 +248,13 @@ class LmsContentController extends Controller
       }
     	$data['record']         	= FALSE;
     	$data['active_class']       = 'lms';
-        $data['chapters']   = [];
+    
+
       $data['topics'] = [];
         $institute_id   = adminInstituteId();
+         $data['chapters'] = App\Chapter::where('institute_id', $institute_id)
+    ->pluck('chapter_name', 'id')
+    ->toArray();
         /*
         if(shareData() || checkRole(getUserGrade(3))){
 
