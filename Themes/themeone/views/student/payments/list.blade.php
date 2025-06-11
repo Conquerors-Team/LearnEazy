@@ -112,10 +112,11 @@
 
 @section('footer_scripts')
 
-  
-
+@if($is_parent)
  @include('common.datatables', array('route'=>URL_PAYPAL_PAYMENTS_AJAXLIST.$user->slug, 'route_as_url' => TRUE,'table_columns' => ['institute_id','image','name','item_name','plan_type','start_date','end_date','payment_gateway','updated_at','payment_status']))
-
+@else
+@include('common.datatables', array('route'=>URL_PAYPAL_PAYMENTS_AJAXLIST.$user->slug, 'route_as_url' => TRUE,'table_columns' => ['item_name','plan_type','start_date','end_date','payment_gateway','updated_at','payment_status']))
+@endif
  @include('common.deletescript', array('route'=>'/exams/quiz/delete/'))
 
 
