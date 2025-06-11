@@ -587,6 +587,13 @@ class PackagesController extends Controller
             }
             return $str;
         })
+         ->editColumn('institute_id', function($records){
+            $institute  = getInstitute($records->institute_id);
+            if($institute)
+            return '<a href = "'.URL_INSTITUTE_DETAILS.$institute->id.'">'.ucwords($institute->institute_name).'</a>';
+
+             return '-';
+        })
         ->editColumn('message_id', function($records)
         {
             return '<a href="'.url('messages/' . $records->message_id . '/' . $records->id).'">Details</a>';
@@ -594,7 +601,7 @@ class PackagesController extends Controller
         ->removeColumn('id')
         // ->removeColumn('institute_id')
         ->removeColumn('updated_at')
-        ->rawColumns(['message_id','replied'])
+        ->rawColumns(['institute_id','message_id','replied'])
         ->make();
     }
 
