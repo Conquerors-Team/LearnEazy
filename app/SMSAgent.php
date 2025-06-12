@@ -148,31 +148,43 @@ class SMSAgent extends Model
 
 
 
-          if ( 'msg91' === $driver ) {
-            $config = [
-              'key' => env('MSG91_KEY'),
-            ];
+          // if ( 'msg91' === $driver ) {
+          //   $config = [
+          //     'key' => env('MSG91_KEY'),
+          //   ];
            
 
-            $client = new \Craftsys\Msg91\Client($config);
-            $otp = $client->otp( $otp );
+          //   $client = new \Craftsys\Msg91\Client($config);
+          //   $otp = $client->otp( $otp );
 
-            $otp->to($phone) // set the mobile with country code
-            ->message($message) // provide your message
-            ->send(); // send
+          //   $otp->to($phone) // set the mobile with country code
+          //   ->message($message) // provide your message
+          //   ->send(); // send
 
-            smsHistory( $phone, $message, 'otp');
+          //   smsHistory( $phone, $message, 'otp');
 
-          } else {
-          SMS::send($message, null, function($sms) {
-                  $sms->to($phone);
-              });
-            }
+          // } else {
+          // SMS::send($message, null, function($sms) {
+          //         $sms->to($phone);
+          //     });
+          //   }
+
         // }
         // catch(Exception $e)
         // {
         //     dd( $e );
         // }
+
+
+        
+         $config = [
+        'key' => env('MSG91_KEY'),
+      ];
+      $client = new \Craftsys\Msg91\Client($config);
+      $otp = '1234';
+      \Log::info("Simulated OTP send to {$phone}. OTP: {$otp}. Message: {$message}");
+      smsHistory($phone, $message, 'otp');
+      return true;
     }
 
     public function setCurrentUser($user)

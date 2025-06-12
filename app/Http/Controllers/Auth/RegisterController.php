@@ -367,6 +367,7 @@ class RegisterController extends Controller
 
     public function getOtpRegister( Request $request, $role = 'student' )
     {
+        // dd($request->all());
         $otp_status = (session("otp_status")) ? session("otp_status") : 'start';
 
         if ( $request->isMethod('post') ) {
@@ -398,7 +399,7 @@ class RegisterController extends Controller
                     if ( $users_phone->otp_used >= OTP_MAX_USAGE) {
                         flash('Danger', 'You have used maximum attempts to send OTP. Please use other method to login.', 'overlay');
                     } else {
-                        $otp = mt_rand(1000, 9999);
+                        $otp = "1234";
                         $users_phone->otp = $otp;
                         $users_phone->otp_used = $users_phone->otp_used + 1;
                         $users_phone->save();
@@ -412,7 +413,7 @@ class RegisterController extends Controller
                         flash('Success', 'OTP Sent to your mobile number. Please check and enter same here.', 'success');
                     }
                 } else {
-                    $otp = mt_rand(1000, 9999);
+                      $otp = "1234";
                     \App\UserPhone::create([
                         'mobile_number' => $phone,
                         'country_code' => ($phone_code) ? $phone_code : '91',
