@@ -155,8 +155,9 @@ class PaymentsController extends Controller
           return $text;
         })
         ->removeColumn('id')
+        ->rawColumns(['payment_gateway','payment_status'])
         ->removeColumn('action');
-
+        
         if($is_parent) {
           $dta = $dta->editColumn('image', function($records) {
              return '<img src="'.getProfilePath($records->image).'"  /> ';
@@ -166,6 +167,7 @@ class PaymentsController extends Controller
             return ucfirst($records->name);
           });
         }
+        
 
         return $dta->make();
     }

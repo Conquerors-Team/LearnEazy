@@ -167,9 +167,7 @@
 					</div>
 					<div class="credits">
 						<!-- All the links in the footer should remain intact. -->
-						Powered by <a href="https://conquerorstech.net/" target="_blank"><strong>CSTPL</strong></a> |
-						Designed by <a href="http://www.rjportfolio.com/" target="_blank"><strong>Rj</strong></a> | based on template by <a href="https://bootstrapmade.com/">BootstrapMade</a> |
-						Vector images created by <a href='https://www.freepik.com/free-photos-vectors/design' target="_blank">freepik</a>
+						Powered by <a href="https://conquerorstech.net/" target="_blank"><strong>CSTPL</strong></a>
 					</div>
 				</div>
 			</div>

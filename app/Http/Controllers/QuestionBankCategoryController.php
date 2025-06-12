@@ -8,6 +8,8 @@ use App\QuestionbankCategory;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
+// use Intervention\Image\Facades\Image;
+
 use Image;
 use ImageSettings;
 use File;
@@ -413,8 +415,12 @@ class QuestionBankCategoryController extends Controller
           $request->file($file_name)->move($destinationPath, $fileName);
 
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
-         return $fileName;
+          // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          Image::make($destinationPath . $fileName)
+            ->fit($examSettings->imageSize)
+            ->save($destinationPath . $fileName);
+
+          return $fileName;
         }
      }
 }
