@@ -899,10 +899,15 @@
 
 								//$onlineclasses = \App\Onlineclass::whereIn('batch_id', $batches)->whereNotNull('valid_from')->whereNotNull('valid_to')->whereRaw('valid_from >= CONCAT(DATE(NOW()), " ", class_time)')->whereRaw('DATE(valid_to) <="' . date('Y-m-d').'"')->get();
 
+								// $onlineclasses = \App\Onlineclass::whereNotNull('class_time')->whereNotNull('valid_from')->whereNotNull('valid_to')
+								// 	->whereIn('batch_id', $batches)
+								// 	->whereDate('valid_from', '>=', date('Y-m-d'))
+								// 	->whereRaw(date('Y-m-d') . ' <= DATE(valid_to)');
+
 								$onlineclasses = \App\Onlineclass::whereNotNull('class_time')->whereNotNull('valid_from')->whereNotNull('valid_to')
 									->whereIn('batch_id', $batches)
-									->whereDate('valid_from', '>=', date('Y-m-d'))
-									->whereRaw(date('Y-m-d') . ' <= DATE(valid_to)');
+									->whereDate('valid_from', '<=', date('Y-m-d'))
+        							->whereRaw('DATE(valid_to) >= ' . date('Y-m-d'))
 
 								// echo date('Y-m-d H:i:s', $newtimestamp_after_mins);
 								//echo $onlineclasses->toSql();
