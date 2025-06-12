@@ -85,6 +85,10 @@ Route::get('/', function () {
     return Auth::check() ? redirect('dashboard') : redirect()->route('site.home');
 });
 
+Route::get('/login', function () {
+    return redirect('/'); // or redirect to any public/home route you want
+})->name('login');
+
 // Demo Mode Event Listener
 if (env('DEMO_MODE')) {
     Event::listen('eloquent.saving: *', function ($model) {
