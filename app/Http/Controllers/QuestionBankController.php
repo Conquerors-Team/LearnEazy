@@ -361,6 +361,7 @@ class QuestionBankController extends Controller
         ->removeColumn('id')
         ->removeColumn('slug')
         ->removeColumn('updated_at')
+        ->rawColumns(['question','action'])
 
            ->editColumn('institute_id', function($records){
 
@@ -376,6 +377,7 @@ class QuestionBankController extends Controller
           if($category)
             return $category->category;
         });
+        
 
         // ->editColumn('question_type', function($results){
         //  return ucfirst($results->question_type);
@@ -387,6 +389,7 @@ class QuestionBankController extends Controller
         // ->editColumn('difficulty_level',function($results){
         //     return ucfirst($results->difficulty_level);
         // });
+        
         return $table->make();
     }
 
@@ -792,6 +795,7 @@ class QuestionBankController extends Controller
      */
     public function store(Request $request, $slug = '')
     {
+      // dd($request->all());
     /**
      * Validation for the Master Data of a question
      */
@@ -969,7 +973,7 @@ class QuestionBankController extends Controller
         // Save data with no images
         $record->save();
         // Update data with images
-
+ 
         if($request->hasFile($record->question_file))
            $record->question_file  = $this->processUpload($request, $record, 'question_file', 'question');
 
@@ -984,9 +988,12 @@ class QuestionBankController extends Controller
 
            $record->answers     = $this->prepareParaQuestionOptions($request, $record);
         }
+   
         else{
-
+  
            $record->answers         = $this->prepareOptions($request, $record);
+           
+  // dd('ster');
         }
 
         $record->created_by_id = \Auth::user()->id;
@@ -1064,78 +1071,128 @@ class QuestionBankController extends Controller
      * @param  [type] $record  [the record which was saved to DB]
      * @return [type]          [description]
      */
-    public function prepareOptions($request, $record)
-    {
+//     public function prepareOptions($request, $record)
+//     {
 
-      $options    = $request->options;
-      $optionsl2  = $request->optionsl2;
-      $list       = array();
+//       $options    = $request->options;
+//       $optionsl2  = $request->optionsl2;
+//       $list       = array();
+// // dd($options);
+//         /**
+//          * Get the image path from ImageSettings class
+//          * This destinationPath variable will be used
+//          * to delete an image if user edits any question and changes an image
+//          */
+//          $imageObject = new App\ImageSettings();
+//          $destinationPath      = $imageObject->getExamImagePath();
 
-        /**
-         * Get the image path from ImageSettings class
-         * This destinationPath variable will be used
-         * to delete an image if user edits any question and changes an image
-         */
-         $imageObject = new App\ImageSettings();
-         $destinationPath      = $imageObject->getExamImagePath();
+//          /**
+//           * Loop the total options selected by user
+//           * and process each option by checking wether the image
+//           * has been uploaded or not
+//           * After this loop multiple objects will be created based on
+//           * the no. of options(total_answers) selected by user
+//           * Each object contains 3 properties
+//           * 1) option_value : stores the text submitted as option
+//           * 2) has_file     : stores if this particular option has any file
+//           * 3) file_name    : stores the name of file uploaded
+//           */
+//       for($index = 0; $index < $request->total_answers; $index++)
+//       {
+//             /**
+//              * The $answers variable is used when user edit any question
+//              * It will contain the previous option values
+//              * As it is under for loop, every option property will be checked
+//              * by comparing wether the file is submitted for this particular object
+//              * If submitted it will delete the old file and overwrite with new file
+//              * @var [type]
+//              */
+//             $answers = json_decode($record->answers);
+//             $old_has_file = isset($answers[$index]->has_file) ? $answers[$index]->has_file : 0;
+//             $old_file_name = isset($answers[$index]->file_name) ? $answers[$index]->file_name : '';
 
-         /**
-          * Loop the total options selected by user
-          * and process each option by checking wether the image
-          * has been uploaded or not
-          * After this loop multiple objects will be created based on
-          * the no. of options(total_answers) selected by user
-          * Each object contains 3 properties
-          * 1) option_value : stores the text submitted as option
-          * 2) has_file     : stores if this particular option has any file
-          * 3) file_name    : stores the name of file uploaded
-          */
-      for($index = 0; $index < $request->total_answers; $index++)
-      {
-            /**
-             * The $answers variable is used when user edit any question
-             * It will contain the previous option values
-             * As it is under for loop, every option property will be checked
-             * by comparing wether the file is submitted for this particular object
-             * If submitted it will delete the old file and overwrite with new file
-             * @var [type]
-             */
-            $answers = json_decode($record->answers);
-            $old_has_file = isset($answers[$index]->has_file) ? $answers[$index]->has_file : 0;
-            $old_file_name = isset($answers[$index]->file_name) ? $answers[$index]->file_name : '';
+//          $spl_char   = ['\t','\n','\b','\c','\r','\'','\\','\$','\"',"'"];
+//         $list[$index]['option_value']   = str_replace($spl_char,'',$options[$index]);
+//         $list[$index]['optionl2_value']   = str_replace($spl_char,'',$optionsl2[$index]);
 
-         $spl_char   = ['\t','\n','\b','\c','\r','\'','\\','\$','\"',"'"];
-        $list[$index]['option_value']   = str_replace($spl_char,'',$options[$index]);
-        $list[$index]['optionl2_value']   = str_replace($spl_char,'',$optionsl2[$index]);
+//         // $list[$index]['option_value']  = $options[$index];
+//         $list[$index]['has_file']     = $old_has_file;
+//         $list[$index]['file_name']    = $old_file_name;
+//         $file_name            = 'upload_'.$index;
+//         if ($request->hasFile($file_name))
+//         {
+//           $rules = array($file_name => 'mimes:jpeg,jpg,png,gif|max:10000');
+//           $validator = Validator::make($request->options, $rules);
+//           if($validator->fails())
+//               return '';
 
-        // $list[$index]['option_value']  = $options[$index];
-        $list[$index]['has_file']     = $old_has_file;
-        $list[$index]['file_name']    = $old_file_name;
-        $file_name            = 'upload_'.$index;
-        if ($request->hasFile($file_name))
-        {
-          $rules = array($file_name => 'mimes:jpeg,jpg,png,gif|max:10000');
-          $validator = Validator::make($request->options, $rules);
-          if($validator->fails())
-              return '';
+//                   //Delete Old Files
+//                 if($old_file_name)
+//                     $this->deleteExamFile($old_file_name, $destinationPath);
 
-                  //Delete Old Files
-                if($old_file_name)
-                    $this->deleteExamFile($old_file_name, $destinationPath);
-
-          // This option has the image to be uploaded,
-          // so process image and update the fields
-          $list[$index]['has_file']     = 1;
-          $list[$index]['file_name']    = $this
-                          ->processUpload($request, $record,$file_name, 'option');
+//           // This option has the image to be uploaded,
+//           // so process image and update the fields
+//           $list[$index]['has_file']     = 1;
+//           $list[$index]['file_name']    = $this
+//                           ->processUpload($request, $record,$file_name, 'option');
 
 
+//         }
+
+//       }
+// dd($list);
+//       return json_encode($list);
+//     }
+
+
+public function prepareOptions($request, $record)
+{
+    $options   = $request->input('options', []);
+    $optionsl2 = $request->input('optionsl2', []);
+
+    $list = [];
+
+    $imageObject = new App\ImageSettings();
+    $destinationPath = $imageObject->getExamImagePath();
+
+    for ($index = 0; $index < (int)$request->total_answers; $index++) {
+        $answers = json_decode($record->answers ?? '[]');
+        $old_has_file = isset($answers[$index]->has_file) ? $answers[$index]->has_file : 0;
+        $old_file_name = isset($answers[$index]->file_name) ? $answers[$index]->file_name : '';
+
+        $spl_char = ['\t','\n','\b','\c','\r','\'','\\','\$','\"',"'"];
+        $list[$index]['option_value'] = isset($options[$index]) 
+            ? str_replace($spl_char, '', $options[$index]) 
+            : '';
+        $list[$index]['optionl2_value'] = isset($optionsl2[$index]) 
+            ? str_replace($spl_char, '', $optionsl2[$index]) 
+            : '';
+
+        $list[$index]['has_file'] = $old_has_file;
+        $list[$index]['file_name'] = $old_file_name;
+
+        $file_field = 'upload_'.$index;
+        if ($request->hasFile($file_field)) {
+            $validator = Validator::make(
+                $request->all(),
+                [$file_field => 'mimes:jpeg,jpg,png,gif|max:10000']
+            );
+
+            if ($validator->fails()) {
+                throw new \Exception('Invalid file type or size for option image.');
+            }
+
+            if ($old_file_name) {
+                $this->deleteExamFile($old_file_name, $destinationPath);
+            }
+
+            $list[$index]['has_file'] = 1;
+            $list[$index]['file_name'] = $this->processUpload($request, $record, $file_field, 'option');
         }
-
-      }
-
-      return json_encode($list);
     }
+
+    return json_encode($list);
+}
 
 
     /**

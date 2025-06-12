@@ -66,7 +66,7 @@
  	<script src="{{JS}}jquery.dataTables.min.js"></script>
 	<script src="{{JS}}dataTables.bootstrap.min.js"></script> --}}
 
- @include('common.datatables', array('route'=>URL_QUESTIONBANK_GETQUESTION_LIST.$subject->slug, 'route_as_url' => 'TRUE', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'institute' => request('institute_id'),'question_category_id' => request('question_category_id'), 'difficulty_level' => request('difficulty_level')]))
+ @include('common.datatables', array('route'=>URL_QUESTIONBANK_GETQUESTION_LIST.$subject->slug, 'route_as_url' => 'TRUE', 'search_columns' => ['subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'institute' => request('institute_id'),'question_category_id' => request('question_category_id'), 'difficulty_level' => request('difficulty_level')],'table_columns' => ['question_code','question','questionbank_category_id','action']))
  @include('common.deletescript', array('route'=>URL_QUESTIONBANK_DELETE))
 @include('common.filter-scripts')
 

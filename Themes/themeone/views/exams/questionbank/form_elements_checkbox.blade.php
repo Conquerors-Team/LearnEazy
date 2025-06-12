@@ -12,10 +12,19 @@
     </fieldset>
      <div class="row" data-ng-repeat="i in range(total_answers) track by $index" ng-if="total_answers > 0">
 
-    <fieldset class="form-group col-md-4" >
-        <label >Option @{{ $index+1 }}</label> <span class="text-red">*</span>
-        <input type="text" name="options[]" id="option_@{{ $index }}" class="form-control" placeholder="Option @{{ $index+1 }}" ng-model="answers[$index].option_value" required="true" ckeditor>
-    </fieldset>
+    <fieldset class="form-group col-md-4">
+    <label>Option @{{ $index+1 }}</label> <span class="text-red">*</span>
+    
+    <!-- Visible input for user -->
+    <input type="text" class="form-control"
+           placeholder="Option @{{ $index+1 }}"
+           ng-model="answers[$index].option_value"
+           required="true" ckeditor>
+
+    <!-- Hidden field with name Laravel understands -->
+    <input type="hidden" name="options[]" ng-value="answers[$index].option_value">
+</fieldset>
+
 
      {{--
      <fieldset class="form-group col-md-4" >
@@ -58,8 +67,16 @@
 <fieldset class="form-group" data-ng-repeat="i in range(total_correct_answers) track by $index" ng-if="total_correct_answers > 0">
 
          <label >Answer @{{ $index+1 }}</label>  <span class="text-red">*</span>
-        <input type="text" name="correct_answers[]" id="option_@{{ $index }}" class="form-control" placeholder="Answer @{{ $index+1 }}" ng-model="correct_answers[$index].answer"
-         required ckeditor>
+          <input type="text"
+           class="form-control"
+           placeholder="Answer @{{ $index+1 }}"
+           ng-model="correct_answers[$index].answer"
+           required
+           ckeditor>
+          <!-- Hidden field with name Laravel understands -->
+  <input type="hidden"
+           name="correct_answers[]"
+           ng-value="correct_answers[$index].answer">
 
     </fieldset>
 
