@@ -190,8 +190,8 @@
 
 							<span class="text-red">*</span>
 
-							{{ Form::text('total_items', $value = null , $attributes = array('class'=>'form-control','readonly'=>'true' ,'placeholder' => getPhrase('It will be updated by adding the LMS items'))) }}
-
+							{{ Form::text('total_items', $value = null , $attributes = array('class'=>'form-control' ,'placeholder' => getPhrase('It will be updated by adding the LMS items'))) }}
+							<!-- {{ Form::textarea('short_description', $value = null , $attributes = array('class'=>'form-control ckeditor', 'rows'=>'5', 'placeholder' => getPhrase('short_description'))) }} -->
 					</fieldset>
 
 
