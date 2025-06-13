@@ -135,9 +135,11 @@
 <!-- @include('exams.examseries.scripts.js-scripts') -->
 
  @include('common.filter-scripts')
-
- @include('common.datatables', array('route'=>'exams.quiz.getlist', 'search_columns' => ['callfrom' => 'examseries', 'series_id' => $record->id, 'subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'content_type' => request('content_type'), 'institute' => request('institute_id')]))
-
+@if(checkRole(getUserGrade(3)) || shareData('share_questions') )
+ @include('common.datatables', array('route'=>'exams.quiz.getlist', 'search_columns' => ['callfrom' => 'examseries', 'series_id' => $record->id, 'subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['institute_id','title','dueration','category_id','total_marks','exam_type','action']))
+@else
+@include('common.datatables', array('route'=>'exams.quiz.getlist', 'search_columns' => ['callfrom' => 'examseries', 'series_id' => $record->id, 'subject' => request('subject_id'),'chapter' => request('chapter_id'),'topic' => request('topic_id'),'sub_topic' => request('sub_topic_id'), 'content_type' => request('content_type'), 'institute' => request('institute_id')],'table_columns' => ['title','dueration','category_id','total_marks','exam_type','action']))
+@endif
 @stop
 
 
