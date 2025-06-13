@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionSettings extends Model
 {
+    use HasSlug;
     ////////////////////////////
     // Subscription settings  //
     ////////////////////////////

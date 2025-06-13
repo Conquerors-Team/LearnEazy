@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Textlocal extends Model
 {
+	use HasSlug;
 	const REQUEST_URL = 'https://api.textlocal.in/';
 	const REQUEST_TIMEOUT = 60;
 	const REQUEST_HANDLER = 'curl';

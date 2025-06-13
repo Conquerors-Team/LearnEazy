@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class ExamSettings extends Model
 {
+    use HasSlug;
    ////////////////////////////
     // Exam upload options //
     ////////////////////////////

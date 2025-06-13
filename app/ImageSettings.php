@@ -2,11 +2,13 @@
 
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use Image;
 class ImageSettings extends Model
 {
+    use HasSlug;
     ////////////////////////////
     // Profile Upload Options //
     ////////////////////////////

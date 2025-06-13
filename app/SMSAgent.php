@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use \App;
+use App\Http\Controllers\Traits\HasSlug;
 use App\User;
 use DB;
 use SMS;
@@ -12,6 +13,7 @@ use Craftsys\Msg91\Facade\Msg91;
 
 class SMSAgent extends Model
 {
+  use HasSlug;
 	public $users    = [];
 	public $message = '';
 	public $role_id = 0;

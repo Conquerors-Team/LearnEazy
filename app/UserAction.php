@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use App\Http\Controllers\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 */
 class UserAction extends Model
 {
+    use HasSlug;
     protected $fillable = ['action', 'action_model', 'action_id', 'user_id', 'record_original', 'record_update', 'ipaddress'];
     protected $hidden = [];
     public static $searchable = [
