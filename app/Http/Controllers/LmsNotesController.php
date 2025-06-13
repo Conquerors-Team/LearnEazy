@@ -10,7 +10,9 @@ use App\LmsNote;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
-use Image;
+// use Image;
+use Intervention\Image\ImageManager as Image;
+
 use ImageSettings;
 use File;
 use Input;
@@ -653,8 +655,14 @@ class LmsNotesController extends Controller
 
          if($is_image){
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($imageObject->getThumbnailSize())->save($destinationPath.$fileName);
-         }
+          // Image::make($destinationPath.$fileName)->fit($imageObject->getThumbnailSize())->save($destinationPath.$fileName);
+         $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
+
+          $image = $manager->read($destinationPath . $fileName);
+          $image->resize(height: $examSettings->imageSize, width: $examSettings->imageSize)->save($destinationPath . $fileName);
+        
+        
+        }
         return $fileName;
 
         }

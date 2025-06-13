@@ -10,7 +10,9 @@ use App\LmsSettings;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
-use Image;
+// use Image;
+use Intervention\Image\ImageManager as Image;
+
 use ImageSettings;
 use File;
 
@@ -175,6 +177,7 @@ class LmsCategoryController extends Controller
 
              return '-';
         })
+        ->rawColumns(['institute_id','image','action'])
         ->make();
     }
 
@@ -408,8 +411,12 @@ class LmsCategoryController extends Controller
           $request->file($file_name)->move($destinationPath, $fileName);
          
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($settings->imageSize)->save($destinationPath.$fileName);
-         return $fileName;
+          // Image::make($destinationPath.$fileName)->fit($settings->imageSize)->save($destinationPath.$fileName);
+         $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
+
+          $image = $manager->read($destinationPath . $fileName);
+          $image->resize(height: $settings->imageSize, width: $settings->imageSize)->save($destinationPath . $fileName);
+          return $fileName;
         }
      }
 }

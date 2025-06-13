@@ -418,10 +418,8 @@ class PackagesController extends Controller
          //Save Normal Image with 300x300
           // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
           Image::read($destinationPath.$fileName)   // v3 uses read(), not make()
-    ->cover($examSettings->imageSize, $examSettings->imageSize)
-
-
-     ->save($destinationPath.$fileName);
+            ->cover($examSettings->imageSize, $examSettings->imageSize)
+            ->save($destinationPath.$fileName);
          return $fileName;
         }
      }

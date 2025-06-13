@@ -586,7 +586,7 @@ class QuizController extends Controller
   public function store(Request $request)
   {
     // dd($request->all());
-    //
+    
     if (!canDo('exams_create')) {
       prepareBlockUserMessage();
       return back();

@@ -11,7 +11,7 @@ use App\LmsSeries;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
-use Image;
+use Intervention\Image\ImageManager as Image;
 use ImageSettings;
 use File;
 use Exception;
@@ -415,10 +415,26 @@ class LmsContentController extends Controller
                 break;
         }
 
+        $file_name = 'image';
+        if ($request->hasFile($file_name))
+        {
+
+            $rules = array( $file_name => 'mimes:jpeg,jpg,png,gif|max:10000' );
+            $this->validate($request, $rules);
+            $this->setSettings();
+            $examSettings = $this->getSettings();
+            $path = $examSettings->contentImagepath;
+            $this->deleteFile($record->image, $path);
+
+              $record->image      = $this->processUpload($request, $record,$file_name);
+
+              $record->save();
+        }
+        // dd($record);
 
         $this->validate($request, $rules);
          DB::beginTransaction();
-       try{
+      //  try{
        $name = $request->title;
         if($name != $record->title)
             $record->slug = $record->makeSlug($name, TRUE);
@@ -485,19 +501,19 @@ class LmsContentController extends Controller
         DB::commit();
         flash('success','record_updated_successfully', 'success');
 
-    }  catch(Exception $e)
-     {
-        DB::rollBack();
-       if(getSetting('show_foreign_key_constraint','module'))
-       {
+    // }  catch(Exception $e)
+    //  {
+    //     DB::rollBack();
+    //    if(getSetting('show_foreign_key_constraint','module'))
+    //    {
 
-          flash('oops...!',$e->errorInfo, 'error');
-       }
-       else {
-          //dd( $e->getMessage() );
-          flash('oops...!','improper_data_file_submitted', 'error');
-       }
-     }
+    //       flash('oops...!',$e->errorInfo, 'error');
+    //    }
+    //    else {
+    //       //dd( $e->getMessage() );
+    //       flash('oops...!','improper_data_file_submitted', 'error');
+    //    }
+    //  }
     	return redirect(URL_LMS_CONTENT);
     }
 
@@ -751,10 +767,19 @@ class LmsContentController extends Controller
           $fileName = $record->id.'-'.$file_name.'.'.$ext;
 
           $request->file($file_name)->move($destinationPath, $fileName);
+          // dd($settings->imageSize);
          if($is_image){
 
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($settings->imageSize)->save($destinationPath.$fileName);
+          // Image::make($destinationPath.$fileName)->fit($settings->imageSize)->save($destinationPath.$fileName);
+          // $image = Image::gd()->read($destinationPath, $fileName);
+          // $image->resize($settings->imageSize)->save($destinationPath . $fileName);
+
+          $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
+
+          $image = $manager->read($destinationPath . $fileName);
+          $image->resize(height: $settings->imageSize, width: $settings->imageSize)->save($destinationPath . $fileName);
+
          }
          return $fileName;
         }

@@ -10,7 +10,8 @@ use App\LmsSeries;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
-use Image;
+// use Image;
+use Intervention\Image\ImageManager as Image;
 use ImageSettings;
 use File;
 use Input;
@@ -467,6 +468,7 @@ class LmsSeriesController extends Controller
      */
     public function store(Request $request)
     {
+      // dd($request->all());
       if(!canDo('lms_series_create'))
       {
         prepareBlockUserMessage();
@@ -530,7 +532,7 @@ class LmsSeriesController extends Controller
         	$record->validity		= $request->validity;
         	$record->cost			= $request->cost;
     	}
-        $record->total_items		= $request->total_items;
+        // $record->total_items		= $request->total_items;
         $record->short_description	= $request->short_description;
         $record->description		= $request->description;
         $record->start_date   = $request->start_date;
@@ -590,10 +592,20 @@ class LmsSeriesController extends Controller
           $request->file($file_name)->move($destinationPath, $fileName);
 
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
 
+          // Resize and save main image
+          $image = $manager->read($destinationPath . $fileName);
+          $image->cover($examSettings->imageSize, $examSettings->imageSize)
+            ->save($destinationPath . $fileName);
 
-           Image::make($destinationPath.$fileName)->fit($imageObject->getThumbnailSize())->save($destinationPathThumb.$fileName);
+          // Resize and save thumbnail
+          $thumbnail = $manager->read($destinationPath . $fileName);
+          $thumbnail->cover($imageObject->getThumbnailSize(), $imageObject->getThumbnailSize())
+            ->save($destinationPathThumb . $fileName);
+
+          //  Image::make($destinationPath.$fileName)->fit($imageObject->getThumbnailSize())->save($destinationPathThumb.$fileName);
         return $fileName;
 
         }

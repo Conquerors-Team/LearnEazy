@@ -13,7 +13,8 @@ use App\ExamSeries;
 use Yajra\Datatables\Datatables;
 use DB;
 use Auth;
-use Image;
+// use Image;
+use Intervention\Image\ImageManager as Image;
 use ImageSettings;
 use File;
 use Input;
@@ -217,6 +218,7 @@ class ExamSeriesController extends Controller
         ->removeColumn('id')
         ->removeColumn('slug')
         ->removeColumn('updated_at')
+        ->rawColumns(['institute_id','title','image','is_paid','action'])
         ->make();
     }
 
@@ -348,6 +350,7 @@ class ExamSeriesController extends Controller
      */
     public function store(Request $request)
     {
+      // dd($request->all());
       if(!canDo('exam_series_create'))
       {
         prepareBlockUserMessage();
@@ -371,9 +374,9 @@ class ExamSeriesController extends Controller
         	$record->cost			= $request->cost;
     	}
 
-        $record->total_exams		= $request->total_exams;
-        $record->total_questions	= $request->total_questions;
-        //$record->category_id      = $request->category_id;
+        // $record->total_exams		= $request->total_exams;
+        // $record->total_questions	= $request->total_questions;
+        // $record->category_id      = $request->category_id;
 
         $record->short_description	= $request->short_description;
         $record->description		= $request->description;
@@ -435,10 +438,19 @@ class ExamSeriesController extends Controller
           $request->file($file_name)->move($destinationPath, $fileName);
 
          //Save Normal Image with 300x300
-          Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
+          $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
 
+          // Resize and save main image
+          $image = $manager->read($destinationPath . $fileName);
+          $image->cover($examSettings->imageSize, $examSettings->imageSize)
+          ->save($destinationPath . $fileName);
 
-           Image::make($destinationPath.$fileName)->fit($imageObject->getThumbnailSize())->save($destinationPathThumb.$fileName);
+          // Resize and save thumbnail
+          $thumbnail = $manager->read($destinationPath . $fileName);
+          $thumbnail->cover($imageObject->getThumbnailSize(), $imageObject->getThumbnailSize())
+            ->save($destinationPathThumb . $fileName);
+            //  Image::make($destinationPath.$fileName)->fit($imageObject->getThumbnailSize())->save($destinationPathThumb.$fileName);
         return $fileName;
 
         }

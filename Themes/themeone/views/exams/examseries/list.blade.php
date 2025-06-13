@@ -64,7 +64,10 @@
 
 @section('footer_scripts')
 
- @include('common.datatables', array('route'=>URL_EXAM_SERIES_AJAXLIST, 'route_as_url' => TRUE))
+@if(checkRole(getUserGrade(3)) || shareData())
+ @include('common.datatables', array('route'=>URL_EXAM_SERIES_AJAXLIST, 'route_as_url' => TRUE,'table_columns' => ['institute_id','title','image','is_paid','cost','validity','total_exams','total_questions','action']))
+@else
+@include('common.datatables', array('route'=>URL_EXAM_SERIES_AJAXLIST, 'route_as_url' => TRUE,'table_columns' => ['title','image','is_paid','cost','validity','total_exams','total_questions','action']))
  @include('common.deletescript', array('route'=>URL_EXAM_SERIES_DELETE))
-
+@endif
 @stop
