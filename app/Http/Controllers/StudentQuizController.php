@@ -1366,6 +1366,7 @@ class StudentQuizController extends Controller
         ->removeColumn('created_at')
         ->removeColumn('updated_at')
         ->removeColumn('id')
+        ->rawColumns(['explaination'])
         ->make();
 
 

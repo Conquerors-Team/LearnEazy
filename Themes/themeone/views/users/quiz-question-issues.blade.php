@@ -108,7 +108,7 @@
 
 
 
- @include('common.datatables', array('route'=>'get_issues_table/'.$user->id, 'route_as_url'=>TRUE))
+ @include('common.datatables', array('route'=>'get_issues_table/'.$user->id, 'route_as_url'=>TRUE, 'table_columns' => ['issue_type', 'title', 'explaination', 'user_id']))
 
  @include('common.deletescript', array('route'=>URL_BOOKMARK_DELETE_BY_ID))
 

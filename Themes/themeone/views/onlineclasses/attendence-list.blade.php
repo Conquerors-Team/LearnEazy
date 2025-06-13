@@ -46,9 +46,9 @@
 									@if(isInstitute() || isStudent() )
 									<th>{{ getPhrase('subject')}}</th>
 									@endif
-									<!-- @if(isInstitute() || isStudent() )
+									@if(isInstitute() || isStudent() )
 									<th>{{ getPhrase('faculty')}}</th>
-									@endif -->
+									@endif
 									<th>{{ getPhrase('attendence')}}</th>
 									<th>{{ getPhrase('absents')}}</th>
 									@if(checkRole(getUserGrade(2)))
@@ -82,7 +82,7 @@
             'subject_id' => request('subject_id')
         ],
         'table_columns' => [
-            'valid_from', 'class_time', 'title', 'batch_id', 'subject_id', 'attendence', 'absents', 'action'
+            'valid_from', 'class_time', 'title', 'batch_id', 'subject_id','created_by_id','attendence', 'absents', 'action'
         ]
     ))
 @elseif(checkRole(getUserGrade(2)))
