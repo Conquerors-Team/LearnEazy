@@ -184,7 +184,7 @@ class PaymentsController extends Controller
      */
     public function paynow(Request $request, $slug)
     {
-// dd($request);
+        // dd($request);
 
       if( $request->gateway  == 'razorpay' ){
 
@@ -1901,10 +1901,11 @@ public function approvePayment(Payment $payment_record,Request $request ,$iscoup
   public function razorpaySuccess(Request $request)
   {
 
-     // dd($request);
+    //  dd($request);
         $user    = Auth::user();
         //Input items of form
-        $input = Input::all();
+        // $input = Input::all();
+        $input = $request->all();
 
         //get API Configuration
         $api = new Api(env('RAZORPAY_APIKEY'), env('RAZORPAY_SECRET'));
@@ -1943,7 +1944,7 @@ public function approvePayment(Payment $payment_record,Request $request ,$iscoup
                 $payment_record->after_discount  = $request->after_discount;
                 $payment_record->paid_by         = $response->email;
                 $payment_record->paid_amount     = $request->after_discount;
-                $payment_record->paid_by_parent  = $request->parent_user;
+                $payment_record->paid_by_parent  = $request->parent_user ?? 0;
                 if ( ! empty( $request->subscribe_onlineclasses ) ) {
                   $payment_record->subscribe_onlineclasses = $request->subscribe_onlineclasses;
                 }
