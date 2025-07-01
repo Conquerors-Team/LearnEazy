@@ -316,7 +316,7 @@ class CourseController extends Controller
     $name                       =  $request->title;
     $record->title          = $name;
     $record->slug               = $record->makeSlug($name);
-    $record->description        = $request->description;
+    // $record->description        = $request->description;
     $record->fee_percourse        = $request->fee_percourse;
     $record->student_class_id        = $request->student_class_id;
 
