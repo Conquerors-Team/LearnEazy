@@ -93,12 +93,12 @@ class SubjectsController extends Controller
 
             $temp = '';
 
-        if(checkRole(getUserGrade(2))) {
+        if(!checkRole(getUserGrade(12))) {
 
           $institute_id   = adminInstituteId();
 
 
-          if(checkRole(getUserGrade(2), 'subject_edit')){
+          if(!checkRole(getUserGrade(12), 'subject_edit')){
             $temp.= '<li><a href="'.URL_SUBJECTS_EDIT.'/'.$records->slug.'"><i class="fa fa-pencil"></i>'.getPhrase("edit").'</a></li>';
           }
 
@@ -270,12 +270,12 @@ class SubjectsController extends Controller
             // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
             $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
 
-$imagePath = $destinationPath . $fileName;
+          $imagePath = $destinationPath . $fileName;
 
-// Read and resize the image
-$image = $manager->read($imagePath);
-$image->cover($examSettings->imageSize, $examSettings->imageSize) // or ->resize()
-      ->save($imagePath);
+          // Read and resize the image
+          $image = $manager->read($imagePath);
+          $image->cover($examSettings->imageSize, $examSettings->imageSize) // or ->resize()
+            ->save($imagePath);
             $record->image      = $fileName;
             $record->save();
           }
