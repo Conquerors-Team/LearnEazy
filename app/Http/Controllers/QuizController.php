@@ -680,7 +680,7 @@ class QuizController extends Controller
       if (!$request->negative_mark)
         $record->having_negative_mark = 0;
 
-      $record->description    = $request->description;
+      // $record->description    = $request->description;
       $record->record_updated_by  = Auth::user()->id;
       $record->record_created_by   = \Auth::id();
       $record->exam_type          = $request->exam_type;
@@ -712,7 +712,9 @@ class QuizController extends Controller
       if ($request->competitive_exam_type_id) {
         $record->competitive_exam_type_id  = $request->competitive_exam_type_id;
       }
+      // dd($record);
       $record->save();
+      // dd($record);
 
       /*
         if($request->quiz_applicability == 1){
