@@ -14,7 +14,8 @@ use ImageSettings;
 use Yajra\Datatables\Datatables;
 use DB;
 use Illuminate\Support\Facades\Hash;
-use Excel;
+// use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use Input;
 use File;
 use Auth;
@@ -991,72 +992,162 @@ class UsersController extends Controller
 
     try {
       if (request()->hasFile('excel')) {
-        $path = request()->file('excel')->getRealPath();
-        $data = Excel::load($path, function ($reader) {})->get();
+        // $path = request()->file('excel')->getRealPath();
+        // $data = Excel::load($path, function ($reader) {})->get();
+        // $data = Excel::toCollection(null, $request->file('excel'))[0];
+        $raw = Excel::toCollection(null, $request->file('excel'))[0]; // First sheet
+
+        $headers = $raw[0]->toArray(); // First row is header
+        $data = collect();
+
+        foreach ($raw->slice(1) as $row) {
+          $rowArray = $row->toArray();
+          if (count($rowArray) !== count($headers)) continue;
+
+          // Check if all values are empty/null
+          $allEmpty = true;
+          foreach ($rowArray as $value) {
+              if (!is_null($value) && trim($value) !== '') {
+                  $allEmpty = false;
+                  break;
+              }
+          }
+          if ($allEmpty) continue; // Skip this row
+
+          $combined = array_combine($headers, $rowArray);
+          $data->push((object) $combined);
+        }
+        // dd($data);
+
 
         $user_record = array();
         $users = array();
         $isHavingDuplicate = 0;
         if (!empty($data) && $data->count()) {
+          // dd($data);
 
-          foreach ($data as $key => $value) {
+          // foreach ($data as $key => $value) {
 
-            foreach ($value as $record) {
-              unset($user_record);
+          //   foreach ($value as $record) {
+          //     unset($user_record);
 
-              $user_record['username'] = $record->username;
-              $user_record['name'] = $record->name;
-              $user_record['email'] = $record->email;
-              $username = $record->username;
-              if (empty($username)) {
-                $username = strtolower(preg_replace("/[^a-zA-Z]+/", "", $record->name));
-              }
-              $user_record['username'] = $username;
+          //     $user_record['username'] = $record->username;
+          //     $user_record['name'] = $record->name;
+          //     $user_record['email'] = $record->email;
+          //     $username = $record->username;
+          //     if (empty($username)) {
+          //       $username = strtolower(preg_replace("/[^a-zA-Z]+/", "", $record->name));
+          //     }
+          //     $user_record['username'] = $username;
 
-              $email = $record->email;
-              if (empty($email)) {
-                $email = strtolower(preg_replace("/[^a-zA-Z]+/", "", $record->name));
-                $email = $email . '@' . $email . '.com';
-                $email = strtolower($email);
-              }
-              $user_record['email'] = $email;
+          //     $email = $record->email;
+          //     if (empty($email)) {
+          //       $email = strtolower(preg_replace("/[^a-zA-Z]+/", "", $record->name));
+          //       $email = $email . '@' . $email . '.com';
+          //       $email = strtolower($email);
+          //     }
+          //     $user_record['email'] = $email;
 
-              if (! empty($record->student_class)) {
-                $student_class = \App\StudentClass::find((int)$record->student_class);
-                if ($student_class) {
-                  $user_record['student_class_id'] = $student_class->id;
-                }
-              }
+          //     if (! empty($record->student_class)) {
+          //       $student_class = \App\StudentClass::find((int)$record->student_class);
+          //       if ($student_class) {
+          //         $user_record['student_class_id'] = $student_class->id;
+          //       }
+          //     }
 
-              $user_record['password'] = $record->password;
-              $user_record['phone'] = $record->phone;
-              $user_record['address'] = $record->address;
-              $user_record['role_id'] = STUDENT_ROLE_ID;
+          //     $user_record['password'] = $record->password;
+          //     $user_record['phone'] = $record->phone;
+          //     $user_record['address'] = $record->address;
+          //     $user_record['role_id'] = STUDENT_ROLE_ID;
 
-              $user_record = (object)$user_record;
-              $failed_length = count($failed_list);
-              if ($this->isRecordExists($record->username, 'username')) {
+          //     $user_record = (object)$user_record;
+          //     $failed_length = count($failed_list);
+          //     if ($this->isRecordExists($record->username, 'username')) {
 
-                $isHavingDuplicate = 1;
-                $temp = array();
-                $temp['record'] = $user_record;
-                $temp['type'] = 'Record already exists with this name';
-                $failed_list[$failed_length] = (object)$temp;
-                continue;
-              }
+          //       $isHavingDuplicate = 1;
+          //       $temp = array();
+          //       $temp['record'] = $user_record;
+          //       $temp['type'] = 'Record already exists with this name';
+          //       $failed_list[$failed_length] = (object)$temp;
+          //       continue;
+          //     }
 
-              if ($this->isRecordExists($record->email, 'email')) {
-                $isHavingDuplicate = 1;
-                $temp = array();
-                $temp['record'] = $user_record;
-                $temp['type'] = 'Record already exists with this email';
-                $failed_list[$failed_length] = (object)$temp;
-                continue;
-              }
+          //     if ($this->isRecordExists($record->email, 'email')) {
+          //       $isHavingDuplicate = 1;
+          //       $temp = array();
+          //       $temp['record'] = $user_record;
+          //       $temp['type'] = 'Record already exists with this email';
+          //       $failed_list[$failed_length] = (object)$temp;
+          //       continue;
+          //     }
 
-              $users[] = $user_record;
+          //     $users[] = $user_record;
+          //   }
+
+          foreach ($data as $record) {
+            // dd($record);
+            unset($user_record);
+
+            $user_record['username'] = $record->username;
+            $user_record['name'] = $record->name;
+            $user_record['email'] = $record->email;
+
+            $username = $record->username;
+            if (empty($username)) {
+              $username = strtolower(preg_replace("/[^a-zA-Z]+/", "", $record->name));
             }
+            $user_record['username'] = $username;
+
+            $email = $record->email;
+            if (empty($email)) {
+              $email = strtolower(preg_replace("/[^a-zA-Z]+/", "", $record->name));
+              $email = $email . '@' . $email . '.com';
+              $email = strtolower($email);
+            }
+            $user_record['email'] = $email;
+
+            if (!empty($record->student_class)) {
+              $student_class = \App\StudentClass::find((int)$record->student_class);
+              if ($student_class) {
+                $user_record['student_class_id'] = $student_class->id;
+              }
+            }
+
+            $user_record['password'] = $record->password;
+            $user_record['phone'] = $record->phone;
+            $user_record['address'] = $record->address;
+            $user_record['role_id'] = STUDENT_ROLE_ID;
+
+            // dd($user_record);
+            
+            $user_record = (object)$user_record;
+            // dd($user_record);
+            
+            $failed_length = count($failed_list);
+
+            if ($this->isRecordExists($record->username, 'username')) {
+              $isHavingDuplicate = 1;
+              $temp = array();
+              $temp['record'] = $user_record;
+              $temp['type'] = 'Record already exists with this name';
+              $failed_list[$failed_length] = (object)$temp;
+              continue;
+            }
+            // dd($user_record);
+
+            if ($this->isRecordExists($record->email, 'email')) {
+              $isHavingDuplicate = 1;
+              $temp = array();
+              $temp['record'] = $user_record;
+              $temp['type'] = 'Record already exists with this email';
+              $failed_list[$failed_length] = (object)$temp;
+              continue;
+            }
+            // dd($user_record);
+
+            $users[] = $user_record;
           }
+          // dd($users);
           if ($this->addUser($users))
             $success_list = $users;
         }
@@ -1065,20 +1156,15 @@ class UsersController extends Controller
 
 
       $this->excel_data['failed'] = $failed_list;
+      // dd($this->excel_data);
       $this->excel_data['success'] = $success_list;
 
       flash('success', 'record_added_successfully', 'success');
-      $this->downloadExcel();
+      // $this->downloadExcel();
     } catch (Exception $e) {
-      if (getSetting('show_foreign_key_constraint', 'module')) {
-
-        flash('oops...!', $e->errorInfo, 'error');
-      } else {
-        flash('oops...!', 'improper_sheet_uploaded', 'error');
-      }
-
+      flash('error', 'Actual error: ' . $e->getMessage(), 'error');
       return back();
-    }
+  }
 
     // URL_USERS_IMPORT_REPORT
     $data['failed_list']   =   $failed_list;
