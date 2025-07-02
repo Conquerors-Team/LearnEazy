@@ -395,13 +395,17 @@ $image->cover($examSettings->imageSize, $examSettings->imageSize) // or ->resize
 
             // Image::make($destinationPath.$fileName)->fit($examSettings->imageSize)->save($destinationPath.$fileName);
             
-               Image::read($destinationPath.$fileName)   // v3 uses read(), not make()
-    ->cover($examSettings->imageSize, $examSettings->imageSize)
+    //            Image::read($destinationPath.$fileName)   // v3 uses read(), not make()
+    // ->cover($examSettings->imageSize, $examSettings->imageSize)
 
 
-     ->save($destinationPath.$fileName);
-            $record->image      = $fileName;
-            $record->save();
+    //  ->save($destinationPath.$fileName);
+    //         $record->image      = $fileName;
+    //         $record->save();
+             $manager = new Image(new \Intervention\Image\Drivers\Gd\Driver());
+
+            $image = $manager->read($destinationPath . $fileName);
+            $image->resize(height: $examSettings->imageSize, width: $examSettings->imageSize)->save($destinationPath . $fileName);
           }
         }
 
