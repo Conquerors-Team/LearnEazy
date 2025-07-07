@@ -321,8 +321,8 @@ class ExamSeriesController extends Controller
         $record->total_exams		= $request->total_exams;
         $record->total_questions	= $request->total_questions;
 
-        $record->short_description	= $request->short_description;
-        $record->description    = $request->description;
+        // $record->short_description	= $request->short_description;
+        // $record->description    = $request->description;
         $record->start_date   = $request->start_date;
         $record->end_date		= $request->end_date;
         $record->record_updated_by 	= Auth::user()->id;
@@ -376,10 +376,10 @@ class ExamSeriesController extends Controller
 
         // $record->total_exams		= $request->total_exams;
         // $record->total_questions	= $request->total_questions;
-        // $record->category_id      = $request->category_id;
+        // $record->category_id      = $request->category_id
 
-        $record->short_description	= $request->short_description;
-        $record->description		= $request->description;
+        // $record->short_description	= $request->short_description;
+        // $record->description		= $request->description;
         $record->start_date   = $request->start_date;
         $record->end_date   = $request->end_date;
         $record->record_updated_by 	= Auth::user()->id;

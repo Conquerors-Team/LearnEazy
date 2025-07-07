@@ -506,7 +506,7 @@ class QuizController extends Controller
     if (!$request->negative_mark)
       $record->having_negative_mark = 0;
 
-    $record->description    = $request->description;
+    // $record->description    = $request->description;
     $record->record_updated_by  = Auth::user()->id;
     if (empty($record->record_created_by)) {
       $record->record_created_by   = \Auth::id();

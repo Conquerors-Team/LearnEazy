@@ -318,7 +318,7 @@ class LmsGroupController extends Controller
        //Validate the overall request
        $this->validate($request, $rules);
     	$record->category 			= $name;
-        $record->description		= $request->description;
+        // $record->description		= $request->description;
         $record->record_updated_by 	= Auth::user()->id;
         $record->save();
 
@@ -347,7 +347,7 @@ class LmsGroupController extends Controller
       	$name  						=  $request->title;
 		$record->title 			= $name;
        	$record->slug 				= $record->makeSlug($name,TRUE);
-        $record->description		= $request->description;
+        // $record->description		= $request->description;
         $record->record_updated_by 	= Auth::user()->id;
          $record->institute_id   = adminInstituteId();
 

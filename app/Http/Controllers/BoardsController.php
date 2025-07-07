@@ -246,7 +246,7 @@ class BoardsController extends Controller
        //Validate the overall request
        $this->validate($request, $rules);
         $record->title           = $name;
-        $record->description = $request->description;
+        // $record->description = $request->description;
         $record->status  = $request->status;
         $record->save();
 
@@ -277,7 +277,7 @@ class BoardsController extends Controller
         $name                       =  $request->title;
         $record->title           = $name;
         $record->status  = $request->status;
-        $record->description = $request->description;
+        // $record->description = $request->description;
         $record->save();
 
         $record->classes()->sync(array_filter((array)$request->input('classes')));

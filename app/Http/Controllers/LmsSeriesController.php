@@ -439,8 +439,8 @@ class LmsSeriesController extends Controller
         $record->total_items		= $request->total_items;
 
 
-        $record->short_description	= $request->short_description;
-        $record->description		= $request->description;
+        // $record->short_description	= $request->short_description;
+        // $record->description		= $request->description;
         $record->start_date   = $request->start_date;
         $record->end_date   = $request->end_date;
         $record->record_updated_by 	= Auth::user()->id;
@@ -533,8 +533,8 @@ class LmsSeriesController extends Controller
         	$record->cost			= $request->cost;
     	}
         // $record->total_items		= $request->total_items;
-        $record->short_description	= $request->short_description;
-        $record->description		= $request->description;
+        // $record->short_description	= $request->short_description;
+        // $record->description		= $request->description;
         $record->start_date   = $request->start_date;
         $record->end_date   = $request->end_date;
         $record->record_updated_by 	= Auth::user()->id;

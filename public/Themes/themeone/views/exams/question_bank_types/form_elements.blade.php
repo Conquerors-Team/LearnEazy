@@ -37,6 +37,8 @@
 
 									'cols'=>'15',
 
+									'required'=> 'true',
+
 
 									'ng-class'=>'{"has-error": instituteBranch.description.$touched && instituteBranch.description.$invalid}',
 

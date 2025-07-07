@@ -364,7 +364,7 @@ class TopicsController extends Controller
         $record->chapter_id       = $request->chapter_id;
         $record->parent_id				= $request->parent_id;
         $record->subject_id				= $request->subject_id;
-        $record->description 			= $request->description;
+        // $record->description 			= $request->description;
         $record->institute_id     = adminInstituteId();
         $record->save();
 

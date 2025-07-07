@@ -229,6 +229,7 @@ class QuestionBankController extends Controller
          if ( ! empty( request('institute') ) ) {
         $institute_id = request('institute');
       }
+      // dd($institute_id);
 
          if(checkRole(getUserGrade(3))){
 
@@ -277,7 +278,7 @@ class QuestionBankController extends Controller
         $topic_id = request('topic_id');
         $records = $records->where('questionbank.topic_id',$topic_id);
       }
-
+// dd($records);  
       if ( ! empty( request('topic_id') ) ) {
         $topic_id = request('topic_id');
         $records = $records->where('questionbank.topic_id',$topic_id);
@@ -711,7 +712,7 @@ class QuestionBankController extends Controller
             $record->answers     = $this->prepareParaQuestionOptions($request, $record);
         else
           $record->answers              = $this->prepareOptions($request, $record);
-
+        // dd($record);
         $record->save();
         flash('success','record_added_successfully', 'success');
          DB::commit();
@@ -906,8 +907,8 @@ class QuestionBankController extends Controller
 
         $record->question       = $request->question;
         $record->difficulty_level   = $request->difficulty_level;
-        $record->hint           = $request->hint;
-        $record->explanation    = $request->explanation;
+        // $record->hint           = $request->hint;
+        // $record->explanation    = $request->explanation;
         $record->marks          = $request->marks;
         $record->question_type  = $request->question_type;
         $record->time_to_spend  = $request->time_to_spend;
@@ -915,7 +916,7 @@ class QuestionBankController extends Controller
         $record->question_l2    = $request->question_l2;
         if($request->has('explanation_l2'))
         $record->explanation_l2 = $request->explanation_l2;
-
+        // dd($record);
         /**
          * Prepare answers data based on the type of question
          */
@@ -966,12 +967,16 @@ class QuestionBankController extends Controller
             $record->correct_answers         = '';
 
         }
+        // dd($record);
 
          $record->institute_id   = adminInstituteId();
+        //  dd($record);
 
          $record->status = 1;
+        //  dd($record);
         // Save data with no images
         $record->save();
+        //  dd($record);
         // Update data with images
  
         if($request->hasFile($record->question_file))
@@ -994,11 +999,15 @@ class QuestionBankController extends Controller
            $record->answers         = $this->prepareOptions($request, $record);
            
   // dd('ster');
+          
         }
+        // dd($record);
 
         $record->created_by_id = \Auth::user()->id;
+        // dd($record);
 
         $record->save();
+        // dd($record);
 
          flash('success','record_added_successfully', 'success');
          DB::commit();

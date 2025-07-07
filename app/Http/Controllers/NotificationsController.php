@@ -246,8 +246,8 @@ class NotificationsController extends Controller
         $record->valid_to     = $valid_to;
 
         $record->url				= $request->url;
-        $record->short_description		= $request->short_description;
-        $record->description		= $request->description;
+        // $record->short_description		= $request->short_description;
+        // $record->description		= $request->description;
         // $record->batch_id    = $request->batch_id;
 
         if ( $request->notification_for == 'batch' ) {
@@ -313,8 +313,8 @@ class NotificationsController extends Controller
         }
         $record->valid_to			= $valid_to;
         $record->url				= $request->url;
-        $record->short_description	= $request->short_description;
-        $record->description		= $request->description;
+        // $record->short_description	= $request->short_description;
+        // $record->description		= $request->description;
 
         if ( $request->notification_for == 'batch' ) {
           $record->batch_id    = $request->batch_id;

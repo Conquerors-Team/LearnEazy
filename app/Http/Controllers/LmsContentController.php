@@ -598,7 +598,7 @@ class LmsContentController extends Controller
        	$record->content_type 		= $request->content_type;
 
        	$record->file_path 		   = $file_path;
-        $record->description		= $request->description;
+        // $record->description		= $request->description;
         $record->record_updated_by 	= Auth::user()->id;
 
          $record->institute_id   = adminInstituteId();
