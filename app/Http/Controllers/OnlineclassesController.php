@@ -548,8 +548,8 @@ class OnlineclassesController extends Controller
     $record->topic = $request->topic;
 
     $record->url        = $request->url;
-    $record->short_description    = $request->short_description;
-    $record->description    = $request->description;
+    // $record->short_description    = $request->short_description;
+    // $record->description    = $request->description;
     $record->batch_id    = $request->batch_id;
 
     if ($request->student_class_id) {
@@ -618,8 +618,8 @@ class OnlineclassesController extends Controller
     $record->topic = $request->topic;
 
     $record->url        = $request->url;
-    $record->short_description  = $request->short_description;
-    $record->description    = $request->description;
+    // $record->short_description  = $request->short_description;
+    // $record->description    = $request->description;
     $record->batch_id    = $request->batch_id;
 
     if ($request->student_class_id) {
