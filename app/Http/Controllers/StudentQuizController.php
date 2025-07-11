@@ -632,7 +632,7 @@ class StudentQuizController extends Controller
         if($isValid = $this->isValidRecord($quiz))
             return redirect($isValid);
 
-        $input_data = Input::all();
+        $input_data = $request->all();
         $answers = array();
         $time_spent = $request->time_spent;
 
