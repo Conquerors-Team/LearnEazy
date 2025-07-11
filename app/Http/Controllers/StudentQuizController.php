@@ -1320,6 +1320,7 @@ class StudentQuizController extends Controller
         ->removeColumn('end_date')
         ->removeColumn('total_marks')
         ->removeColumn('batch_id')
+        ->rawColumns(['title','dueration','total_questions','action'])
         ->make();
     }
 
