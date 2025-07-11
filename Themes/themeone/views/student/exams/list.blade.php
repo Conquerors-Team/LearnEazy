@@ -235,9 +235,9 @@
 @section('footer_scripts')
 
   @if($category)
-	 @include('common.datatables', array('route'=>URL_STUDENT_QUIZ_GETLIST.$category->slug . '/' . $type, 'route_as_url' => TRUE))
+	 @include('common.datatables', array('route'=>URL_STUDENT_QUIZ_GETLIST.$category->slug . '/' . $type, 'route_as_url' => TRUE, 'table_columns' => ['title','dueration','total_questions','action']))
   @else
-	 @include('common.datatables', array('route'=>URL_STUDENT_QUIZ_GETLIST_ALL, 'route_as_url' => TRUE))
+	 @include('common.datatables', array('route'=>URL_STUDENT_QUIZ_GETLIST_ALL, 'route_as_url' => TRUE, 'table_columns' => ['title','dueration','total_questions','action']))
   @endif
 
   @include('common.deletescript', array('route'=>URL_QUIZ_DELETE))
