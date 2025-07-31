@@ -124,7 +124,7 @@
 
  @else
 
- @include('common.datatables', array('route'=>URL_STUDENT_EXAM_GETATTEMPTS.$user->slug.'/'.$exam_record->slug, 'route_as_url' => 'TRUE'))
+ @include('common.datatables', array('route'=>URL_STUDENT_EXAM_GETATTEMPTS.$user->slug.'/'.$exam_record->slug, 'route_as_url' => 'TRUE','table_columns'=>['title','marks_obtained','exam_status','action']))
 
  @endif
 
