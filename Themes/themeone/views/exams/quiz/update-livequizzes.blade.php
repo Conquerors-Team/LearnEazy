@@ -110,8 +110,15 @@
 								<td>{{$batch->student_class->name}}</td>
 								<td>{{$batch->course->title}}</td>
 								<td>
-									<input type="checkbox" class="datepicker1 input-sm form-control" name="assign[{{$batch->id}}]" value="{{$batch->id}}" {{$assigned}}>
-								</td>
+  <input
+    type="checkbox"
+    name="assign[{{$batch->id}}]"
+    value="{{$batch->id}}"
+    {{$assigned}}
+    style="display:inline-block !important; width:18px; height:18px;"
+  >
+</td>
+
 								<td>
 									<select name="is_popquiz[{{$batch->id}}]">
 										<option value="no" @if('no' == $is_popquiz) selected @endif>No</option>
