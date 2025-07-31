@@ -380,6 +380,17 @@ class StudentQuizController extends Controller
 
         $user                = Auth::user();
         $current_state       = null;
+
+        // Check if the user has already attempted this quiz/exam
+        $attempted = \App\QuizResult::where('quiz_id', '=', $quiz->id)
+                                    ->where('user_id', '=', $user->id)
+                                    ->first();
+
+        if ($attempted) {
+            flash('Ooops...!', 'You have already attempted this exam.', 'overlay');
+            return redirect(URL_STUDENT_EXAM_ATTEMPTS . $user->slug);
+        }
+
         // $any_resume_exam     = App\QuizQuestions::resumeExam($quiz->id);
         $any_resume_exam     = FALSE;
 
