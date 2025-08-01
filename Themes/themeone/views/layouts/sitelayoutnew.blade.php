@@ -2,6 +2,8 @@
 <html lang="en">
 
 	<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 		<meta charset="utf-8">
 		<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -218,14 +220,22 @@
 							</div>
 							<div class="form-group" id="input-group-password">
 								<label class="text-royal" for="loginPassword"><strong>Password</strong></label>
-								{{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
-							        'placeholder' => getPhrase("password"),
-							        'ng-model'=>'registration.password',
-							        'required'=> 'true',
-							        'id'=> 'login-password',
-							        'ng-class'=>'{"has-error": loginForm.password.$touched && loginForm.password.$invalid}',
-							        
-							          )) }}
+								<div style="position: relative;">
+    {{ Form::password('password', $attributes = array(
+        'class'=>'form-control instruction-call',
+        'placeholder' => getPhrase("password"),
+        'ng-model'=>'registration.password',
+        'required'=> 'true',
+        'id'=> 'login-password',
+        'ng-class'=>'{"has-error": loginForm.password.$touched && loginForm.password.$invalid}',
+    )) }}
+
+    <i class="fa fa-eye" id="eye_login_password"
+       onclick="togglePassword('login-password', 'eye_login_password')"
+       style="position: absolute; top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer;">
+    </i>
+</div>
+
 								<!-- <input type="password" class="form-control" id="loginPassword" placeholder="Password"> -->
 							</div>
 							@if( Request::routeIs('site.institute') )
@@ -391,6 +401,22 @@
 @endif
 
 	</body>
+	<script>
+function togglePassword(inputId, iconId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById(iconId);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+</script>
+
 
 	<script>
 		if ('serviceWorker' in navigator) {
