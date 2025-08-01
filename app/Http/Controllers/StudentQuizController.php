@@ -201,7 +201,7 @@ class StudentQuizController extends Controller
     public function exams($slug='', $type = 'category')
     {
       $category = FALSE;
-
+// dd('lllll');
       //if($slug)
       //$category = QuizCategory::getRecordWithSlug($slug);
 
@@ -213,11 +213,17 @@ class StudentQuizController extends Controller
       {
           if ($slug!='all')
           {
+            // dd('iiii');
               if ( 'subject' === $type ) {
+                // dd($slug);
                 $category = \App\Subject::getRecordWithSlug($slug);
+                // dd($category);
+                $series = \App\LmsSeries::getRecordWithSlug($category->id);
+                // dd($series);
               } else {
                 $category = QuizCategory::getRecordWithSlug($slug);
               }
+
 
               //check student quiz category
               if ($category)
@@ -230,6 +236,7 @@ class StudentQuizController extends Controller
           }
           else
           {
+            // dd('iijjii');
               $user = Auth::user();
 
               $role = getRole($user->id);
@@ -279,6 +286,7 @@ class StudentQuizController extends Controller
       }
 
       $data['category']         = $category;
+      $data['series']           = $series;
       $data['type'] = $type;
       $data['active_class']     = 'exams';
       $data['title']            = getphrase('all_exams');
@@ -1320,6 +1328,7 @@ class StudentQuizController extends Controller
 
             return "<p>".$records->start_date."</p><p>Start Time: ".$time."</p>";
         })
+        
         ->removeColumn('tags')
         ->removeColumn('id')
         ->removeColumn('slug')
@@ -2345,6 +2354,7 @@ class StudentQuizController extends Controller
         ->removeColumn('end_date')
         ->removeColumn('total_marks')
         ->removeColumn('batch_id')
+        ->rawColumns(['title','dueration','total_questions','action'])
         ->make();
     }
 

@@ -78,7 +78,7 @@
 
 @section('footer_scripts')
 
-@include('common.datatables', array('route'=> 'student.multisubject.examsgetlist'))
+@include('common.datatables', array('route'=> 'student.multisubject.examsgetlist','table_columns' => ['title', 'total_questions', 'dueration', 'action']))
 
 <script>
 function showInstructions(url) {
