@@ -171,19 +171,31 @@
 
 						<span class="text-red">*</span>
 
-						{{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
+						<div style="position: relative;">
 
-								'placeholder' => getPhrase("password"),
+	{{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
 
-								'ng-model'=>'password',
+		'placeholder' => getPhrase("password"),
 
-								'required'=> 'true',
+		'ng-model'=>'password',
 
-								'ng-class'=>'{"has-error": formUsers.password.$touched && formUsers.password.$invalid}',
+		'required'=> 'true',
 
-								'ng-minlength' => 5
+		'ng-class'=>'{"has-error": formUsers.password.$touched && formUsers.password.$invalid}',
 
-							)) }}
+		'ng-minlength' => 5,
+
+		'id' => 'password',
+		'style' => 'padding-right: 40px;'
+
+	)) }}
+	<span class="toggle-password" onclick="togglePassword('password')" 
+	style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+	<i class="fa fa-eye" id="eye_password"></i>
+</span>
+
+	</div>
+
 
 						<div class="validation-error" ng-messages="formUsers.password.$error" >
 
@@ -200,20 +212,32 @@
 					 {{ Form::label('confirm_password', getphrase('confirm_password')) }}
 
 						<span class="text-red">*</span>
+						<div style="position: relative;">
+
 
 						{{ Form::password('password_confirmation', $attributes = array('class'=>'form-control instruction-call',
 
-								'placeholder' => getPhrase("confirm_password"),
+'placeholder' => getPhrase("confirm_password"),
 
-								'ng-model'=>'password_confirmation',
+'ng-model'=>'password_confirmation',
 
-								'required'=> 'true',
+'required'=> 'true',
 
-								'ng-class'=>'{"has-error": formUsers.password_confirmation.$touched && formUsers.password.$invalid}',
+'ng-class'=>'{"has-error": formUsers.password_confirmation.$touched && formUsers.password.$invalid}',
 
-								'ng-minlength' => 5
+'ng-minlength' => 5,
 
-							)) }}
+'id' => 'password_confirmation',
+'style' => 'padding-right: 40px;'
+
+)) }}
+<span class="toggle-password" onclick="togglePassword('password_confirmation')" 
+	style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+	<i class="fa fa-eye" id="eye_password_confirmation"></i>
+</span>
+
+						</div>
+							
 
 						<div class="validation-error" ng-messages="formUsers.password_confirmation.$error" >
 
@@ -228,18 +252,30 @@
 					@else
 					<fieldset class="form-group">
 					 {{ Form::label('password', getphrase('password')) }}
+					 <div style="position: relative;">
 
-						{{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
 
-								'placeholder' => getPhrase("password"),
+					 {{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
 
-								'ng-model'=>'password',
+'placeholder' => getPhrase("password"),
 
-								'ng-class'=>'{"has-error": formUsers.password.$touched && formUsers.password.$invalid}',
+'ng-model'=>'password',
 
-								'ng-minlength' => 5
+'ng-class'=>'{"has-error": formUsers.password.$touched && formUsers.password.$invalid}',
 
-							)) }}
+'ng-minlength' => 5,
+
+'id' => 'password',
+'style' => 'padding-right: 40px;'
+
+)) }}
+<span class="toggle-password" onclick="togglePassword('password')" 
+	style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+	<i class="fa fa-eye" id="eye_password"></i>
+</span>
+
+
+					 </div>
 
 						<div class="validation-error" ng-messages="formUsers.password.$error" >
 
@@ -254,20 +290,29 @@
 
 					 <fieldset class="form-group">
 					 {{ Form::label('confirm_password', getphrase('confirm_password')) }}
+					 <div style="position: relative;">
 
 
-						{{ Form::password('password_confirmation', $attributes = array('class'=>'form-control instruction-call',
+					 {{ Form::password('password_confirmation', $attributes = array('class'=>'form-control instruction-call',
 
-								'placeholder' => getPhrase("confirm_password"),
+'placeholder' => getPhrase("confirm_password"),
 
-								'ng-model'=>'password_confirmation',
+'ng-model'=>'password_confirmation',
 
+'ng-class'=>'{"has-error": formUsers.password_confirmation.$touched && formUsers.password.$invalid}',
 
-								'ng-class'=>'{"has-error": formUsers.password_confirmation.$touched && formUsers.password.$invalid}',
+'ng-minlength' => 5,
 
-								'ng-minlength' => 5
+'id' => 'password_confirmation',
+'style' => 'padding-right: 40px;'
 
-							)) }}
+)) }}
+<span class="toggle-password" onclick="togglePassword('password_confirmation')" 
+	style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+	<i class="fa fa-eye" id="eye_password_confirmation"></i>
+</span>
+
+					 </div>
 
 						<div class="validation-error" ng-messages="formUsers.password_confirmation.$error" >
 
@@ -527,3 +572,19 @@
 							ng-disabled='!formUsers.$valid'>{{ $button_name }}</button>
 
 						</div>
+
+						<script>
+function togglePassword(fieldId) {
+	const input = document.getElementById(fieldId);
+	const icon = document.getElementById('eye_' + fieldId);
+	if (input.type === "password") {
+		input.type = "text";
+		icon.classList.remove('fa-eye');
+		icon.classList.add('fa-eye-slash');
+	} else {
+		input.type = "password";
+		icon.classList.remove('fa-eye-slash');
+		icon.classList.add('fa-eye');
+	}
+}
+</script>
