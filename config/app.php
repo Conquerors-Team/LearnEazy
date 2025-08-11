@@ -124,6 +124,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'editor_type' => env('EDITOR_TYPE', 'ckeditor'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

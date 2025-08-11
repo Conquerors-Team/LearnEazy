@@ -1,4 +1,4 @@
-@ -0,0 +1,52 @@
+<!-- @ -0,0 +1,52 @@
 @if(config('app.editor_type') === 'quilljs')
 
 <script>
@@ -19,16 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
       theme: 'snow',
       modules: {
         toolbar: [
-            [{ font: [] }],
-            [{ size: ['small', false, 'large', 'huge'] }], // custom sizes
-            ['bold', 'italic', 'underline', 'strike'],    // toggled buttons
-            [{ color: [] }, { background: [] }],          // dropdown with defaults
-            [{ script: 'sub' }, { script: 'super' }],     // superscript/subscript
-            [{ header: '1' }, { header: '2' }, 'blockquote', 'code-block'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ indent: '-1' }, { indent: '+1' }],         // outdent/indent
-            ['link', 'image', 'video', 'formula'],
-            ['clean']  
+          ['bold', 'italic', 'underline'],
+          ['formula'],
+          ['clean']
         ],
         formula: true
       }
@@ -44,11 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+
 @else
-<script src="{{themes('plugins/ckeditor-standard/ckeditor.js')}}"></script>
-@endif
-
-<script>
-  window.editorType = "{{ config('app.editor_type') }}";
-</script>
-
+    @include('common.editor');
+@endif -->

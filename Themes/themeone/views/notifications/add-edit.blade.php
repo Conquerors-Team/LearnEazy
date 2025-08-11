@@ -58,6 +58,11 @@
 @section('footer_scripts')
 @include('common.validations');
    {{-- <script src="{{JS}}bootstrap-datepicker.min.js"></script> --}}
+   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.formula.min.js"></script>
 @include('common.editor');
 <script src="{{JS}}datepicker.min.js"></script>
  <script>

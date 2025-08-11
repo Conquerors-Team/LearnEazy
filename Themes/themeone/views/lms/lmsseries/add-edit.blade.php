@@ -57,8 +57,19 @@
 
 @section('footer_scripts')
  @include('common.validations');
- @include('common.editor');
+
+
  @include('common.alertify')
+
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.formula.min.js"></script>
+
+<!-- @include('common.conditional-editor') -->
+@include('common.editor');
+
   <script src="{{JS}}datepicker.min.js"></script>
     <script>
  	var file = document.getElementById('image_input');

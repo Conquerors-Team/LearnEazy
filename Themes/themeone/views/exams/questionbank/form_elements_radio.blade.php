@@ -16,7 +16,7 @@
     <fieldset class="form-group col-md-4" >
         <label >Option @{{ $index+1 }}</label> <span class="text-red">*</span>
         <!-- <input type="text" name="options[]" id="option_@{{ $index }}" class="form-control" placeholder="Option @{{ $index+1 }}" ng-model="answers[$index].option_value"  min="1"  required="true" > -->
-        <textarea name="options[]" id="option_@{{ $index }}" class="form-control editor" placeholder="Option @{{ $index+1 }}" ng-model="answers[$index].option_value"  min="1"  required="true" ckeditor></textarea>
+        <textarea name="options[]" id="option_@{{ $index }}" class="form-control ckeditor" placeholder="Option @{{ $index+1 }}" ng-model="answers[$index].option_value"  min="1"  required="true" ckeditor></textarea>
 
     </fieldset>
 

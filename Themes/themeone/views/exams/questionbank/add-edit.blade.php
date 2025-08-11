@@ -62,6 +62,11 @@
 @section('footer_scripts')
 	@include('exams.questionbank.scripts.js-scripts')
 	@include('common.validations', array('isLoaded'=>TRUE))
+	<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.formula.min.js"></script>
 	@include('common.editor')
 	@if($record)
 		@if($record->question_type=='video')
