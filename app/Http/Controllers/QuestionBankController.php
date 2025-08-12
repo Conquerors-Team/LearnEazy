@@ -13,8 +13,9 @@ use Image;
 use ImageSettings;
 use File;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Input;
-use Excel;
+// use Excel;
 use Exception;
 use Illuminate\Support\Arr;
 
@@ -1564,50 +1565,94 @@ public function prepareOptions($request, $record)
         $summary = [];
          try{
 
-        if(Input::hasFile('excel')){
-          $path = Input::file('excel')->getRealPath();
-          $data = Excel::load($path, function($reader) {
-          })->get();
+        if($request->hasFile('excel')){
+          $path = $request->file('excel')->getRealPath();
+          // $data = Excel::load($path, function($reader) {
+          // })->get();
+          $data = Excel::toCollection(null, $request->file('excel'))->first();
 
           $all_records  = array();
           $excel_record = array();
           $final_records =array();
           $isHavingDuplicate = 0;
-          if(!empty($data) && $data->count()){
-            foreach ($data as $key => $value) {
-              if(Arr::has($value,'subject_id'))
-              {
-                $all_records[] = $value;
+        //   if(!empty($data) && $data->count()){
+        //     foreach ($data as $key => $value) {
+        //       if(Arr::has($value,'subject_id'))
+        //       {
+        //         $all_records[] = $value;
+        //       }
+        //       else {
+
+        //       foreach($value as $record)
+        //       {
+        //         $all_records[] = $record;
+        //       }
+        //     }
+
+        //     }
+
+        //      $questionbank = new QuestionBank();
+
+        //     $summary = (object)$this->processExcelQuestions($request, $all_records);
+
+        // }
+        if (!empty($data) && $data->count()) {
+          // dd($data);
+          $headers = $data->first()->toArray(); // First row is header
+          // dd($headers);
+      
+          foreach ($data->skip(1) as $row) {
+            // dd($row);
+              // Flatten nested collections into a simple array
+              $rowArray = collect($row)->flatten()->toArray();
+              // dd($rowArray);
+              // Skip completely empty rows
+              if (!array_filter($rowArray, fn($cell) => $cell !== null && $cell !== '')) {
+                // dd($rowArray);
+                  continue;
               }
-              else {
-
-              foreach($value as $record)
-              {
-                $all_records[] = $record;
+              // dd($rowArray);
+              // Map headers to row values
+              $record = array_combine($headers, $rowArray);
+              // dd($record);
+              if ($record) {
+                // dd($record);
+                  $all_records[] = $record;
+                  // dd($all_records); 
               }
-            }
-
-            }
-
-             $questionbank = new QuestionBank();
-
-            $summary = (object)$this->processExcelQuestions($request, $all_records);
-
-        }
+              // dd($all_records);
+          }
+          // dd($all_records);
+          $questionbank = new QuestionBank();
+          // dd($all_records);
+          $all_records = array_map(function($row) {
+            return (object) $row; // cast array to object
+        }, $all_records);
+        // dd($all_records);
+        $summary = (object) $this->processExcelQuestions($request, $all_records);
+          // dd($summary);
+      }
+      
       }
 
        if(isset($summary->failed_list) || isset($summary->success_list)) {
+        // dd($summary);
 
        $data['failed_list']   =   $summary->failed_list;
+      //  dd($data['failed_list']);
        $data['success_list']  =    $summary->success_list;
+      //  dd($data);
 
        $this->excel_data['failed'] = $summary->failed_list;
+      //  dd($this->excel_data['failed']);
        $this->excel_data['success'] = $summary->success_list;
        $this->excel_data['columns'] = $summary->columns_list;
+      //  dd($this->excel_data);
 
-         $this->downloadExcel();
+        //  $this->downloadExcel();
        }
        else {
+        // dd($e);
 
         flash('oops...!','improper_sheet_uploaded', 'error');
        }
@@ -1621,20 +1666,28 @@ public function prepareOptions($request, $record)
           flash('oops...!',$e->errorInfo, 'error');
        }
        else {
+        dd($e);
           flash('oops...!','improper_sheet_uploaded', 'error');
        }
 
        return back();
      }
         // URL_USERS_IMPORT_REPORT
-       $data['failed_list']   =   $failed_list;
-       $data['success_list']  =    $success_list;
-       $data['records']      = FALSE;
-       $data['layout']       = getLayout();
-       $data['active_class'] = 'exams';
-       $data['heading']      = getPhrase('upload_questions');
-       $data['title']        = getPhrase('report');
-       // return view('exams.questionbank.import.import-result', $data);
+        // Preserve failed/success lists from $summary if set; otherwise use empty defaults
+        // dd($data);
+        if (!isset($data['failed_list'])) {
+          dd($failed_list);
+          $data['failed_list'] = $failed_list;
+        }
+        if (!isset($data['success_list'])) {
+          $data['success_list'] = $success_list;
+        }
+        $data['records']      = FALSE;
+        $data['layout']       = getLayout();
+        $data['active_class'] = 'exams';
+        $data['heading']      = getPhrase('upload_questions');
+        $data['title']        = getPhrase('report');
+        // return view('exams.questionbank.import.import-result', $data);
 
         $view_name = getTheme().'::exams.questionbank.import.import-result';
         return view($view_name, $data);
