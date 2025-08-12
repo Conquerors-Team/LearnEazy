@@ -1,5 +1,5 @@
 @extends('layouts.examlayout')
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 @section('content')
 
 
