@@ -185,7 +185,7 @@ class BatchesController extends Controller
         // ->removeColumn('available_seats')
         // ->removeColumn('capacity')
         ->removeColumn('enable_sms_alerts')
-        ->rawColumns([ 'name','action','start_date','capacity','end_date'])
+        ->rawColumns([ 'name','action','start_date','end_date','capacity'])
 
         ->make();
     }

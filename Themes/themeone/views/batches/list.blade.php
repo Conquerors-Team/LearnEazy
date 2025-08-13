@@ -107,7 +107,7 @@
 
 
 
- @include('common.datatables', array('route'=>URL_BATCHS_GETLIST, 'route_as_url' => TRUE, 'table_columns' => ['name','start_date','capacity','end_date','action']))
+ @include('common.datatables', array('route'=>URL_BATCHS_GETLIST, 'route_as_url' => TRUE, 'table_columns' => ['name','start_date','end_date','capacity','action']))
 
  @include('common.deletescript', array('route'=>URL_BATCHS_DELETE))
 

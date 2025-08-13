@@ -55,8 +55,11 @@
 
 
 @section('footer_scripts')
-
+ @if(shareData('share_subjects'))
+ @include('common.datatables', array('route'=>'subjects.dataTable','table_columns' => ['institute_id','id','subject_title','subject_code','action']))
+ @else
  @include('common.datatables', array('route'=>'subjects.dataTable','table_columns' => ['id','subject_title','subject_code','action']))
+ @endif
  @include('common.deletescript', array('route'=>URL_SUBJECTS_DELETE))
 
 @stop

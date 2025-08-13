@@ -160,6 +160,7 @@ class SubjectsController extends Controller
         ->removeColumn('pass_marks')
         ->removeColumn('maximum_marks')
         ->removeColumn('updated_at')
+        ->rawColumns(['institute_id','action'])
         ->make();
     }
 

@@ -942,7 +942,7 @@ if ( isOnlinestudent() ) {
 				</div>
 
 @endif
-				<div class="col-md-12">
+				<!-- <div class="col-md-12">
 					<h5>Latest LMS</h5>
 					<?php
 	  $quizzes = \App\LmsSeries::select(['lmsseries.*', 'subjects.slug AS subject_slug','subjects.subject_title AS subject_title'])->join('subjects', 'subjects.id', '=', 'lmsseries.subject_id')->where('lmsseries.institute_id',$user->institute_id)->orderBy('lmsseries.updated_at')->take(5)->get();
@@ -964,7 +964,7 @@ if ( isOnlinestudent() ) {
 				</div>
 
 
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
