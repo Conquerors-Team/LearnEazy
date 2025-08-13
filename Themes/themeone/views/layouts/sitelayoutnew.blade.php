@@ -19,6 +19,7 @@
 		<!-- Vendor CSS Files -->
 		<link href="{{themes('site/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 		<link href="{{themes('site/vendor/icofont/icofont.min.css')}}" rel="stylesheet">
+		<link href="{{themes('font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
 
 		<!-- Template Main CSS File -->
 		<link href="{{themes('site/css/home.css')}}" rel="stylesheet">
@@ -218,14 +219,20 @@
 							</div>
 							<div class="form-group" id="input-group-password">
 								<label class="text-royal" for="loginPassword"><strong>Password</strong></label>
-								{{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
+								<div style="position: relative;">
+									{{ Form::password('password', $attributes = array('class'=>'form-control instruction-call',
 							        'placeholder' => getPhrase("password"),
 							        'ng-model'=>'registration.password',
 							        'required'=> 'true',
 							        'id'=> 'login-password',
 							        'ng-class'=>'{"has-error": loginForm.password.$touched && loginForm.password.$invalid}',
-							        
+							        'style' => 'padding-right: 40px;'
 							          )) }}
+									<span class="toggle-password" onclick="togglePassword('login-password')" 
+									style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+										<i class="fa fa-eye" id="eye_login-password"></i>
+									</span>
+								</div>
 								<!-- <input type="password" class="form-control" id="loginPassword" placeholder="Password"> -->
 							</div>
 							@if( Request::routeIs('site.institute') )
@@ -627,6 +634,20 @@ function openModal(id) {
   $('.modal').modal('hide');
   $('.modal-backdrop').remove() // removes the grey overlay.
   $('#' + id).modal('show');
+}
+
+function togglePassword(fieldId) {
+    const input = document.getElementById(fieldId);
+    const icon = document.getElementById('eye_' + fieldId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
 }
 
 function getCourses() {
