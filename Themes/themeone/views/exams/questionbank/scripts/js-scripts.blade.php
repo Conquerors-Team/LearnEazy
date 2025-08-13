@@ -106,6 +106,14 @@ app.directive("ckeditor", ["$timeout", function($timeout) {
         require: '?ngModel',
         link: function ($scope, element, attr, ngModelCtrl) {
             if (window.editorType === 'quilljs') {
+                // Check if QuillJS is already initialized on this element
+                if (element[0].quillInitialized) {
+                    return; // Already initialized, skip
+                }
+                
+                // Mark this element as initialized
+                element[0].quillInitialized = true;
+                
                 // QuillJS editor setup
                 element.css('display', 'none'); // hide original textarea
                 
