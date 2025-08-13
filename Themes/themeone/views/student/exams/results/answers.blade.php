@@ -33,7 +33,9 @@
  */
 
  ?>
-
+ @section('header_scripts')
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+ @stop
 @section('content')
 
   <div id="page-wrapper" class="answer-sheet" ng-controller="angExamScript" >

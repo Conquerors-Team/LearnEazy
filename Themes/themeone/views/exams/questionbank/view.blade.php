@@ -1,6 +1,7 @@
 @extends($layout)
 @section('header_scripts')
 <link href="{{CSS}}ajax-datatables.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 @stop
 @section('content')
 
