@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('batch_faculty', function (Blueprint $table) {
+            $table->foreign(['user_id'], 'batch_faculty_FK')->references(['id'])->on('users')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign(['batch_id'], 'batch_faculty_FK_1')->references(['id'])->on('batches')->onUpdate('restrict')->onDelete('restrict');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('batch_faculty', function (Blueprint $table) {
+            $table->dropForeign('batch_faculty_FK');
+            $table->dropForeign('batch_faculty_FK_1');
+        });
+    }
+};

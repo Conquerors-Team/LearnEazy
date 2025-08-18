@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('quiz_question_issues', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title', 250)->nullable();
+            $table->text('explaination')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('issue_type', 100)->nullable();
+            $table->timestamps();
+            $table->binary('status')->nullable()->default('0');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('quiz_question_issues');
+    }
+};
