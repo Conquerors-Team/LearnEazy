@@ -136,11 +136,13 @@
 					 <fieldset class="form-group col-md-3">
 
 						{{ Form::label('pass_percentage', getphrase('pass_percentage')) }}
+						<span class="text-red">*</span>
 
 						{{ Form::number('pass_percentage', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => '40',
 							'min'=>'1',
 							'max' =>'100',
 						'ng-model'=>'pass_percentage',
+						'required'=> 'true',
 						'string-to-number'=> 'true',
 
 						'ng-class'=>'{"has-error": formQuiz.pass_percentage.$touched && formQuiz.pass_percentage.$invalid}',
